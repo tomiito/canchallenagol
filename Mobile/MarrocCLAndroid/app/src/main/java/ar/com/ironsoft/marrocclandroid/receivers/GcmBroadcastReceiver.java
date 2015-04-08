@@ -11,7 +11,9 @@ import ar.com.ironsoft.marrocclandroid.intentServices.GcmIntentService;
 /**
  * Created by gabrielvilloldo on 4/8/15.
  */
+
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // Explicitly specify that GcmIntentService will handle the intent.
@@ -20,5 +22,9 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
         // Start the service, keeping the device awake while it is launching.
         startWakefulService(context, (intent.setComponent(comp)));
         setResultCode(Activity.RESULT_OK);
+
+
     }
+
+
 }
