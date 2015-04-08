@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+
+    <context-param>
+        <param-name>guice-modules</param-name>
+        <param-value>
+            ar.com.ironsoft.marroccl.web.guice.MarrocGuiceServletsModule
+        </param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>guiceFilter</filter-name>
+        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>guiceFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <context-param>
+        <param-name>org.mortbay.jetty.servlet.SessionURL</param-name>
+        <param-value>none</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>
+            ar.com.ironsoft.marroccl.web.guice.GuiceServletContextListener
+        </listener-class>
+    </listener>
+
+    <welcome-file-list>
+        <welcome-file>forward.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- for html5 cache if required -->
+    <mime-mapping>
+        <extension>appcache</extension>
+        <mime-type>text/cache-manifest</mime-type>
+    </mime-mapping>
+
+</web-app>

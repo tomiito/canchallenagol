@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+    <application>marroccl</application>
+    <version>1</version>
+
+    <threadsafe>true</threadsafe>
+    <!-- DISABLE SESSION UNTIL REQUIRED BY SECURITY FRAMEWORK-->
+    <sessions-enabled>false</sessions-enabled>
+    <!--
+        Changes to a session are put into the data store asynchronously, which produces some risk
+        of losing sync, but with a big improvement in latency, which means cheaper.-->
+    <async-session-persistence enabled="true" queue-name="default"/>
+
+    <precompilation-enabled>false</precompilation-enabled>
+
+    <!-- Configure serving/caching of WEB files -->
+    <static-files>
+        <include path="/**.html" expiration="1s"/>
+        <include path="/**.png" expiration="30d"/>
+        <include path="/**.gif" expiration="30d"/>
+        <include path="/**.jpg" expiration="30d"/>
+        <include path="/**.css" expiration="30d"/>
+        <include path="/**.js" expiration="7d"/>
+
+        <exclude path="/**.appcache"/>
+    </static-files>
+
+    <!-- Configure java.util.logging -->
+    <system-properties>
+        <property name="java.util.logging.config.file"
+                  value="WEB-INF/logging.properties"/>
+    </system-properties>
+
+</appengine-web-app>
