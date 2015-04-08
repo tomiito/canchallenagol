@@ -4,6 +4,25 @@ android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("keystores/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+        release {
+            storeFile file("keystores/release.jks")
+            storePassword "Iron123"
+            keyAlias "releasekey"
+            keyPassword "Soft123"
+        }
+    }
     defaultConfig {
         applicationId "ar.com.ironsoft.marrocclandroid"
         minSdkVersion 14
@@ -13,9 +32,12 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        preDexLibraries false
     }
 }
 
