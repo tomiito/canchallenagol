@@ -91,6 +91,10 @@
         // DASHBOARD MODULE
         sl.add("/app/modules/dashboard/dashboardModule.js");
         sl.add("/app/modules/dashboard/controller/dashboardController.js");
+        // DEVICES MODULE
+        sl.add("/app/modules/devices/devicesModule.js");
+        sl.add("/app/modules/devices/controller/deviceController.js");
+        sl.add("/app/modules/devices/controller/deviceModalController.js");
         //
     } else if (SharedConstants.isProductionServer()) {
         sl.add("/app/all.js");

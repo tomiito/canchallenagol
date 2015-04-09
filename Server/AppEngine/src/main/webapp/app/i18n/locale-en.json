@@ -1,5 +1,28 @@
 {
   "DASHBOARD": {
     "TITLE": "Dashboard"
+  },
+  "DEVICES": {
+    "TITLE": "Devices",
+    "DEVICE_ID": "Device ID",
+    "DEVICE_DATE": "Date",
+    "REGISTER_NEW_DEVICE": "Register new device",
+    "LIST": "Registered Devices",
+    "LOADING": "Loading devices ...",
+    "NO_DATA": "No devices found!"
+  },
+  "GENERAL": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "FILTER": "Filter",
+    "ACTIONS": "Actions"
+  },
+  "PAGINATION": {
+    "SHOWING": "Showing",
+    "OF": "of",
+    "RECORDS": "records",
+    "NEXT": "Next",
+    "PREVIOUS": "Previous",
+    "RECORDS_PER_PAGE": "Records per page"
   }
 }

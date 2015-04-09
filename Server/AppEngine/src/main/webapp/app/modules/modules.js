@@ -1,2 +1,2 @@
-var appModules = angular
-		.module('appModules', ['coreModule', 'dashboardModule']);
+var appModules = angular.module('appModules', ['coreModule', 'dashboardModule',
+		'deviceModule']);

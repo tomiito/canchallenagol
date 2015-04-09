@@ -1,10 +1,17 @@
 var app = angular.module('app', ['ngRoute', 'pascalprecht.translate',
 		'ui.bootstrap', 'appModules'])
 
-app.config(['$routeProvider', 'dashboardURLProvider', '$translateProvider',
-		function($routeProvider, dashboardURLProvider, $translateProvider) {
+app.config([
+		'$routeProvider',
+		'dashboardURLProvider',
+		'deviceURLProvider',
+		'$translateProvider',
+		function($routeProvider, dashboardURLProvider, deviceURLProvider,
+				$translateProvider) {
 			// /
 			dashboardURLProvider.provideUrl($routeProvider);
+			// /devices/
+			deviceURLProvider.provideUrl($routeProvider);
 			// other
 			$routeProvider.otherwise({
 				redirectTo : '/'

@@ -83,7 +83,7 @@ public class SendAllMessagesServlet extends BaseServlet {
                         + " multicast messages to " + total + " devices";
             }
         }
-        req.setAttribute(IndexServlet.ATTRIBUTE_STATUS, status.toString());
+        req.setAttribute("status", status.toString());
         getServletContext().getRequestDispatcher("/").forward(req, resp);
     }
 }

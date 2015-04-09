@@ -44,56 +44,6 @@ public final class Datastore {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Registers a device.
-     *
-     * @param regId
-     *            device's registration id.
-     */
-    public static void register(String regId) {
-        logger.info("Registering " + regId);
-        Transaction txn = datastore.beginTransaction();
-        try {
-            Entity entity = findDeviceByRegId(regId);
-            if (entity != null) {
-                logger.fine(regId + " is already registered; ignoring.");
-                return;
-            }
-            entity = new Entity(DEVICE_TYPE);
-            entity.setProperty(DEVICE_REG_ID_PROPERTY, regId);
-            datastore.put(entity);
-            txn.commit();
-        } finally {
-            if (txn.isActive()) {
-                txn.rollback();
-            }
-        }
-    }
-
-    /**
-     * Unregisters a device.
-     *
-     * @param regId
-     *            device's registration id.
-     */
-    public static void unregister(String regId) {
-        logger.info("Unregistering " + regId);
-        Transaction txn = datastore.beginTransaction();
-        try {
-            Entity entity = findDeviceByRegId(regId);
-            if (entity == null) {
-                logger.warning("Device " + regId + " already unregistered");
-            } else {
-                Key key = entity.getKey();
-                datastore.delete(key);
-            }
-            txn.commit();
-        } finally {
-            if (txn.isActive()) {
-                txn.rollback();
-            }
-        }
-    }
 
     /**
      * Updates the registration id of a device.

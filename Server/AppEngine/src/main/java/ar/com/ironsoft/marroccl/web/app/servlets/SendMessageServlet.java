@@ -134,7 +134,7 @@ public class SendMessageServlet extends BaseServlet {
             String error = result.getErrorCodeName();
             if (error.equals(GCMConstants.ERROR_NOT_REGISTERED)) {
                 // application has been removed from device - unregister it
-                Datastore.unregister(regId);
+                //TODO Datastore.unregister(regId)
             } else {
                 logger.severe("Error sending message to device " + regId + ": "
                         + error);
@@ -181,7 +181,7 @@ public class SendMessageServlet extends BaseServlet {
                     if (error.equals(GCMConstants.ERROR_NOT_REGISTERED)) {
                         // application has been removed from device - unregister
                         // it
-                        Datastore.unregister(regId);
+                        //TODO Datastore.unregister(regId);
                     }
                     if (error.equals(GCMConstants.ERROR_UNAVAILABLE)) {
                         retriableRegIds.add(regId);

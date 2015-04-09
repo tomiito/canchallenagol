@@ -1,0 +1,32 @@
+<modal title="{{title}}" clazz="panel-primary">
+    <div class="modal-body">
+        <form id="modalForm" form-validate class="form-horizontal">
+            <app-form-body>
+
+                <div class="form-group  col-md-12">
+                    <label
+                            class="col-md-4 control-label">{{'DEVICES.DEVICE_ID'
+                        |
+                        translate}}</label>
+
+                    <div class="col-md-8 " style="padding-left: 0px">
+                        <input name="id" type="text"
+                               tabindex="1" minlength="1"
+                               ng-model="device.deviceId" maxlength="40"
+                               placeholder="" class="form-control input-md"
+                               autocomplete="off" required focus-me="true">
+                    </div>
+                </div>
+            </app-form-body>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="cancel()"
+                tabindex="6">{{'GENERAL.CANCEL' | translate}}
+        </button>
+        <button class="btn btn-success " ng-click="confirm()"
+                ng-class="confirmClass"
+                tabindex="7">{{'GENERAL.SAVE' | translate}}
+        </button>
+    </div>
+</modal>
