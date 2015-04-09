@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import javax.servlet.http.HttpServlet;
 
+import ar.com.ironsoft.marroccl.web.core.daos.OfyService;
 import ar.com.ironsoft.marroccl.web.guice.base.ExternallyConfigurableServletModule;
 import ar.com.ironsoft.marroccl.web.guice.base.URLPaths;
 import ar.com.ironsoft.marroccl.web.guice.init.InitializationMatcher;
@@ -23,6 +24,7 @@ public abstract class GuiceServletsModule extends
 
     private final LinkedList<Class<? extends HttpServlet>> servletClasses = new LinkedList<>();
     private final LinkedList<Class<?>> endpointClasses = new LinkedList<>();
+    private final LinkedList<Class<?>> ofyClasses = new LinkedList<>();
     private final LinkedList<Class<?>> allClasses = new LinkedList<>();
     //
     private GuiceClassesHolder guiceClassesHolder;
@@ -38,6 +40,11 @@ public abstract class GuiceServletsModule extends
         return list;
     }
 
+    public LinkedList<Class<?>> getOfyClasses() {
+        LinkedList<Class<?>> list = new LinkedList<>();
+        return list;
+    }
+
     protected void addModules(GuiceServletsModule... modules) {
         Preconditions.checkNotNull(modules);
         //
@@ -49,6 +56,7 @@ public abstract class GuiceServletsModule extends
     protected void addModule(GuiceServletsModule module) {
         servletClasses.addAll(module.getServletClasses());
         endpointClasses.addAll(module.getEndpointClasses());
+        ofyClasses.addAll(module.getOfyClasses());
     }
 
     @Provides
@@ -70,6 +78,10 @@ public abstract class GuiceServletsModule extends
         //
         for (Class clazz : allClasses) {
             URLPaths.base(clazz).apply(this);
+        }
+        //
+        for (Class clazz : ofyClasses) {
+            OfyService.factory().register(clazz);
         }
         //
         this.serveGuiceSystemServiceServlet("/_ah/spi/*", endpointClasses);

@@ -1,0 +1,12 @@
+<div class="controls form-inline">
+    <select name="users-table_length"
+            ng-model="size"
+            ng-change="changedSize(size)"
+            class="form-control input-sm">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </select>
+    <label>{{'PAGINATION.RECORDS_PER_PAGE' | translate}}</label>
+</div>

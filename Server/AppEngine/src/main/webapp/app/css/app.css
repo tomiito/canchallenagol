@@ -1,0 +1,96 @@
+.logo {
+  margin-top: -7px;
+  width: 50px;
+  height: 34px;
+}
+.null-state {
+  background-color: #fff;
+  color: #000;
+}
+.disabled-row {
+  background-color: #EEE;
+  opacity: 0.7;
+}
+.form-horizontal .rightlabel,
+.form .rightlabel {
+  padding-top: 7px;
+  margin-left: 2px;
+  margin-bottom: 0;
+  text-align: left;
+  font-weight: normal;
+}
+label.normal {
+  font-weight: normal;
+}
+label.editable:hover {
+  cursor: pointer;
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  padding: 5px 10px 5px;
+}
+.error-402 {
+  font-size: 8em;
+  color: #2d5231;
+}
+.error {
+  color: red;
+}
+.helptext {
+  font-weight: normal;
+}
+.breadcrumb .pull-right:before {
+  padding: 0px;
+  content: " ";
+}
+.breadcrumb .pull-right button {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-top: -2px;
+}
+.breadcrumb-nolines > li + li:before {
+  padding: 0px;
+  content: "";
+}
+.breadcrumb-nolines li {
+  margin-right: 20px;
+}
+.thumbnail {
+  margin-bottom: 0px;
+  cursor: pointer;
+}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+footer {
+  clear: both;
+  padding-left: 250px;
+  float: left;
+  width: 100%;
+}
+footer section {
+  color: #707070;
+  border-top: 1px solid #e7e7e7;
+  border-left: 1px solid #e7e7e7;
+  height: 35px;
+}
+footer section span {
+  padding-top: 8px;
+  margin-right: 30px;
+  color: #707070;
+}

@@ -1,0 +1,28 @@
+<div class="row">
+    <!-- TABLE PAGINATION -->
+    <div class="col-sm-6">
+        <div class="dataTables_info">
+            {{'PAGINATION.SHOWING' | translate}} {{page.data.length == 0 ? 0 : page.offset+ 1}}
+            {{'PAGINATION.OF' | translate}} {{ page.offset + page.data.length}}
+            {{'PAGINATION.RECORDS' | translate}}
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="dataTables_paginate paging_simple">
+            <ul class="pagination">
+                <li class="paginate_button previous" tabindex="0"
+                    ng-class="{ 'disabled': page.offset == 0 }">
+                    <a href="javascript:;"
+                       ng-click="page.previous()">{{'PAGINATION.PREVIOUS' | translate}}</a>
+                </li>
+                <li class="paginate_button next" tabindex="0"
+                    ng-class="{ 'disabled': page.data.length < page.size }">
+                    <a href="javascript:;" ng-click="page.next()">
+                        {{'PAGINATION.NEXT' | translate}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END TABLE PAGINATION -->
+</div>
