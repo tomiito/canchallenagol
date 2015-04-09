@@ -43,7 +43,9 @@
         <div ng-view></div>
     </div>
 
-    <app-footer app-version="1.0.0"></app-footer>
+    <% String appVersion = SharedConstants.APP_VERSION; %>
+
+    <app-footer app-version="<%=appVersion%>"></app-footer>
 
 </div>
 

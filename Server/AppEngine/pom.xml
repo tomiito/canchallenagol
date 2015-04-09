@@ -382,4 +382,26 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>jenkins-prod</id>
+            <properties>
+                <application.build.version>
+                    ${env.JENKINS.MARROCCL.VERSION.NUMBER}
+                </application.build.version>
+                <application.build.appengine.id>
+                    marroccl-909
+                </application.build.appengine.id>
+                <application.build.appengine.version>
+                    1
+                </application.build.appengine.version>
+                <application.email.contact>
+                    tomasdepriede@gmail.com.ar
+                </application.email.contact>
+                <application.url>
+                    https://marroccl-909.appspot.com/
+                </application.url>
+            </properties>
+        </profile>
+    </profiles>
 </project>

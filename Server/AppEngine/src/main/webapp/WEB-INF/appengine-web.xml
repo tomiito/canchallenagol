@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-    <application>marroccl-909</application>
-    <version>1</version>
+    <application>${application.build.appengine.id}</application>
+    <version>${application.build.appengine.version}</version>
 
     <threadsafe>true</threadsafe>
     <!-- DISABLE SESSION UNTIL REQUIRED BY SECURITY FRAMEWORK-->
