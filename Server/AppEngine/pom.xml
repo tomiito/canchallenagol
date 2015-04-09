@@ -8,9 +8,22 @@
     <version>1.0-SNAPSHOT</version>
     <name>marroccl Maven Webapp</name>
     <url>http://maven.apache.org</url>
+    <prerequisites>
+        <maven>3.1.0</maven>
+    </prerequisites>
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+
+        <application.build.version>DEV</application.build.version>
+        <application.build.appengine.id>marroccl-909
+        </application.build.appengine.id>
+        <application.build.appengine.version>1
+        </application.build.appengine.version>
+
+        <application.email.contact>tomasdepriede@gmail.com
+        </application.email.contact>
+        <application.url>http://localhost:8080/</application.url>
 
         <!-- GAE properties -->
         <gae.version>1.9.15</gae.version>
@@ -233,7 +246,47 @@
         <outputDirectory>
             ${project.build.directory}/${project.build.finalName}/WEB-INF/classes
         </outputDirectory>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+                <targetPath>
+                    ${project.build.directory}/${project.build.finalName}/WEB-INF/classes
+                </targetPath>
+            </resource>
+        </resources>
         <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.13</version>
+                <configuration>
+                    <argLine>-XX:-UseSplitVerifier</argLine>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>
+                            ${project.build.sourceDirectory}
+                        </additionalClasspathElement>
+                        <additionalClasspathElement>
+                            ${project.build.testSourceDirectory}
+                        </additionalClasspathElement>
+                    </additionalClasspathElements>
+                    <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <forkMode>always</forkMode>
+                    <printSummary>true</printSummary>
+                    <!-- Folder for generated testing stuff -->
+                    <systemProperties>
+                        <property>
+                            <name>gwt.args</name>
+                            <value>-out
+                                ${project.build.directory}/${project.build.finalName}
+                            </value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -323,29 +376,7 @@
                     <outputDirectory>${basedir}/target</outputDirectory>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <webXml>
-                        ${project.build.directory}/generated-sources/appengine-endpoints/WEB-INF/web.xml
-                    </webXml>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>
-                                ${project.build.directory}/generated-sources/appengine-endpoints
-                            </directory>
-                            <!-- the list has a default value of ** -->
-                            <includes>
-                                <include>WEB-INF/*.discovery</include>
-                                <include>WEB-INF/*.api</include>
-                            </includes>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
+
             <plugin>
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
@@ -363,12 +394,53 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <phase>compile</phase>
                         <goals>
                             <goal>endpoints_get_discovery_doc</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <webXml>
+                        ${project.build.directory}/generated-sources/appengine-endpoints/WEB-INF/web.xml
+                    </webXml>
+                    <webappDirectory>
+                        ${project.build.directory}/${project.build.finalName}
+                    </webappDirectory>
+                    <webResources>
+                        <!-- in order to interpolate version from pom into appengine-web.xml -->
+                        <resource>
+                            <directory>
+                                ${basedir}/src/main/webapp/WEB-INF
+                            </directory>
+                            <includes>
+                                <include>appengine-web.xml</include>
+                            </includes>
+                            <filtering>true</filtering>
+                            <targetPath>WEB-INF</targetPath>
+                        </resource>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>
+                                ${project.build.directory}/generated-sources/appengine-endpoints
+                            </directory>
+                            <!-- the list has a default value of ** -->
+                            <includes>
+                                <include>WEB-INF/*.discovery</include>
+                                <include>WEB-INF/*.api</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+
+            </plugin>
+
             <plugin>
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
