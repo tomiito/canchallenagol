@@ -1,6 +1,6 @@
 package ar.com.ironsoft.marroccl.web.app.modules.messages.model;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 import ar.com.ironsoft.marroccl.web.core.model.BaseModel;
@@ -18,7 +18,7 @@ public class Multicast implements BaseModel {
 
     @Id
     private String multicastId;
-    private Set<String> deviceIds;
+    private List<String> deviceIds;
 
     public Multicast() {
     }
@@ -31,11 +31,11 @@ public class Multicast implements BaseModel {
         multicastId = UUID.randomUUID().toString();
     }
 
-    public Set<String> getDeviceIds() {
+    public List<String> getDeviceIds() {
         return deviceIds;
     }
 
-    public void setDeviceIds(Set<String> deviceIds) {
+    public void setDeviceIds(List<String> deviceIds) {
         this.deviceIds = deviceIds;
     }
 

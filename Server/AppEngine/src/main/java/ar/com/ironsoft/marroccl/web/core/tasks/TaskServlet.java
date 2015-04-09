@@ -36,6 +36,16 @@ public abstract class TaskServlet extends HttpServlet {
         return valid;
     }
 
+    /**
+     * Indicates to App Engine that this task should be retried.
+     */
+    protected void retryTask(HttpServletResponse resp) {
+        resp.setStatus(500);
+    }
+
+    /**
+     * Indicates to App Engine that this task is done.
+     */
     protected void taskDone(HttpServletResponse resp) {
         resp.setStatus(200);
     }

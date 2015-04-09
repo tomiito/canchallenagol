@@ -68,7 +68,7 @@ import java.util.Map;
  * 
  * </code>
  */
-public final class Message implements Serializable {
+public final class GCMMessage implements Serializable {
 
     private final String collapseKey;
     private final Boolean delayWhileIdle;
@@ -139,12 +139,12 @@ public final class Message implements Serializable {
             return this;
         }
 
-        public Message build() {
-            return new Message(this);
+        public GCMMessage build() {
+            return new GCMMessage(this);
         }
     }
 
-    private Message(Builder builder) {
+    private GCMMessage(Builder builder) {
         collapseKey = builder.collapseKey;
         delayWhileIdle = builder.delayWhileIdle;
         data = Collections.unmodifiableMap(builder.data);

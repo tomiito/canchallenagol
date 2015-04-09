@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpServlet;
 
 import ar.com.ironsoft.marroccl.web.app.servlets.IndexServlet;
-import ar.com.ironsoft.marroccl.web.app.servlets.SendMessageServlet;
 import ar.com.ironsoft.marroccl.web.guice.GuiceServletsModule;
 
 /**
@@ -17,7 +16,6 @@ public class AppModule extends GuiceServletsModule {
     public LinkedList<Class<? extends HttpServlet>> getServletClasses() {
         LinkedList<Class<? extends HttpServlet>> servletClasses = new LinkedList<>();
         servletClasses.add(IndexServlet.class);
-        servletClasses.add(SendMessageServlet.class);
         return servletClasses;
     }
 }

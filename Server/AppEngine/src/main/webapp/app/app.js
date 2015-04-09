@@ -95,7 +95,7 @@ app.run([
 
 //Called by google endpoints
 function init() {
-	var MARROCCL = 'https://' + window.location.host + '/_ah/api';
+	var MARROCCL = '//' + window.location.host + '/_ah/api';
 	var apisToLoad;
 	var callback = function() {
 		if (--apisToLoad == 0) {
