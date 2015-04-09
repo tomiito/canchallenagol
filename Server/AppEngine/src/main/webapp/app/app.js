@@ -95,7 +95,7 @@ app.run([
 
 //Called by google endpoints
 function init() {
-	var MARROCCL = '//' + window.location.host + '/_ah/api';
+	var MARROCCL = 'https://' + window.location.host + '/_ah/api';
 	var apisToLoad;
 	var callback = function() {
 		if (--apisToLoad == 0) {
@@ -103,6 +103,7 @@ function init() {
 			angular.bootstrap(document, ["app"]);
 		}
 	}
-	apisToLoad = 1; // must match number of calls to gapi.client.load()
+	apisToLoad = 2; // must match number of calls to gapi.client.load()
 	gapi.client.load('devicesApi', 'v1', callback, MARROCCL);
+    gapi.client.load('messagesApi', 'v1', callback, MARROCCL);
 }

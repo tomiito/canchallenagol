@@ -92,26 +92,6 @@ public final class Datastore {
         return devices;
     }
 
-    /**
-     * Gets the number of total devices.
-     */
-    public static int getTotalDevices() {
-        Transaction txn = datastore.beginTransaction();
-        try {
-            Query query = new Query(DEVICE_TYPE).setKeysOnly();
-            List<Entity> allKeys = datastore.prepare(query).asList(
-                    DEFAULT_FETCH_OPTIONS);
-            int total = allKeys.size();
-            logger.fine("Total number of devices: " + total);
-            txn.commit();
-            return total;
-        } finally {
-            if (txn.isActive()) {
-                txn.rollback();
-            }
-        }
-    }
-
     private static Entity findDeviceByRegId(String regId) {
         Query query = new Query(DEVICE_TYPE).addFilter(DEVICE_REG_ID_PROPERTY,
                 FilterOperator.EQUAL, regId);
@@ -127,34 +107,6 @@ public final class Datastore {
                     + ": " + entities);
         }
         return entity;
-    }
-
-    /**
-     * Creates a persistent record with the devices to be notified using a
-     * multicast message.
-     *
-     * @param devices
-     *            registration ids of the devices.
-     * @return encoded key for the persistent record.
-     */
-    public static String createMulticast(List<String> devices) {
-        logger.info("Storing multicast for " + devices.size() + " devices");
-        String encodedKey;
-        Transaction txn = datastore.beginTransaction();
-        try {
-            Entity entity = new Entity(MULTICAST_TYPE);
-            entity.setProperty(MULTICAST_REG_IDS_PROPERTY, devices);
-            datastore.put(entity);
-            Key key = entity.getKey();
-            encodedKey = KeyFactory.keyToString(key);
-            logger.fine("multicast key: " + encodedKey);
-            txn.commit();
-        } finally {
-            if (txn.isActive()) {
-                txn.rollback();
-            }
-        }
-        return encodedKey;
     }
 
     /**

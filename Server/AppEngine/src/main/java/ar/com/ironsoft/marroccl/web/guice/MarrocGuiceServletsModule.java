@@ -4,8 +4,9 @@ import java.util.LinkedList;
 
 import javax.inject.Singleton;
 
-import ar.com.ironsoft.marroccl.web.app.modules.devices.guice.DeviceModule;
 import ar.com.ironsoft.marroccl.web.app.guice.AppModule;
+import ar.com.ironsoft.marroccl.web.app.modules.devices.guice.DeviceModule;
+import ar.com.ironsoft.marroccl.web.app.modules.messages.guice.MessagesModule;
 
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -43,7 +44,8 @@ public class MarrocGuiceServletsModule extends GuiceServletsModule {
 
     @Override
     protected void configureServlets() {
-        super.addModules(new AppModule(), new DeviceModule());
+        super.addModules(new AppModule(), new DeviceModule(),
+                new MessagesModule());
         super.configureServlets();
         //
         filter("/*").through(AsyncCacheFilter.class);
