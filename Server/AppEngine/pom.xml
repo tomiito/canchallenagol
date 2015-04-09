@@ -375,9 +375,9 @@
                 <version>${gae.version}</version>
                 <configuration>
                     <email>tomasdepriede@gmail.com</email>
-                    <oauth2>false</oauth2>
-                    <noCookies>true</noCookies>
-                    <passin>true</passin>
+                    <oauth2>true</oauth2>
+                    <noCookies>false</noCookies>
+                    <passin>false</passin>
                 </configuration>
             </plugin>
         </plugins>
