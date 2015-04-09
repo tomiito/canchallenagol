@@ -97,6 +97,7 @@
         sl.add("/app/modules/devices/devicesModule.js");
         sl.add("/app/modules/devices/controller/deviceController.js");
         sl.add("/app/modules/devices/controller/deviceModalController.js");
+        sl.add("/app/modules/devices/controller/videoMessageModalController.js");
         //
     } else if (SharedConstants.isProductionServer()) {
         sl.add("/app/all.js");

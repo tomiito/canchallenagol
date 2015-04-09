@@ -1,5 +1,5 @@
 var module = angular.module('deviceModule', ['deviceModalController',
-		'deviceController']);
+		'deviceController', 'videoMessageModalController']);
 
 module.provider('deviceURL', [function() {
 	return {

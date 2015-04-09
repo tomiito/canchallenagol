@@ -6,7 +6,9 @@ controller.controller('DeviceController', [
 		'$modal',
 		'$growl',
 		'DeviceModalController',
-		function($scope, Page, $modal, $growl, DeviceModalController) {
+		'VideoMessageModalController',
+		function($scope, Page, $modal, $growl, DeviceModalController,
+				VideoMessageModalController) {
 
 			$scope.listDevices = function() {
 				$scope.loading = true;
@@ -26,6 +28,17 @@ controller.controller('DeviceController', [
 					isNew : true
 				};
 				$scope.openModalForDevice(device);
+			};
+
+			$scope.newVideoMessage = function() {
+				var videoMsg = {
+					isNew : true,
+					message : "",
+					videoLink : null,
+					gifLink : null,
+					thumbnailLink : null
+				};
+				$scope.openModalForVideoMessage(videoMsg);
 			};
 
 			$scope.deleteDevice = function(device) {
@@ -66,6 +79,32 @@ controller.controller('DeviceController', [
 				modalInstance.result.then(function(device) {
 					$scope.showCreateMessage(device);
 					$scope.listDevices();
+				}, function() {
+
+				});
+			}
+
+			$scope.showSendVideoMessage = function(videoMsg) {
+				$growl.success("DEVICE.SEND_MESSAGE.SUCCESS.TITLE",
+						"DEVICE.SEND_MESSAGE.SUCCESS.BODY", {
+							message : videoMsg.message
+						});
+			}
+
+			$scope.openModalForVideoMessage = function(videoMsg) {
+				var modalInstance = $modal.open({
+					templateUrl : // 
+					'app/modules/devices/views/videoMessageModal.html',
+					controller : VideoMessageModalController,
+					resolve : {
+						videoMsg : function() {
+							return angular.copy(videoMsg);
+						}
+					}
+				});
+
+				modalInstance.result.then(function(videoMsg) {
+					$scope.showSendVideoMessage(videoMsg);
 				}, function() {
 
 				});

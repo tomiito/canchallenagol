@@ -8,7 +8,13 @@
             <li class="pull-right">
                 <button type="button" class="btn btn-info"
                         ng-click="newDevice()">
+                    <i class="fa fa-mobile-phone"></i>
                     {{'DEVICES.REGISTER_NEW_DEVICE' | translate}}
+                </button>
+                <button type="button" class="btn btn-warning"
+                        ng-click="newVideoMessage()">
+                    <i class="fa fa-video-camera"></i>
+                    {{'VIDEO.SEND_NEW_MESSAGE' | translate}}
                 </button>
             </li>
         </ol>
@@ -82,7 +88,8 @@
                         <tbody>
                         <tr class="" ng-repeat="device in devicePage.data">
                             <td>{{device.deviceId}}</td>
-                            <td>{{device.registeredOn | date:'dd/MM/yyyy hh:mm'}}
+                            <td>{{device.registeredOn | date:'dd/MM/yyyy
+                                hh:mm'}}
                             </td>
                             <td align="center" width="70px">
                                 <button type="button" class="btn btn-danger"

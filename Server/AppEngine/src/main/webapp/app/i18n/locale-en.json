@@ -11,8 +11,16 @@
     "LOADING": "Loading devices ...",
     "NO_DATA": "No devices found!"
   },
+  "VIDEO": {
+    "SEND_NEW_MESSAGE":"Send new video message",
+    "MESSAGE": "Message",
+    "VIDEO_LINK": "Video link",
+    "GIF_LINK": "Gif link",
+    "THUMBNAIL_LINK": "Thumbnail link"
+  },
   "GENERAL": {
     "SAVE": "Save",
+    "SEND": "Send",
     "CANCEL": "Cancel",
     "FILTER": "Filter",
     "ACTIONS": "Actions"
