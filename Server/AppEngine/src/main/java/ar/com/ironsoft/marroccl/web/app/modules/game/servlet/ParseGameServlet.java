@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.GameXmlService;
-import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.CommentaryElement;
+import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.core.constants.SharedConstants;
 import ar.com.ironsoft.marroccl.web.core.servlets.BaseServlet;
 import ar.com.ironsoft.marroccl.web.guice.base.BasePath;
@@ -50,7 +50,7 @@ public class ParseGameServlet extends BaseServlet {
                 .fetch(gaeRequest);
         //
         String xml = new String(xmlResponse.getContent(), SharedConstants.UTF_8);
-        CommentaryElement commentary = gameXmlService.parseGameXml(xml);
+        Commentary commentary = gameXmlService.parseGameXml(xml);
         commentaryService.saveCommentary(commentary);
         setSuccess(resp);
     }

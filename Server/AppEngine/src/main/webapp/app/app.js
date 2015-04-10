@@ -5,13 +5,16 @@ app.config([
 		'$routeProvider',
 		'dashboardURLProvider',
 		'deviceURLProvider',
+		'gameURLProvider',
 		'$translateProvider',
 		function($routeProvider, dashboardURLProvider, deviceURLProvider,
-				$translateProvider) {
+				gameURLProvider, $translateProvider) {
 			// /
 			dashboardURLProvider.provideUrl($routeProvider);
 			// /devices/
 			deviceURLProvider.provideUrl($routeProvider);
+			// /game/
+			gameURLProvider.provideUrl($routeProvider);
 			// other
 			$routeProvider.otherwise({
 				redirectTo : '/'
@@ -105,5 +108,5 @@ function init() {
 	}
 	apisToLoad = 2; // must match number of calls to gapi.client.load()
 	gapi.client.load('devicesApi', 'v1', callback, MARROCCL);
-    gapi.client.load('messagesApi', 'v1', callback, MARROCCL);
+	gapi.client.load('messagesApi', 'v1', callback, MARROCCL);
 }

@@ -10,7 +10,6 @@ import org.dom4j.Element;
 import ar.com.ironsoft.marroccl.web.core.model.BaseModel;
 
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.IgnoreSave;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
@@ -20,9 +19,11 @@ import com.googlecode.objectify.annotation.Unindex;
  */
 @Entity
 @Index
-public class CommentaryElement extends BaseElement implements BaseModel {
+public class Commentary extends BaseElement implements BaseModel {
 
-    @Id
+    public static final String COMMENTARY_ID = "COMMENTARY_ID";
+    private String id = COMMENTARY_ID;
+    @Unindex
     private String gameId;
     @Unindex
     private Integer homeScore;
@@ -57,9 +58,9 @@ public class CommentaryElement extends BaseElement implements BaseModel {
     @Unindex
     private List<String> messageListId = new ArrayList<>();
     @IgnoreSave
-    private List<MessageElement> messageList = new ArrayList<>();
+    private List<Message> messageList = new ArrayList<>();
 
-    public CommentaryElement(Element element) {
+    public Commentary(Element element) {
         parseAttributes(element);
         parseChilds(element);
     }
@@ -87,7 +88,7 @@ public class CommentaryElement extends BaseElement implements BaseModel {
 
     private void parseChilds(Element element) {
         for (Iterator i = element.elementIterator(); i.hasNext();) {
-            MessageElement message = new MessageElement((Element) i.next());
+            Message message = new Message((Element) i.next());
             // do something
             messageListId.add(message.getMessageId());
             messageList.add(message);
@@ -222,11 +223,11 @@ public class CommentaryElement extends BaseElement implements BaseModel {
         this.date = date;
     }
 
-    public List<MessageElement> getMessageList() {
+    public List<Message> getMessageList() {
         return messageList;
     }
 
-    public void setMessageList(List<MessageElement> messageList) {
+    public void setMessageList(List<Message> messageList) {
         this.messageList = messageList;
     }
 
@@ -240,11 +241,11 @@ public class CommentaryElement extends BaseElement implements BaseModel {
 
     @Override
     public String getId() {
-        return gameId;
+        return id;
     }
 
     @Override
     public void setId(String id) {
-        setGameId(id);
+        this.id = id;
     }
 }

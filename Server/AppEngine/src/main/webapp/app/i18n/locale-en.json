@@ -12,11 +12,23 @@
     "NO_DATA": "No devices found!"
   },
   "VIDEO": {
-    "SEND_NEW_MESSAGE":"Send new video message",
+    "SEND_NEW_MESSAGE": "Send new video message",
     "MESSAGE": "Message",
     "VIDEO_LINK": "Video link",
     "GIF_LINK": "Gif link",
     "THUMBNAIL_LINK": "Thumbnail link"
+  },
+  "GAME": {
+    "TITLE": "Game",
+    "EVENT_INCIDENTS": "Incidents",
+    "LOADING": "Loading game incidents ...",
+    "NO_DATA": "No incidents found!",
+    "MESSAGE": {
+      "ID": "Id",
+      "TYPE": "Type",
+      "TIME": "Time",
+      "TEXT": "Description"
+    }
   },
   "GENERAL": {
     "SAVE": "Save",

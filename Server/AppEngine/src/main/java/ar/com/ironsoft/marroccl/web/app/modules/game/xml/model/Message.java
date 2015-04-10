@@ -17,7 +17,7 @@ import com.googlecode.objectify.annotation.Unindex;
  */
 @Entity
 @Index
-public class MessageElement extends BaseElement implements BaseModel {
+public class Message extends BaseElement implements BaseModel {
 
     @Id
     private String messageId;
@@ -36,7 +36,7 @@ public class MessageElement extends BaseElement implements BaseModel {
     @Unindex
     private String type;
 
-    public MessageElement(Element element) {
+    public Message(Element element) {
         parseAttributes(element);
     }
 

@@ -4,9 +4,10 @@ import java.util.LinkedList;
 
 import javax.servlet.http.HttpServlet;
 
+import ar.com.ironsoft.marroccl.web.app.modules.game.endpoints.GameEndpointApi;
 import ar.com.ironsoft.marroccl.web.app.modules.game.servlet.ParseGameServlet;
-import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.CommentaryElement;
-import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.MessageElement;
+import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
+import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
 import ar.com.ironsoft.marroccl.web.guice.GuiceServletsModule;
 
 public class GameModule extends GuiceServletsModule {
@@ -15,8 +16,8 @@ public class GameModule extends GuiceServletsModule {
     public LinkedList<Class<?>> getOfyClasses() {
         LinkedList<Class<?>> registeredClasses = new LinkedList<>();
         //
-        registeredClasses.add(CommentaryElement.class);
-        registeredClasses.add(MessageElement.class);
+        registeredClasses.add(Commentary.class);
+        registeredClasses.add(Message.class);
         //
         return registeredClasses;
     }
@@ -34,6 +35,7 @@ public class GameModule extends GuiceServletsModule {
     public LinkedList<Class<?>> getEndpointClasses() {
         LinkedList<Class<?>> registeredClasses = new LinkedList<>();
         //
+        registeredClasses.add(GameEndpointApi.class);
         //
         return registeredClasses;
     }

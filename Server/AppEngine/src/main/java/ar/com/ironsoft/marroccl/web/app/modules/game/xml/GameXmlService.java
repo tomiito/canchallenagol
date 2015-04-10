@@ -9,7 +9,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
-import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.CommentaryElement;
+import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 
 import com.google.inject.Singleton;
 
@@ -22,14 +22,14 @@ public class GameXmlService {
     private Logger logger = Logger.getLogger(GameXmlService.class
             .getSimpleName());
 
-    public CommentaryElement parseGameXml(String xml) {
+    public Commentary parseGameXml(String xml) {
         try {
             InputStream stream = new ByteArrayInputStream(
                     xml.getBytes(StandardCharsets.UTF_8));
             SAXReader reader = new SAXReader();
             Document document = reader.read(stream);
             //
-            CommentaryElement commentaryElement = new CommentaryElement(
+            Commentary commentaryElement = new Commentary(
                     document.getRootElement());
             return commentaryElement;
         } catch (DocumentException e) {
