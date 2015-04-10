@@ -5,6 +5,7 @@ import java.util.UUID;
 import ar.com.ironsoft.marroccl.web.core.model.BaseModel;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 /**
@@ -14,16 +15,19 @@ import com.googlecode.objectify.annotation.Index;
 @Index
 public class VideoUrl implements BaseModel {
 
+    @Id
     private String id;
     private String videoUrl;
+    private Integer videoMinute;
     private String gameId;
 
     public VideoUrl() {
     }
 
-    public VideoUrl(String gameId, String videoUrl) {
+    public VideoUrl(String gameId, String videoUrl, Integer videoMinute) {
         this.gameId = gameId;
         this.videoUrl = videoUrl;
+        this.videoMinute = videoMinute;
         this.id = UUID.randomUUID().toString();
     }
 
@@ -43,6 +47,14 @@ public class VideoUrl implements BaseModel {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public Integer getVideoMinute() {
+        return videoMinute;
+    }
+
+    public void setVideoMinute(Integer videoMinute) {
+        this.videoMinute = videoMinute;
     }
 
     public String getGameId() {

@@ -42,9 +42,9 @@ public class FindUrlTaskServlet extends TaskServlet {
                 "Starting task" + FindUrlTaskServlet.class.getSimpleName());
         if (doInitialTaskCheck(req, resp)) {
             logger.log(Level.INFO, "Pass initial checking");
-            //
             String gameId = req.getParameter(Commentary.GAME_ID);
             String startUrl = req.getParameter("startUrl");
+            Integer videoMinute = Integer.parseInt(req.getParameter("video"));
             Integer hour = Integer.parseInt(req.getParameter("hour"));
             Integer minute = Integer.parseInt(req.getParameter("minute"));
             //
@@ -52,7 +52,7 @@ public class FindUrlTaskServlet extends TaskServlet {
             for (int j = 0; j < 99; j++) {
                 String url = findVideo(startUrl, hour, minute, j);
                 if (url != null) {
-                    videoUrlDao.save(new VideoUrl(gameId, url));
+                    videoUrlDao.save(new VideoUrl(gameId, url, videoMinute));
                     break;
                 }
             }

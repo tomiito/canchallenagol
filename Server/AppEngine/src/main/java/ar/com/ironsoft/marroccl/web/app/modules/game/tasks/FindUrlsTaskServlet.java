@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.com.ironsoft.marroccl.web.app.modules.game.daos.VideoUrlDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.core.tasks.TaskLauncher;
 import ar.com.ironsoft.marroccl.web.core.tasks.TaskParameter;
@@ -30,6 +31,7 @@ public class FindUrlsTaskServlet extends TaskServlet {
     private Logger logger = Logger.getLogger(FindUrlsTaskServlet.class
             .getSimpleName());
     private TaskLauncher taskLauncher;
+    private VideoUrlDao videoUrlDao;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -39,6 +41,11 @@ public class FindUrlsTaskServlet extends TaskServlet {
         if (doInitialTaskCheck(req, resp)) {
             logger.log(Level.INFO, "Pass initial checking");
             //
+            logger.log(Level.INFO, "Delete old videoUrls");
+            videoUrlDao.deleteAll();
+            //
+            logger.log(Level.INFO, "Launch child tasks");
+            //
             String gameId = req.getParameter(Commentary.GAME_ID);
             //
             String startUrl = FIRST_VIDEO_URL;
@@ -46,10 +53,11 @@ public class FindUrlsTaskServlet extends TaskServlet {
             int hour = 21;
             int minute = 1;
             //
-            for (int i = 0; i < totalVideos; i++) {
+            for (int i = 0; i <= totalVideos; i++) {
                 //
                 taskLauncher.launchTask(FindUrlTaskServlet.class,
                         new TaskParameter(Commentary.GAME_ID, gameId), //
+                        new TaskParameter("video", String.valueOf(i)), //
                         new TaskParameter("startUrl", startUrl), //
                         new TaskParameter("hour", String.valueOf(hour)), //
                         new TaskParameter("minute", String.valueOf(minute)) //
@@ -61,6 +69,11 @@ public class FindUrlsTaskServlet extends TaskServlet {
                 }
             }
         }
+    }
+
+    @Inject
+    public void setVideoUrlDao(VideoUrlDao videoUrlDao) {
+        this.videoUrlDao = videoUrlDao;
     }
 
     @Inject

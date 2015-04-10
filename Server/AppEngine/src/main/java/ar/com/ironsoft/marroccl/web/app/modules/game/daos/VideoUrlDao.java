@@ -10,4 +10,6 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(VideoUrlDaoObjectifyImpl.class)
 public interface VideoUrlDao extends BaseDao<VideoUrl> {
+
+    void deleteAll();
 }

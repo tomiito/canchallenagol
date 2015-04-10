@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpServlet;
 
 import ar.com.ironsoft.marroccl.web.app.modules.game.endpoints.GameEndpointApi;
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.VideoUrl;
 import ar.com.ironsoft.marroccl.web.app.modules.game.servlet.ParseGameServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
@@ -20,6 +21,7 @@ public class GameModule extends GuiceServletsModule {
         //
         registeredClasses.add(Commentary.class);
         registeredClasses.add(Message.class);
+        registeredClasses.add(VideoUrl.class);
         //
         return registeredClasses;
     }
