@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import javax.servlet.http.HttpServlet;
 
+import ar.com.ironsoft.marroccl.web.app.modules.game.cron.ParseGameCronServlet;
 import ar.com.ironsoft.marroccl.web.guice.GuiceServletsModule;
 
 public class GameModule extends GuiceServletsModule {
@@ -20,6 +21,7 @@ public class GameModule extends GuiceServletsModule {
     public LinkedList<Class<? extends HttpServlet>> getServletClasses() {
         LinkedList<Class<? extends HttpServlet>> registeredClasses = new LinkedList<>();
         //
+        registeredClasses.add(ParseGameCronServlet.class);
         //
         return registeredClasses;
     }

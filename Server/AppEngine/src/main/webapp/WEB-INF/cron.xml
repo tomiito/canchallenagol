@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
+    <cron>
+        <url>/cron/parseGame</url>
+        <description>refresh the xml with the data of the game</description>
+        <schedule>every 5 minutes</schedule>
+        <target>1</target>
+    </cron>
 </cronentries>

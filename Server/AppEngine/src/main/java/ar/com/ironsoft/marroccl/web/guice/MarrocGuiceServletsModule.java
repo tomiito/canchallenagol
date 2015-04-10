@@ -13,6 +13,8 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.inject.Provides;
 import com.googlecode.objectify.ObjectifyFilter;
 import com.googlecode.objectify.cache.AsyncCacheFilter;
@@ -29,6 +31,12 @@ public class MarrocGuiceServletsModule extends GuiceServletsModule {
         // BigDecimalLongTranslatorFactory());
         //
         return super.getOfyClasses();
+    }
+
+    @Provides
+    @com.google.inject.Singleton
+    public URLFetchService provideUrlFetchService() {
+        return URLFetchServiceFactory.getURLFetchService();
     }
 
     @Provides
