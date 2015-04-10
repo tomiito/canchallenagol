@@ -74,6 +74,7 @@ public class VideoMessage extends SimpleMessage {
 
     public GCMMessage asGCM() {
         return new GCMMessage.Builder().addData("message", getMessage()) //
+                .addData("title", getTitle()) //
                 .addData("videoLink", getVideoLink()) //
                 .addData("gifLink", getGifLink()) //
                 .addData("type", getType()) //

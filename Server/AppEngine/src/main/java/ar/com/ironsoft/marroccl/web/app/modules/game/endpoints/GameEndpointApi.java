@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.TitleMessage;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
@@ -48,9 +49,12 @@ public class GameEndpointApi {
             throws IOException {
         Message message = messageDao.get(Message.class, messageId);
         //
+        TitleMessage titleMessage = commentaryService
+                .parseTitleMessage(message);
+        //
         VideoMessage videoMessage = new VideoMessage();
-        videoMessage.setTitle("");
-        videoMessage.setMessage(message.getComment());
+        videoMessage.setTitle(titleMessage.getTitle());
+        videoMessage.setMessage(titleMessage.getMessage());
         videoMessage.setType(message.getType());
         //
         videoMessage.setVideoLink("");
@@ -63,6 +67,11 @@ public class GameEndpointApi {
         //
         taskLauncher.launchTask(SendAllMessageTask.class,
                 ObjectSerializationUtils.serialize(videoMessage));
+    }
+
+    @Inject
+    public void setCommentaryService(CommentaryService commentaryService) {
+        this.commentaryService = commentaryService;
     }
 
     @Inject
