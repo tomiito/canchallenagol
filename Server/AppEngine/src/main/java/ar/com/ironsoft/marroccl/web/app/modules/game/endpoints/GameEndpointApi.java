@@ -57,7 +57,8 @@ public class GameEndpointApi {
         videoMessage.setMessage(titleMessage.getMessage());
         videoMessage.setType(message.getType());
         //
-        videoMessage.setVideoLink("");
+        //TODO remove hardcode video
+        videoMessage.setVideoLink("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_211215.mp4");
         videoMessage.setGifLink("");
         videoMessage.setThumbnailLink("");
         //
