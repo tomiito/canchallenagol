@@ -239,12 +239,12 @@ public class MainActivity extends ActionBarActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                Toast.makeText(context, "NO NENE NO", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "NO NENE NO", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                Toast.makeText(context, "Andooo", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Andooo", Toast.LENGTH_LONG).show();
             }
         });
     }

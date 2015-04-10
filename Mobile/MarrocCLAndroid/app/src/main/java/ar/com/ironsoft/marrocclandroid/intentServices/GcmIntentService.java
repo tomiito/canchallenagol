@@ -11,10 +11,14 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
+
+import java.util.Set;
 
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.activities.MainActivity;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
+import ar.com.ironsoft.marrocclandroid.helpers.SharedPreferencesHelper;
 import ar.com.ironsoft.marrocclandroid.receivers.GcmBroadcastReceiver;
 
 /**
@@ -47,7 +51,17 @@ public class GcmIntentService extends IntentService {
                     // Do Nothing
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE:
-                    sendNotification(parsePushMessage(extras));
+                    PushMessage pushMessage = parsePushMessage(extras);
+
+                    Set<String> recordsSaved = SharedPreferencesHelper.getSetOfStrings(getApplicationContext(),
+                            SharedPreferencesHelper.EVENTS_MATCH);
+
+                    recordsSaved.add(new Gson().toJson(pushMessage));
+
+                    SharedPreferencesHelper.setSetOfStrings(getApplicationContext(), SharedPreferencesHelper.EVENTS_MATCH,
+                            recordsSaved);
+
+                    sendNotification(pushMessage);
                     break;
             }
         }
