@@ -14,6 +14,8 @@ import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 
@@ -50,15 +52,17 @@ public class EventActivity extends ActionBarActivity {
     private void setUI() {
         videoView = (VideoView)findViewById(R.id.video);
         progressBar = (ProgressBar)findViewById(R.id.progress_bar);
-
+        thumbnail = (ImageView)findViewById(R.id.thumbnail);
     }
 
     private void playVideo() {
         videoView.setMediaController(new MediaController(this));
         videoView.setVideoURI(Uri.parse(pushMessage.getVideoLink()));
+        ImageLoader.getInstance().displayImage(pushMessage.getThumbnailLink(), thumbnail); // TODO: GV Add cache in Memory.
         //videoView.setVideoURI(Uri.parse("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_225631.mp4"));
         videoView.requestFocus();
         progressBar.setVisibility(View.VISIBLE);
+        thumbnail.setVisibility(View.VISIBLE);
         videoView.start();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
@@ -67,6 +71,7 @@ public class EventActivity extends ActionBarActivity {
                     @Override
                     public void onVideoSizeChanged(MediaPlayer mp, int arg1, int arg2) {
                         progressBar.setVisibility(View.GONE);
+                        thumbnail.setVisibility(View.GONE);
                         mp.start();
                     }
                 });
