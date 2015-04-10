@@ -18,11 +18,11 @@ controller.controller('GameController', [
 			}
 
 			$scope.sendMessage = function(message) {
+				message.sending = true;
 				gapi.client.gameApi.gameEndpointApi.pushMessage({
 					'messageId' : message.messageId
 				}).execute(function(result) {
-					$scope.commentary = result;
-					$scope.loading = false;
+					message.sending = false;
 					$scope.$apply();
 				});
 			}
