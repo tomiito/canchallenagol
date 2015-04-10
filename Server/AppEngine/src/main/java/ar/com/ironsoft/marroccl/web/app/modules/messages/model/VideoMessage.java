@@ -7,6 +7,7 @@ import ar.com.ironsoft.marroccl.web.gcm.GCMMessage;
  */
 public class VideoMessage extends SimpleMessage {
 
+    private String gameId;
     private String videoLink;
     private String gifLink;
     private String thumbnailLink;
@@ -38,6 +39,14 @@ public class VideoMessage extends SimpleMessage {
 
     public void setThumbnailLink(String thumbnailLink) {
         this.thumbnailLink = thumbnailLink;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
     public Integer getPeriod() {
@@ -74,6 +83,7 @@ public class VideoMessage extends SimpleMessage {
 
     public GCMMessage asGCM() {
         return new GCMMessage.Builder().addData("message", getMessage()) //
+                .addData("gameId", getGameId()) //
                 .addData("title", getTitle()) //
                 .addData("videoLink", getVideoLink()) //
                 .addData("gifLink", getGifLink()) //

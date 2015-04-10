@@ -45,20 +45,22 @@ public class GameEndpointApi {
     }
 
     @ApiMethod(httpMethod = "post")
-    public void pushMessage(@Named("messageId") String messageId)
-            throws IOException {
+    public void pushMessage(@Named("gameId") String gameId,
+            @Named("messageId") String messageId) throws IOException {
         Message message = messageDao.get(Message.class, messageId);
         //
         TitleMessage titleMessage = commentaryService
                 .parseTitleMessage(message);
         //
         VideoMessage videoMessage = new VideoMessage();
+        videoMessage.setGameId(gameId);
         videoMessage.setTitle(titleMessage.getTitle());
         videoMessage.setMessage(titleMessage.getMessage());
         videoMessage.setType(message.getType());
         //
-        //TODO remove hardcode video
-        videoMessage.setVideoLink("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_211215.mp4");
+        // TODO remove hardcode video
+        videoMessage
+                .setVideoLink("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_211215.mp4");
         videoMessage.setGifLink("");
         videoMessage.setThumbnailLink("");
         //

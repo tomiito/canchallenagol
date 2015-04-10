@@ -20,6 +20,7 @@ controller.controller('GameController', [
 			$scope.sendMessage = function(message) {
 				message.sending = true;
 				gapi.client.gameApi.gameEndpointApi.pushMessage({
+					'gameId' : $scope.commentary.gameId,
 					'messageId' : message.messageId
 				}).execute(function(result) {
 					message.sending = false;
