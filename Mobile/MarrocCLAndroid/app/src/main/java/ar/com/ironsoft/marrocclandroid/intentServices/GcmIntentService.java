@@ -37,7 +37,7 @@ public class GcmIntentService extends IntentService {
         String messageType = gcm.getMessageType(intent);
 
         if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
-
+            String message = extras.getString("message");
 
             switch(messageType) {
                 case GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR:
@@ -47,7 +47,7 @@ public class GcmIntentService extends IntentService {
                     // Do Nothing
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE:
-                    sendNotification(new PushMessage("", extras.toString()));
+                    sendNotification(parsePushMessage(extras));
                     break;
             }
         }
@@ -71,5 +71,17 @@ public class GcmIntentService extends IntentService {
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
+    private PushMessage parsePushMessage(Bundle bundle) {
+        PushMessage pushMessage = new PushMessage();
+        pushMessage.setTitle(bundle.getString("title"));
+        pushMessage.setMessage(bundle.getString("message"));
+        pushMessage.setGifLink(bundle.getString("gifLink"));
+        pushMessage.setVideoLink(bundle.getString("videoLink"));
+        pushMessage.setThumbnailLink(bundle.getString("thumbnailLink"));
+        pushMessage.setTimeMinutes(bundle.getInt("minutes"));
+        pushMessage.setTimeSeconds(bundle.getInt("seconds"));
+        return pushMessage;
     }
 }

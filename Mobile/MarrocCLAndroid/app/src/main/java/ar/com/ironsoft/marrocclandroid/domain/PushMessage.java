@@ -1,18 +1,35 @@
 package ar.com.ironsoft.marrocclandroid.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by gabrielvilloldo on 4/10/15.
  */
-public class PushMessage {
+public class PushMessage implements Parcelable {
     public String title;
     public String message;
-    public String url;
-    public String thumbnail;
-    public String gifUrl;
+    public String videoLink;
+    public String thumbnailLink;
+    public String gifLink;
     public String additionalData;
     public Integer timeMinutes;
     public Integer timeSeconds;
-    public Integer type;
+    public String type;
+
+    public static final Parcelable.Creator<PushMessage> CREATOR = new Parcelable.Creator<PushMessage>() {
+        @Override
+        public PushMessage createFromParcel(Parcel source) {
+            return new PushMessage(source);
+        }
+
+        @Override
+        public PushMessage[] newArray(int size) {
+            return new PushMessage[size];
+        }
+    };
+
+    public PushMessage() { }
 
     public PushMessage(String title, String message) {
         this.title = title;
@@ -35,28 +52,28 @@ public class PushMessage {
         this.message = message;
     }
 
-    public String getUrl() {
-        return url;
+    public String getVideoLink() {
+        return videoLink;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setVideoLink(String videoLink) {
+        this.videoLink = videoLink;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
+    public String getThumbnailLink() {
+        return thumbnailLink;
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setThumbnailLink(String thumbnailLink) {
+        this.thumbnailLink = thumbnailLink;
     }
 
-    public String getGifUrl() {
-        return gifUrl;
+    public String getGifLink() {
+        return gifLink;
     }
 
-    public void setGifUrl(String gifUrl) {
-        this.gifUrl = gifUrl;
+    public void setGifLink(String gifLink) {
+        this.gifLink = gifLink;
     }
 
     public String getAdditionalData() {
@@ -83,11 +100,42 @@ public class PushMessage {
         this.timeSeconds = timeSeconds;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(message);
+        dest.writeString(videoLink);
+        dest.writeString(thumbnailLink);
+        dest.writeString(gifLink);
+        dest.writeString(additionalData);
+        dest.writeInt(timeMinutes);
+        dest.writeInt(timeSeconds);
+        dest.writeString(type);
+    }
+
+    private PushMessage(Parcel source) {
+        title = source.readString();
+        message = source.readString();
+        videoLink = source.readString();
+        thumbnailLink = source.readString();
+        gifLink = source.readString();
+        additionalData = source.readString();
+        timeMinutes = source.readInt();
+        timeSeconds = source.readInt();
+        type = source.readString();
+
     }
 }
