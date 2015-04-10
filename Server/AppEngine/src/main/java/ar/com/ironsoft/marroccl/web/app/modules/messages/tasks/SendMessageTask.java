@@ -58,7 +58,10 @@ public class SendMessageTask extends TaskServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        logger.log(Level.INFO,
+                "Starting task" + SendMessageTask.class.getSimpleName());
         if (doInitialTaskCheck(req, resp)) {
+            logger.log(Level.INFO, "Pass initial checking");
             try {
                 MulticastMessage mm = (MulticastMessage) ObjectSerializationUtils
                         .deserialize(ObjectSerializationUtils.getBytes(req,
@@ -71,13 +74,16 @@ public class SendMessageTask extends TaskServlet {
                 MulticastResult multicastResult;
                 boolean allDone = true;
                 try {
+                    logger.log(Level.INFO, "Sending multitask");
                     multicastResult = sender.sendNoRetry(gcm, deviceIds);
+                    logger.log(Level.INFO, "Processing result");
                     allDone = processMulticastResult(mm, deviceIds,
                             multicastResult);
                 } catch (IOException e) {
                     logger.log(Level.SEVERE, "Exception posting " + gcm, e);
                 }
                 //
+                logger.log(Level.INFO, "Multicast done");
                 multicastDone(resp, mm.getMulticastKey());
                 //
                 if (allDone) {
