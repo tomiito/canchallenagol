@@ -4,13 +4,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -36,6 +43,9 @@ public class MainActivity extends ActionBarActivity {
 
     static final String TAG = "MarrocApp";
 
+    private VideoView videoView;
+    private ProgressBar progressBar;
+
     GoogleCloudMessaging gcm;
     SharedPreferences prefs;
     Context context;
@@ -49,6 +59,10 @@ public class MainActivity extends ActionBarActivity {
 
         context = this;
 
+        setUI();
+
+        playVideo();
+
         // Check device for Play Services APK. If check succeeds, proceed with
         //  GCM registration.
         if (checkPlayServices()) {
@@ -61,6 +75,32 @@ public class MainActivity extends ActionBarActivity {
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
+    }
+
+    private void setUI() {
+        videoView = (VideoView)findViewById(R.id.video);
+        progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+
+    }
+
+    private void playVideo() {
+        videoView.setMediaController(new MediaController(this));
+        videoView.setVideoURI(Uri.parse("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_225631.mp4"));
+        videoView.requestFocus();
+        progressBar.setVisibility(View.VISIBLE);
+        videoView.start();
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+                mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                    @Override
+                    public void onVideoSizeChanged(MediaPlayer mp, int arg1, int arg2) {
+                        progressBar.setVisibility(View.GONE);
+                        mp.start();
+                    }
+                });
+            }
+        });
     }
 
     @Override
