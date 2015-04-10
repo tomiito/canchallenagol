@@ -29,9 +29,12 @@ public class MessagesEndpointApi {
             @Nullable @Named("thumbnailLink") String thumbnailLink)
             throws IOException {
         VideoMessage videoMessage = new VideoMessage();
+        videoMessage.setTitle("");
         videoMessage.setMessage(message);
         videoMessage.setVideoLink(videoLink);
         videoMessage.setGifLink(gifLink);
+        videoMessage.setMinutes(0);
+        videoMessage.setSeconds(0);
         videoMessage.setThumbnailLink(thumbnailLink);
         //
         taskLauncher.launchTask(SendAllMessageTask.class,

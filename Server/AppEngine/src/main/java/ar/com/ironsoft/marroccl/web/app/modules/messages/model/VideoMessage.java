@@ -10,6 +10,10 @@ public class VideoMessage extends SimpleMessage {
     private String videoLink;
     private String gifLink;
     private String thumbnailLink;
+    private String type;
+    private Integer minutes;
+    private Integer seconds;
+    private String title;
 
     public String getVideoLink() {
         return videoLink;
@@ -35,10 +39,45 @@ public class VideoMessage extends SimpleMessage {
         this.thumbnailLink = thumbnailLink;
     }
 
+    public Integer getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(Integer minutes) {
+        this.minutes = minutes;
+    }
+
+    public Integer getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(Integer seconds) {
+        this.seconds = seconds;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public GCMMessage asGCM() {
         return new GCMMessage.Builder().addData("message", getMessage()) //
                 .addData("videoLink", getVideoLink()) //
                 .addData("gifLink", getGifLink()) //
+                .addData("type", getType()) //
+                .addData("minutes", String.valueOf(getMinutes())) //
+                .addData("seconds", String.valueOf(getSeconds())) //
                 .addData("thumbnailLink", getThumbnailLink()).build();
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
