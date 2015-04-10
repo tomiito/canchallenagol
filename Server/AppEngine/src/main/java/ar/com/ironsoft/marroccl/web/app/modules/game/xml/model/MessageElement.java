@@ -4,30 +4,44 @@ import java.util.Date;
 
 import org.dom4j.Element;
 
-import ar.com.ironsoft.marroccl.web.app.modules.game.model.Message;
+import ar.com.ironsoft.marroccl.web.core.model.BaseModel;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 
 /**
  *
  * @author Tomas de Priede
  */
-public class MessageElement extends BaseElement implements Message {
+@Entity
+@Index
+public class MessageElement extends BaseElement implements BaseModel {
 
-    private final Element element;
-    private Integer messageId;
+    @Id
+    private String messageId;
+    @Unindex
     private String comment;
+    @Unindex
     private Date lastModified;
+    @Unindex
     private Integer period;
+    @Unindex
     private Integer minute;
+    @Unindex
     private Integer second;
+    @Unindex
     private String time;
+    @Unindex
     private String type;
 
     public MessageElement(Element element) {
-        this.element = element;
+        parseAttributes(element);
     }
 
-    public void parseAttributes() {
-        messageId = parseInteger(element.attributeValue("id"));
+    public void parseAttributes(Element element) {
+        messageId = element.attributeValue("id");
         comment = element.attributeValue("comment");
         lastModified = parseDate(element.attributeValue("last_modified"));
         period = parseInteger(element.attributeValue("period"));
@@ -37,11 +51,11 @@ public class MessageElement extends BaseElement implements Message {
         time = element.attributeValue("time");
     }
 
-    public Integer getMessageId() {
+    public String getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(Integer messageId) {
+    public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
 
@@ -103,11 +117,11 @@ public class MessageElement extends BaseElement implements Message {
 
     @Override
     public String getId() {
-        return String.valueOf(messageId);
+        return messageId;
     }
 
     @Override
     public void setId(String id) {
-        setMessageId(parseInteger(id));
+        setMessageId(id);
     }
 }

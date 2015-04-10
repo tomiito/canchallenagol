@@ -1,4 +1,4 @@
-package ar.com.ironsoft.marroccl.web.app.modules.game.cron;
+package ar.com.ironsoft.marroccl.web.app.modules.game.servlet;
 
 import java.io.IOException;
 import java.net.URL;
@@ -8,8 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.com.ironsoft.marroccl.web.app.modules.game.model.Commentary;
+import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.GameXmlService;
+import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.CommentaryElement;
 import ar.com.ironsoft.marroccl.web.core.constants.SharedConstants;
 import ar.com.ironsoft.marroccl.web.core.servlets.BaseServlet;
 import ar.com.ironsoft.marroccl.web.guice.base.BasePath;
@@ -31,11 +32,12 @@ import com.google.inject.Singleton;
 @Singleton
 @BasePath("/cron/")
 @RelativePath("parseGame")
-public class ParseGameCronServlet extends BaseServlet {
+public class ParseGameServlet extends BaseServlet {
 
-    private Logger logger = Logger.getLogger(ParseGameCronServlet.class
+    private Logger logger = Logger.getLogger(ParseGameServlet.class
             .getSimpleName());
     private GameXmlService gameXmlService;
+    private CommentaryService commentaryService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -48,8 +50,14 @@ public class ParseGameCronServlet extends BaseServlet {
                 .fetch(gaeRequest);
         //
         String xml = new String(xmlResponse.getContent(), SharedConstants.UTF_8);
-        Commentary commentary = gameXmlService.parseGameXml(xml);
+        CommentaryElement commentary = gameXmlService.parseGameXml(xml);
+        commentaryService.saveCommentary(commentary);
         setSuccess(resp);
+    }
+
+    @Inject
+    public void setCommentaryService(CommentaryService commentaryService) {
+        this.commentaryService = commentaryService;
     }
 
     @Inject

@@ -7,43 +7,64 @@ import java.util.List;
 
 import org.dom4j.Element;
 
-import ar.com.ironsoft.marroccl.web.app.modules.game.model.Commentary;
-import ar.com.ironsoft.marroccl.web.app.modules.game.model.Message;
+import ar.com.ironsoft.marroccl.web.core.model.BaseModel;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.IgnoreSave;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 
 /**
  * @author Tomas de Priede
  */
-public class CommentaryElement extends BaseElement implements Commentary {
+@Entity
+@Index
+public class CommentaryElement extends BaseElement implements BaseModel {
 
-    private Element element;
+    @Id
     private String gameId;
+    @Unindex
     private Integer homeScore;
+    @Unindex
     private Integer homeTeamId;
+    @Unindex
     private String homeTeamName;
+    @Unindex
     private Integer awayScore;
+    @Unindex
     private Integer awayTeamId;
+    @Unindex
     private String awayTeamName;
+    @Unindex
     private String competition;
+    @Unindex
     private Integer competitionId;
+    @Unindex
     private String langId;
+    @Unindex
     private String matchday;
+    @Unindex
     private Integer seasonId;
+    @Unindex
     private String season;
+    @Unindex
     private Integer sportId;
+    @Unindex
     private String sportName;
+    @Unindex
     private Date date;
-    private List<Message> messageList = new ArrayList<>();
+    @Unindex
+    private List<String> messageListId = new ArrayList<>();
+    @IgnoreSave
+    private List<MessageElement> messageList = new ArrayList<>();
 
     public CommentaryElement(Element element) {
-        this.element = element;
+        parseAttributes(element);
+        parseChilds(element);
     }
 
-    public void parse() {
-        parseAttributes();
-        parseChilds();
-    }
-
-    private void parseAttributes() {
+    private void parseAttributes(Element element) {
         homeScore = parseInteger(element.attributeValue("home_score"));
         homeTeamId = parseInteger(element.attributeValue("home_team_id"));
         homeTeamName = element.attributeValue("home_team_name");
@@ -64,13 +85,12 @@ public class CommentaryElement extends BaseElement implements Commentary {
         date = parseDate(element.attributeValue("game_date"));
     }
 
-    private void parseChilds() {
+    private void parseChilds(Element element) {
         for (Iterator i = element.elementIterator(); i.hasNext();) {
-            MessageElement element = new MessageElement((Element) i.next());
-            //
-            element.parseAttributes();
+            MessageElement message = new MessageElement((Element) i.next());
             // do something
-            messageList.add(element);
+            messageListId.add(message.getMessageId());
+            messageList.add(message);
         }
     }
 
@@ -202,12 +222,20 @@ public class CommentaryElement extends BaseElement implements Commentary {
         this.date = date;
     }
 
-    public List<Message> getMessageList() {
+    public List<MessageElement> getMessageList() {
         return messageList;
     }
 
-    public void setMessageList(List<Message> messageList) {
+    public void setMessageList(List<MessageElement> messageList) {
         this.messageList = messageList;
+    }
+
+    public List<String> getMessageListId() {
+        return messageListId;
+    }
+
+    public void setMessageListId(List<String> messageListId) {
+        this.messageListId = messageListId;
     }
 
     @Override
