@@ -100,6 +100,7 @@
         sl.add("/app/modules/devices/controller/videoMessageModalController.js");
         // GAME MODULE
         sl.add("/app/modules/game/gameModule.js");
+        sl.add("/app/modules/game/controller/gameController.js");
         //
     } else if (SharedConstants.isProductionServer()) {
         sl.add("/app/all.js");

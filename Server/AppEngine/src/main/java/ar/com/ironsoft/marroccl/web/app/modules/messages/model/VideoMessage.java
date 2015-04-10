@@ -11,6 +11,7 @@ public class VideoMessage extends SimpleMessage {
     private String gifLink;
     private String thumbnailLink;
     private String type;
+    private Integer period;
     private Integer minutes;
     private Integer seconds;
     private String title;
@@ -37,6 +38,14 @@ public class VideoMessage extends SimpleMessage {
 
     public void setThumbnailLink(String thumbnailLink) {
         this.thumbnailLink = thumbnailLink;
+    }
+
+    public Integer getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Integer period) {
+        this.period = period;
     }
 
     public Integer getMinutes() {
@@ -68,6 +77,7 @@ public class VideoMessage extends SimpleMessage {
                 .addData("videoLink", getVideoLink()) //
                 .addData("gifLink", getGifLink()) //
                 .addData("type", getType()) //
+                .addData("period", String.valueOf(getPeriod())) //
                 .addData("minutes", String.valueOf(getMinutes())) //
                 .addData("seconds", String.valueOf(getSeconds())) //
                 .addData("thumbnailLink", getThumbnailLink()).build();

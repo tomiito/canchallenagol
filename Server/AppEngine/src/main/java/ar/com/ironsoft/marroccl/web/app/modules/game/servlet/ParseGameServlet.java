@@ -30,7 +30,7 @@ import com.google.inject.Singleton;
  * @author Tomas de Priede
  */
 @Singleton
-@BasePath("/cron/")
+@BasePath("/game/")
 @RelativePath("parseGame")
 public class ParseGameServlet extends BaseServlet {
 

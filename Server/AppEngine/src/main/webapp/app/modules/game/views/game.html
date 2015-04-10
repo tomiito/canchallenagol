@@ -74,7 +74,7 @@
                                 {{message.type}}
                             </td>
                             <td>
-                                {{message.text}}
+                                {{message.comment}}
                             </td>
                             <td>
                                 {{message.time}}
@@ -82,12 +82,12 @@
                             <td align="center" width="70px">
                                 <button type="button" class="btn btn-warning"
                                         ng-click="sendMessage(message)"
-                                        ng-disabled="message.deleting"
+                                        ng-disabled="message.sending"
                                         title="Send">
                                     <i class="fa fa-send"
-                                       ng-hide="message.deleting"></i>
+                                       ng-hide="message.sending"></i>
                                     <i class="fa fa-spinner fa-spin"
-                                       ng-show="message.deleting"></i>
+                                       ng-show="message.sending"></i>
                                 </button>
                             </td>
                         </tr>

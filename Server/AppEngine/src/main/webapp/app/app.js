@@ -106,7 +106,8 @@ function init() {
 			angular.bootstrap(document, ["app"]);
 		}
 	}
-	apisToLoad = 2; // must match number of calls to gapi.client.load()
+	apisToLoad = 3; // must match number of calls to gapi.client.load()
 	gapi.client.load('devicesApi', 'v1', callback, MARROCCL);
 	gapi.client.load('messagesApi', 'v1', callback, MARROCCL);
+	gapi.client.load('gameApi', 'v1', callback, MARROCCL);
 }

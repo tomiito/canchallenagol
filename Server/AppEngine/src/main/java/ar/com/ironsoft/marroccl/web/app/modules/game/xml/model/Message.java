@@ -36,6 +36,9 @@ public class Message extends BaseElement implements BaseModel {
     @Unindex
     private String type;
 
+    public Message() {
+    }
+
     public Message(Element element) {
         parseAttributes(element);
     }

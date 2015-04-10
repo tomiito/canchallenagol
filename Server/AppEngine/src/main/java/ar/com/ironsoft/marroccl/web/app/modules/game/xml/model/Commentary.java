@@ -10,6 +10,7 @@ import org.dom4j.Element;
 import ar.com.ironsoft.marroccl.web.core.model.BaseModel;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.IgnoreSave;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
@@ -22,6 +23,7 @@ import com.googlecode.objectify.annotation.Unindex;
 public class Commentary extends BaseElement implements BaseModel {
 
     public static final String COMMENTARY_ID = "COMMENTARY_ID";
+    @Id
     private String id = COMMENTARY_ID;
     @Unindex
     private String gameId;
@@ -59,6 +61,9 @@ public class Commentary extends BaseElement implements BaseModel {
     private List<String> messageListId = new ArrayList<>();
     @IgnoreSave
     private List<Message> messageList = new ArrayList<>();
+
+    public Commentary() {
+    }
 
     public Commentary(Element element) {
         parseAttributes(element);
