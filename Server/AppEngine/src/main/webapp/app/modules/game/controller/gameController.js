@@ -28,6 +28,19 @@ controller.controller('GameController', [
 				});
 			}
 
+			$scope.showFindSuccessMessage = function() {
+				$growl.success("GAME.FIND.SUCCESS.TITLE",
+						"GAME.FIND.SUCCESS.BODY", {});
+			}
+
+			$scope.findUrls = function() {
+				gapi.client.gameApi.gameEndpointApi.findUrls({
+					'gameId' : $scope.commentary.gameId
+				}).execute(function(result) {
+					$scope.showFindSuccessMessage();
+				});
+			}
+
 			$scope.start = function() {
 				$scope.loading = false;
 				$scope.listGames();

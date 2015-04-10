@@ -23,6 +23,7 @@
     "EVENT_INCIDENTS": "Incidents",
     "LOADING": "Loading game incidents ...",
     "NO_DATA": "No incidents found!",
+    "FIND_URLS": "Find urls",
     "MESSAGE": {
       "ID": "Id",
       "TYPE": "Type",

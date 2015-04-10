@@ -7,11 +7,13 @@ import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.TitleMessage;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
+import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
 import ar.com.ironsoft.marroccl.web.app.modules.messages.model.VideoMessage;
 import ar.com.ironsoft.marroccl.web.app.modules.messages.tasks.SendAllMessageTask;
 import ar.com.ironsoft.marroccl.web.core.tasks.TaskLauncher;
+import ar.com.ironsoft.marroccl.web.core.tasks.TaskParameter;
 import ar.com.ironsoft.marroccl.web.core.utils.ObjectSerializationUtils;
 
 import com.google.api.server.spi.config.Api;
@@ -31,6 +33,13 @@ public class GameEndpointApi {
     private MessageDao messageDao;
     private TaskLauncher taskLauncher;
     private CommentaryService commentaryService;
+
+    @ApiMethod
+    public void findUrls(@Named("gameId") String gameId) {
+        //
+        taskLauncher.launchTask(FindUrlsTaskServlet.class, new TaskParameter(
+                Commentary.GAME_ID, gameId));
+    }
 
     @ApiMethod
     public Commentary getGameCommentary() {

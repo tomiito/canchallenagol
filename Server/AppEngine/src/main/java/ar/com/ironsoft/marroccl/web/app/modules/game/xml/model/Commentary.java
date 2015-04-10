@@ -22,6 +22,7 @@ import com.googlecode.objectify.annotation.Unindex;
 @Index
 public class Commentary extends BaseElement implements BaseModel {
 
+    public static final String GAME_ID = "gameId";
     public static final String COMMENTARY_ID = "COMMENTARY_ID";
     @Id
     private String id = COMMENTARY_ID;
