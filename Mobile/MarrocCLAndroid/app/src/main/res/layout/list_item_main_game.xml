@@ -7,8 +7,7 @@
     <ImageView
         android:id="@+id/list_item_main_game_image_rival_home"
         android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/ic_ball"/>
+        android:layout_height="60dp"/>
 
         <TextView
             android:id="@+id/list_item_main_game_home_score_name"
@@ -59,8 +58,7 @@
             android:paddingLeft="5dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_ball"/>
+            android:layout_alignParentRight="true"/>
 
         <TextView
             android:id="@+id/list_item_main_game_away_score_name"
