@@ -26,7 +26,7 @@ public class VideoUrlDaoObjectifyImpl extends BaseDaoObjectifyImpl<VideoUrl>
     @Override
     public VideoUrl findByMinute(Integer minute) {
         Query<VideoUrl> query = ofy().load().type(VideoUrl.class)
-                .filter("minute", minute);
+                .filter("videoMinute", minute);
         return query.first().now();
     }
 }
