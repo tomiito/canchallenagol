@@ -44,7 +44,7 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
         eventHolder.title.setText(item.getTitle());
         eventHolder.message.setText(item.getMessage());
         eventHolder.player.setText(item.getPlayer());
-        eventHolder.time.setText(item.getMinutes() + ":" + item.getSeconds() + "''");
+        eventHolder.time.setText(String.format("%02d:%02d",item.getMinutes(),item.getSeconds())+"''");
         if (position >= 1) {
             eventHolder.timeContainer.setBackgroundResource(R.color.gray_darker);
         }

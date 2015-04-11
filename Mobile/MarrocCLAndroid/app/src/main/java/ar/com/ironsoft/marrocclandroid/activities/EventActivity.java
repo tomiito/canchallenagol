@@ -99,7 +99,9 @@ public class EventActivity extends BaseActionBarActivity {
 
         ((TextView)findViewById(R.id.list_item_main_event_title)).setText(pushMessage.getTitle());
         eventTypeHelper.changeIconImages(pushMessage, bigIcon, playerIcon);
-        ((TextView)findViewById(R.id.list_item_main_event_time)).setText(pushMessage.getMinutes() + ":" + pushMessage.getSeconds() + "''");
+        //
+        String time = String.format("%02d:%02d",pushMessage.getMinutes(),pushMessage.getSeconds())+"''";
+        ((TextView)findViewById(R.id.list_item_main_event_time)).setText(time);
     }
 
     private void getScoreBoard() {
