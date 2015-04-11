@@ -75,6 +75,7 @@ public class SendMessageTask extends TaskServlet {
                 boolean allDone = true;
                 try {
                     logger.log(Level.INFO, "Sending multitask");
+                    logger.log(Level.FINE, "To devices: " + deviceIds);
                     multicastResult = sender.sendNoRetry(gcm, deviceIds);
                     logger.log(Level.INFO, "Processing result");
                     allDone = processMulticastResult(mm, deviceIds,

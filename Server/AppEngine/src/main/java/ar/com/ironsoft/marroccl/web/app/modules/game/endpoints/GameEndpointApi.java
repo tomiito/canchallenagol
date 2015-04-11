@@ -83,7 +83,8 @@ public class GameEndpointApi {
         if (videoUrl != null) {
             videoMessage.setVideoLink(videoUrl.getVideoUrl());
         } else {
-            logger.log(Level.WARNING, "Video not found");
+            logger.log(Level.WARNING,
+                    "Video not found in minute: " + message.getMinute());
             videoMessage.setVideoLink(null);
         }
         videoMessage.setGifLink("");
