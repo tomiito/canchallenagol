@@ -50,8 +50,6 @@ public class GameSelectActivity extends BaseActionBarActivity {
                 switch ((Integer)view.findViewById(R.id.list_item_main_game_away_score_name).getTag()) {
                     case 1: // No empezo
                         return;
-                    case 3: // Terminado
-                        return;
                 }
                 Intent intent = new Intent().setClass(context, GameActivity.class);
 

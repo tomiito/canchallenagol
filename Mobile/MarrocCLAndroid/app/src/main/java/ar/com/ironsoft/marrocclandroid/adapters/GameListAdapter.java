@@ -55,6 +55,8 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
                 gameHolder.status.setText("No comenzado");
             }
             else {
+                gameHolder.homeScore.setText(item.getHomeTeamScore().toString());
+                gameHolder.awayScore.setText(item.getAwayTeamScore().toString());
                 gameHolder.status.setText("Finalizado");
 
             }
