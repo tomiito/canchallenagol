@@ -7,14 +7,15 @@ import android.os.Parcelable;
  * Created by gabrielvilloldo on 4/10/15.
  */
 public class PushMessage implements Parcelable {
+    public Integer gameId;
     public String title;
     public String message;
     public String videoLink;
     public String thumbnailLink;
     public String gifLink;
     public String additionalData;
-    public Integer timeMinutes;
-    public Integer timeSeconds;
+    public Integer minutes;
+    public Integer seconds;
     public String type;
 
     public static final Parcelable.Creator<PushMessage> CREATOR = new Parcelable.Creator<PushMessage>() {
@@ -34,6 +35,14 @@ public class PushMessage implements Parcelable {
     public PushMessage(String title, String message) {
         this.title = title;
         this.message = message;
+    }
+
+    public Integer getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(Integer gameId) {
+        this.gameId = gameId;
     }
 
     public String getTitle() {
@@ -84,20 +93,20 @@ public class PushMessage implements Parcelable {
         this.additionalData = aditionalData;
     }
 
-    public Integer getTimeMinutes() {
-        return timeMinutes;
+    public Integer getMinutes() {
+        return minutes;
     }
 
-    public void setTimeMinutes(Integer timeMinutes) {
-        this.timeMinutes = timeMinutes;
+    public void setMinutes(Integer minutes) {
+        this.minutes = minutes;
     }
 
-    public Integer getTimeSeconds() {
-        return timeSeconds;
+    public Integer getSeconds() {
+        return seconds;
     }
 
-    public void setTimeSeconds(Integer timeSeconds) {
-        this.timeSeconds = timeSeconds;
+    public void setSeconds(Integer seconds) {
+        this.seconds = seconds;
     }
 
     public String getType() {
@@ -115,26 +124,28 @@ public class PushMessage implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(gameId);
         dest.writeString(title);
         dest.writeString(message);
         dest.writeString(videoLink);
         dest.writeString(thumbnailLink);
         dest.writeString(gifLink);
         dest.writeString(additionalData);
-        dest.writeInt(timeMinutes);
-        dest.writeInt(timeSeconds);
+        dest.writeInt(minutes);
+        dest.writeInt(seconds);
         dest.writeString(type);
     }
 
     private PushMessage(Parcel source) {
+        gameId = source.readInt();
         title = source.readString();
         message = source.readString();
         videoLink = source.readString();
         thumbnailLink = source.readString();
         gifLink = source.readString();
         additionalData = source.readString();
-        timeMinutes = source.readInt();
-        timeSeconds = source.readInt();
+        minutes = source.readInt();
+        seconds = source.readInt();
         type = source.readString();
 
     }

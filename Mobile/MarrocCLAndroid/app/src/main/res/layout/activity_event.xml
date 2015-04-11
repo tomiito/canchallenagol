@@ -2,29 +2,55 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context=".MainActivity">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <VideoView
-            android:id="@+id/video"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="wrap_content">
+            <VideoView
+                android:id="@+id/video"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
 
-        <ImageView
-            android:id="@+id/thumbnail"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_ball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:indeterminate="true"
-            android:indeterminateBehavior="repeat"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            style="@android:style/Widget.ProgressBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:indeterminate="true"
+                android:indeterminateBehavior="repeat"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/event_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/event_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
 </ScrollView>

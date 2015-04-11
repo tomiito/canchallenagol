@@ -6,9 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
@@ -16,7 +14,7 @@ import com.google.gson.Gson;
 import java.util.Set;
 
 import ar.com.ironsoft.marrocclandroid.R;
-import ar.com.ironsoft.marrocclandroid.activities.MainActivity;
+import ar.com.ironsoft.marrocclandroid.activities.EventActivity;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 import ar.com.ironsoft.marrocclandroid.helpers.SharedPreferencesHelper;
 import ar.com.ironsoft.marrocclandroid.receivers.GcmBroadcastReceiver;
@@ -72,8 +70,11 @@ public class GcmIntentService extends IntentService {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Intent intent = new Intent(this, EventActivity.class);
+        intent.putExtra("pushMessage", pushMessage);
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                intent, 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -81,6 +82,7 @@ public class GcmIntentService extends IntentService {
                         .setContentTitle(pushMessage.getTitle())
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(pushMessage.getTitle()))
+                        .setAutoCancel(true)
                         .setContentText(pushMessage.getMessage());
 
         mBuilder.setContentIntent(contentIntent);
@@ -89,13 +91,14 @@ public class GcmIntentService extends IntentService {
 
     private PushMessage parsePushMessage(Bundle bundle) {
         PushMessage pushMessage = new PushMessage();
+        pushMessage.setGameId(Integer.parseInt(bundle.getString("gameId")));
         pushMessage.setTitle(bundle.getString("title"));
         pushMessage.setMessage(bundle.getString("message"));
-        pushMessage.setGifLink(bundle.getString("gifLink"));
+        //pushMessage.setGifLink(bundle.getString("gifLink"));
         pushMessage.setVideoLink(bundle.getString("videoLink"));
-        pushMessage.setThumbnailLink(bundle.getString("thumbnailLink"));
-        pushMessage.setTimeMinutes(bundle.getInt("minutes"));
-        pushMessage.setTimeSeconds(bundle.getInt("seconds"));
+        //pushMessage.setThumbnailLink(bundle.getString("thumbnailLink"));
+        pushMessage.setMinutes(Integer.parseInt(bundle.getString("minutes")));
+        pushMessage.setSeconds(Integer.parseInt(bundle.getString("seconds")));
         return pushMessage;
     }
 }

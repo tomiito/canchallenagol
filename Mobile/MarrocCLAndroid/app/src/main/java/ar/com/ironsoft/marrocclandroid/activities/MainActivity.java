@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -22,19 +23,24 @@ import android.widget.VideoView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Set;
 
 import ar.com.ironsoft.marrocclandroid.R;
+import ar.com.ironsoft.marrocclandroid.adapters.MatchEventsAdapter;
+import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
+import ar.com.ironsoft.marrocclandroid.helpers.SharedPreferencesHelper;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -45,6 +51,9 @@ public class MainActivity extends ActionBarActivity {
 
     private VideoView videoView;
     private ProgressBar progressBar;
+    private ListView matchEvents;
+
+    private MatchEventsAdapter adapter;
 
     GoogleCloudMessaging gcm;
     SharedPreferences prefs;
@@ -60,6 +69,7 @@ public class MainActivity extends ActionBarActivity {
         context = this;
 
         setUI();
+        loadEventMatches();
 
         // Check device for Play Services APK. If check succeeds, proceed with
         //  GCM registration.
@@ -75,10 +85,27 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    private void loadEventMatches() {
+        Set<String> recordsSaved = SharedPreferencesHelper.getSetOfStrings(getApplicationContext(),
+                SharedPreferencesHelper.EVENTS_MATCH);
+
+        if (recordsSaved == null)
+            return;
+
+        Gson gson = new Gson();
+        ArrayList<PushMessage> events = new ArrayList<>();
+        for (String value : recordsSaved) {
+            events.add(gson.fromJson(value, PushMessage.class));
+        }
+        adapter = new MatchEventsAdapter(0, new ArrayList(events), this);
+        matchEvents.setAdapter(adapter);
+
+    }
+
     private void setUI() {
         videoView = (VideoView)findViewById(R.id.video);
         progressBar = (ProgressBar)findViewById(R.id.progress_bar);
-
+        matchEvents = (ListView)findViewById(R.id.match_events);
     }
 
     @Override
@@ -239,12 +266,12 @@ public class MainActivity extends ActionBarActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                //Toast.makeText(context, "NO NENE NO", Toast.LENGTH_LONG).show();
+
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                //Toast.makeText(context, "Andooo", Toast.LENGTH_LONG).show();
+
             }
         });
     }

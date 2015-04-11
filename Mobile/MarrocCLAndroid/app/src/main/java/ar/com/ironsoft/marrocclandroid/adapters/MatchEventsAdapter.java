@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,12 +19,9 @@ import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 public class MatchEventsAdapter extends ArrayAdapter<PushMessage> {
     protected ArrayList<PushMessage> pushedMessages;
 
-    private Context mContext;
-
-    public MatchEventsAdapter(Context context, int resource, ArrayList<PushMessage> pushedMessages, Context mContext) {
-        super(context, resource);
+    public MatchEventsAdapter(int resource, ArrayList<PushMessage> pushedMessages, Context mContext) {
+        super(mContext, resource, pushedMessages);
         this.pushedMessages = pushedMessages;
-        this.mContext = mContext;
     }
 
     @Override
@@ -34,7 +29,7 @@ public class MatchEventsAdapter extends ArrayAdapter<PushMessage> {
         final PushMessage item = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_main_event, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_main_event, parent, false);
 
             // configure view holder
             configureViewHolder(convertView);

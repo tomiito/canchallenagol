@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/list_item_main_event_image_rival_local"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_ball"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/list_item_main_event_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:text="River" />
+        <TextView
+            android:id="@+id/list_item_main_event_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Boca"/>
+
+        <ImageView
+            android:id="@+id/list_item_main_event_image_rival_visitor"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_ball"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/list_item_main_event_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:text="River" />
+
+</LinearLayout>

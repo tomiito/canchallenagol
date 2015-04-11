@@ -12,9 +12,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.VideoView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
@@ -32,12 +31,12 @@ public class EventActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_event);
 
         context = this;
 
-        setUI();
         processPushMessageFromIntent();
+        setUI();
 
         playVideo();
     }
@@ -53,12 +52,16 @@ public class EventActivity extends ActionBarActivity {
         videoView = (VideoView)findViewById(R.id.video);
         progressBar = (ProgressBar)findViewById(R.id.progress_bar);
         thumbnail = (ImageView)findViewById(R.id.thumbnail);
+
+        ((TextView)findViewById(R.id.event_title)).setText(pushMessage.getTitle());
+        ((TextView)findViewById(R.id.event_message)).setText(pushMessage.getMessage());
+        //((TextView)findViewById(R.id.event_time)).setText(pushMessage.getMinutes());
     }
 
     private void playVideo() {
         videoView.setMediaController(new MediaController(this));
         videoView.setVideoURI(Uri.parse(pushMessage.getVideoLink()));
-        ImageLoader.getInstance().displayImage(pushMessage.getThumbnailLink(), thumbnail); // TODO: GV Add cache in Memory.
+        //ImageLoader.getInstance().displayImage(pushMessage.getThumbnailLink(), thumbnail); // TODO: GV Add cache in Memory.
         //videoView.setVideoURI(Uri.parse("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_225631.mp4"));
         videoView.requestFocus();
         progressBar.setVisibility(View.VISIBLE);
