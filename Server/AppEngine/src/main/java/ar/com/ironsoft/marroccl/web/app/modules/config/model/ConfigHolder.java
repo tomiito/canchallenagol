@@ -34,7 +34,7 @@ public class ConfigHolder implements BaseModel {
     @Unindex
     private Integer extraMinutes = 3;
     @Unindex
-    private Integer extraMinutes2Period = 15;
+    private Integer extraMinutes2Period = 20;
     @Unindex
     private String inProgressGameId = "1";
 
