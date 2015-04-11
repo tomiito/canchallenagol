@@ -50,6 +50,8 @@ public class CommentaryService {
             titleMessage.setTitle(message.getComment());
             titleMessage.setMessage("");
         }
+        titleMessage.setTitle(titleMessage.getTitle().trim());
+        titleMessage.setMessage(titleMessage.getTitle().trim());
         return titleMessage;
     }
 
