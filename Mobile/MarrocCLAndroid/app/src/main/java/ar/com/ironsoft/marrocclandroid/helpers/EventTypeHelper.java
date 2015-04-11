@@ -10,6 +10,7 @@ import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
  */
 public class EventTypeHelper {
     public void changeIconImages(PushMessage pushMessage, ImageView bigIcon, ImageView playerIcon) {
+        playerIcon.setImageResource(R.drawable.player_goal);
         switch (pushMessage.getType().toLowerCase()) {
             case "goal":
                 bigIcon .setImageResource(R.drawable.goal_big);
@@ -31,7 +32,6 @@ public class EventTypeHelper {
             default:
                 // Put something
                 bigIcon.setImageResource(R.drawable.ic_ball);
-                playerIcon.setImageResource(R.drawable.player_goal);
                 break;
         }
     }
