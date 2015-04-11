@@ -85,6 +85,7 @@ public class FindUrlTaskServlet extends TaskServlet {
         logger.log(Level.INFO, "C:" + urlString);
         URL url = new URL(urlString);
         HTTPRequest gaeRequest = new HTTPRequest(url, HTTPMethod.GET);
+        gaeRequest.getFetchOptions().setDeadline(20.0);
         HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
                 .fetch(gaeRequest);
         //
