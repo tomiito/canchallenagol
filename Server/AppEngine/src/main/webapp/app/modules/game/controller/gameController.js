@@ -20,10 +20,24 @@ controller.controller('GameController', [
 			$scope.sendMessage = function(message) {
 				message.sending = true;
 				gapi.client.gameApi.gameEndpointApi.pushMessage({
+					'gameId' : $scope.commentary.gameId,
 					'messageId' : message.messageId
 				}).execute(function(result) {
 					message.sending = false;
 					$scope.$apply();
+				});
+			}
+
+			$scope.showFindSuccessMessage = function() {
+				$growl.success("GAME.FIND.SUCCESS.TITLE",
+						"GAME.FIND.SUCCESS.BODY", {});
+			}
+
+			$scope.findUrls = function() {
+				gapi.client.gameApi.gameEndpointApi.findUrls({
+					'gameId' : $scope.commentary.gameId
+				}).execute(function(result) {
+					$scope.showFindSuccessMessage();
 				});
 			}
 

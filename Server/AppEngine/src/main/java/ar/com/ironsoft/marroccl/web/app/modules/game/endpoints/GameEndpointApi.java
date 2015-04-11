@@ -5,12 +5,15 @@ import java.util.Collection;
 
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.TitleMessage;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
+import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
 import ar.com.ironsoft.marroccl.web.app.modules.messages.model.VideoMessage;
 import ar.com.ironsoft.marroccl.web.app.modules.messages.tasks.SendAllMessageTask;
 import ar.com.ironsoft.marroccl.web.core.tasks.TaskLauncher;
+import ar.com.ironsoft.marroccl.web.core.tasks.TaskParameter;
 import ar.com.ironsoft.marroccl.web.core.utils.ObjectSerializationUtils;
 
 import com.google.api.server.spi.config.Api;
@@ -32,6 +35,14 @@ public class GameEndpointApi {
     private CommentaryService commentaryService;
 
     @ApiMethod
+    public void findUrls(@Named("gameId") String gameId) {
+        //
+        taskLauncher.launchTask(TaskLauncher.QUEUE_FIND_URL_PAGED,
+                FindUrlsTaskServlet.class, new TaskParameter(
+                        Commentary.GAME_ID, gameId));
+    }
+
+    @ApiMethod
     public Commentary getGameCommentary() {
         Commentary commentary = commentaryDao.get(Commentary.class,
                 Commentary.COMMENTARY_ID);
@@ -44,16 +55,22 @@ public class GameEndpointApi {
     }
 
     @ApiMethod(httpMethod = "post")
-    public void pushMessage(@Named("messageId") String messageId)
-            throws IOException {
+    public void pushMessage(@Named("gameId") String gameId,
+            @Named("messageId") String messageId) throws IOException {
         Message message = messageDao.get(Message.class, messageId);
         //
+        TitleMessage titleMessage = commentaryService
+                .parseTitleMessage(message);
+        //
         VideoMessage videoMessage = new VideoMessage();
-        videoMessage.setTitle("");
-        videoMessage.setMessage(message.getComment());
+        videoMessage.setGameId(gameId);
+        videoMessage.setTitle(titleMessage.getTitle());
+        videoMessage.setMessage(titleMessage.getMessage());
         videoMessage.setType(message.getType());
         //
-        videoMessage.setVideoLink("");
+        // TODO remove hardcode video
+        videoMessage
+                .setVideoLink("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_211215.mp4");
         videoMessage.setGifLink("");
         videoMessage.setThumbnailLink("");
         //
@@ -61,8 +78,14 @@ public class GameEndpointApi {
         videoMessage.setMinutes(message.getMinute());
         videoMessage.setSeconds(message.getSecond());
         //
-        taskLauncher.launchTask(SendAllMessageTask.class,
+        taskLauncher.launchTask(TaskLauncher.QUEUE_GCM_PAGED,
+                SendAllMessageTask.class,
                 ObjectSerializationUtils.serialize(videoMessage));
+    }
+
+    @Inject
+    public void setCommentaryService(CommentaryService commentaryService) {
+        this.commentaryService = commentaryService;
     }
 
     @Inject

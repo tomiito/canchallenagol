@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.com.ironsoft.marroccl.web.app.modules.config.daos.ConfigHolderDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.GameXmlService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
@@ -38,12 +39,13 @@ public class ParseGameServlet extends BaseServlet {
             .getSimpleName());
     private GameXmlService gameXmlService;
     private CommentaryService commentaryService;
+    private ConfigHolderDao configHolderDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
         // Receive game
-        URL url = new URL(SharedConstants.XML_URL);
+        URL url = new URL(configHolderDao.getConfig().getXmlUrl());
         HTTPRequest gaeRequest = new HTTPRequest(url, HTTPMethod.GET);
         gaeRequest.addHeader(new HTTPHeader("accept", "application/xml"));
         HTTPResponse xmlResponse = URLFetchServiceFactory.getURLFetchService()
@@ -53,6 +55,11 @@ public class ParseGameServlet extends BaseServlet {
         Commentary commentary = gameXmlService.parseGameXml(xml);
         commentaryService.saveCommentary(commentary);
         setSuccess(resp);
+    }
+
+    @Inject
+    public void setConfigHolderDao(ConfigHolderDao configHolderDao) {
+        this.configHolderDao = configHolderDao;
     }
 
     @Inject

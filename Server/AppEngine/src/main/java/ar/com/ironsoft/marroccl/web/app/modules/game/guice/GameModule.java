@@ -5,7 +5,10 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpServlet;
 
 import ar.com.ironsoft.marroccl.web.app.modules.game.endpoints.GameEndpointApi;
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.VideoUrl;
 import ar.com.ironsoft.marroccl.web.app.modules.game.servlet.ParseGameServlet;
+import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlTaskServlet;
+import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
 import ar.com.ironsoft.marroccl.web.guice.GuiceServletsModule;
@@ -18,6 +21,7 @@ public class GameModule extends GuiceServletsModule {
         //
         registeredClasses.add(Commentary.class);
         registeredClasses.add(Message.class);
+        registeredClasses.add(VideoUrl.class);
         //
         return registeredClasses;
     }
@@ -27,6 +31,8 @@ public class GameModule extends GuiceServletsModule {
         LinkedList<Class<? extends HttpServlet>> registeredClasses = new LinkedList<>();
         //
         registeredClasses.add(ParseGameServlet.class);
+        registeredClasses.add(FindUrlsTaskServlet.class);
+        registeredClasses.add(FindUrlTaskServlet.class);
         //
         return registeredClasses;
     }
