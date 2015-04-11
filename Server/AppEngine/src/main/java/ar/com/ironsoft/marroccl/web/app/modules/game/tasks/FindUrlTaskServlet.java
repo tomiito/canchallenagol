@@ -1,6 +1,7 @@
 package ar.com.ironsoft.marroccl.web.app.modules.game.tasks;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,11 +51,24 @@ public class FindUrlTaskServlet extends TaskServlet {
             //
             //
             for (int j = 0; j < 99; j++) {
-                String url = findVideo(startUrl, hour, minute, j);
-                if (url != null) {
-                    videoUrlDao.save(new VideoUrl(gameId, url, videoMinute));
-                    break;
-                }
+                boolean retry = false;
+                int times = 1;
+                do {
+                    try {
+                        String url = findVideo(startUrl, hour, minute, j);
+                        retry = false;
+                        if (url != null) {
+                            videoUrlDao.save(new VideoUrl(gameId, url,
+                                    videoMinute));
+                            break;
+                        }
+                    } catch (SocketTimeoutException e) {
+                        logger.log(Level.WARNING,
+                                "Failed to get url, retrying...");
+                        retry = true;
+                        times++;
+                    }
+                } while (retry == true && times <= 3);
             }
         }
     }
