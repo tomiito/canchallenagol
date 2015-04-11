@@ -13,6 +13,8 @@ public class GameItem {
     private String awayTeamLink;
     private Integer awayTeamScore;
     private String time;
+    private Integer currentMinute;
+    private Integer currentSecond;
 
     public String getGameId() {
         return gameId;
@@ -84,5 +86,21 @@ public class GameItem {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public Integer getCurrentMinute() {
+        return currentMinute;
+    }
+
+    public void setCurrentMinute(Integer currentMinute) {
+        this.currentMinute = currentMinute;
+    }
+
+    public Integer getCurrentSecond() {
+        return currentSecond;
+    }
+
+    public void setCurrentSecond(Integer currentSecond) {
+        this.currentSecond = currentSecond;
     }
 }

@@ -144,6 +144,7 @@ public class EventActivity extends BaseActionBarActivity {
 
     private void playVideo() {
         if (pushMessage.getVideoLink() == null) {
+            progressBar.setVisibility(View.GONE);
             thumbnail.setImageResource(R.drawable.video_not);
             return;
         }

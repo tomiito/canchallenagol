@@ -51,11 +51,17 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
         if (item.getStatus() != 2) {
             gameHolder.homeScore.setText("");
             gameHolder.awayScore.setText("");
-            gameHolder.status.setText("No comenzado");
+            if (item.getStatus() == 1) {
+                gameHolder.status.setText("No comenzado");
+            }
+            else {
+                gameHolder.status.setText("Finalizado");
+
+            }
         } else {
             gameHolder.homeScore.setText(item.getHomeTeamScore().toString());
             gameHolder.awayScore.setText(item.getAwayTeamScore().toString());
-            gameHolder.status.setText("Jugando");
+            gameHolder.status.setText(item.getCurrentMinute().toString() + ":" + item.getCurrentSecond().toString());
         }
 
         return convertView;
