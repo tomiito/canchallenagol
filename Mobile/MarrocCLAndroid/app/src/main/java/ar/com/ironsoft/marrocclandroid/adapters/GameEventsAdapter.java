@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
@@ -70,19 +74,23 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> implements Sect
         eventHolder.player = (TextView)convertView.findViewById(R.id.list_item_main_event_player);
         eventHolder.time = (TextView)convertView.findViewById(R.id.list_item_main_event_time);
         eventHolder.timeContainer = (LinearLayout)convertView.findViewById(R.id.list_item_main_event_time_container);
-        //
         convertView.setTag(eventHolder);
     }
 
     @Override
     public Object[] getSections() {
-        Integer[] minutes = new Integer[pushedMessages.size()];
-        Integer i = 0;
+        Set<Integer> minutes = new TreeSet<Integer>();
         for (PushMessage message : pushedMessages) {
-            minutes[i] = message.getMinutes();
-            i++;
+            if (message.getMinutes() != null && message.getMinutes() == 0
+                    && message.getSeconds() != null && message.getSeconds() == 0
+                    && message.getTitle() != null && message.getTitle().toLowerCase().startsWith("final")){
+                continue;
+            }
+            minutes.add(message.getMinutes());
         }
-        return minutes;
+        List<Integer> minuteSorted = new ArrayList<Integer>(minutes);
+        Collections.reverse(minuteSorted);
+        return minuteSorted.toArray();
     }
 
     @Override
