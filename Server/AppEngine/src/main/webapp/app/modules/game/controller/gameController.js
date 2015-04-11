@@ -34,6 +34,7 @@ controller.controller('GameController', [
 			}
 
 			$scope.createDummyGames = function() {
+
 				gapi.client.gameApi.gameEndpointApi.createDummyGames({})
 						.execute(function(result) {
 							$scope.showCreateDummySuccessMessage();
