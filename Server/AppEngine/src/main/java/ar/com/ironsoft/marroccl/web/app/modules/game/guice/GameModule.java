@@ -8,8 +8,9 @@ import ar.com.ironsoft.marroccl.web.app.modules.game.endpoints.GameEndpointApi;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.Game;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.GameGoal;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.VideoUrl;
-import ar.com.ironsoft.marroccl.web.app.modules.game.servlet.GameListServlet;
+import ar.com.ironsoft.marroccl.web.app.modules.game.servlet.GameGetFullServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.servlet.GameGetServlet;
+import ar.com.ironsoft.marroccl.web.app.modules.game.servlet.GameListServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.servlet.ParseGameServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
@@ -37,6 +38,7 @@ public class GameModule extends GuiceServletsModule {
         LinkedList<Class<? extends HttpServlet>> registeredClasses = new LinkedList<>();
         //
         registeredClasses.add(GameGetServlet.class);
+        registeredClasses.add(GameGetFullServlet.class);
         registeredClasses.add(GameListServlet.class);
         registeredClasses.add(ParseGameServlet.class);
         registeredClasses.add(FindUrlsTaskServlet.class);

@@ -16,6 +16,8 @@ public class VideoMessage extends SimpleMessage {
     private Integer minutes;
     private Integer seconds;
     private String title;
+    private String player;
+    private String player2;
 
     public String getVideoLink() {
         return videoLink;
@@ -90,6 +92,22 @@ public class VideoMessage extends SimpleMessage {
         this.type = type;
     }
 
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    public String getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer2(String player2) {
+        this.player2 = player2;
+    }
+
     public GCMMessage asGCM() {
         return new GCMMessage.Builder().addData("message", getMessage()) //
                 .addData("gameId", getGameId()) //
@@ -97,6 +115,8 @@ public class VideoMessage extends SimpleMessage {
                 .addData("videoLink", getVideoLink()) //
                 .addData("gifLink", getGifLink()) //
                 .addData("type", getType()) //
+                .addData("player", getPlayer()) //
+                .addData("player2", getPlayer2()) //
                 .addData("period", String.valueOf(getPeriod())) //
                 .addData("minutes", String.valueOf(getMinutes())) //
                 .addData("seconds", String.valueOf(getSeconds())) //

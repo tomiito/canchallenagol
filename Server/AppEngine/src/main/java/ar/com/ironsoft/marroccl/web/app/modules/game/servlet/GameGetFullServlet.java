@@ -25,8 +25,8 @@ import com.google.inject.Singleton;
  */
 @Singleton
 @BasePath("/game/")
-@RelativePath("get")
-public class GameGetServlet extends BaseServlet {
+@RelativePath("getFull")
+public class GameGetFullServlet extends BaseServlet {
 
     private GameService gameService;
 
@@ -39,6 +39,7 @@ public class GameGetServlet extends BaseServlet {
         Preconditions.checkNotNull(gameId);
         //
         Game game = gameService.getGameWithCurrentScore(gameId, minute, second);
+
         //
         String json = new Gson().toJson(game);
         setJsonResponse(resp, json);

@@ -39,6 +39,7 @@ public class Game implements BaseModel {
     private String awayTeamLink;
     @Unindex
     private Integer awayTeamScore;
+
     /**
      * Time in string MM:ss
      */

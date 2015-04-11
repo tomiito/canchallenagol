@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 
 import ar.com.ironsoft.marroccl.web.app.modules.config.daos.ConfigHolderDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.daos.GameDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.daos.GameGoalDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.Game;
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.GameGoal;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.GameXmlService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.core.constants.SharedConstants;
@@ -22,10 +26,28 @@ import com.google.inject.Singleton;
 @Singleton
 public class GameService {
 
+    private GameDao gameDao;
+    private GameGoalDao gameGoalDao;
     private GameXmlService gameXmlService;
     private CommentaryService commentaryService;
     private ConfigHolderDao configHolderDao;
     private ScoreService scoreService;
+
+    public Game getGameWithCurrentScore(String gameId, Integer minute,
+            Integer second) {
+        Game game = gameDao.get(Game.class, gameId);
+        // Replace final score by current score in that minute
+        GameGoal currentScore = gameGoalDao.findByMinuteAndSecond(minute,
+                second);
+        if (currentScore != null) {
+            game.setHomeTeamScore(currentScore.getHomeTeamScore());
+            game.setAwayTeamScore(currentScore.getAwayTeamScore());
+        } else {
+            game.setHomeTeamScore(0);
+            game.setAwayTeamScore(0);
+        }
+        return game;
+    }
 
     public void parseGame() throws IOException {
         // Receive game
@@ -59,5 +81,15 @@ public class GameService {
     @Inject
     public void setGameXmlService(GameXmlService gameXmlService) {
         this.gameXmlService = gameXmlService;
+    }
+
+    @Inject
+    public void setGameGoalDao(GameGoalDao gameGoalDao) {
+        this.gameGoalDao = gameGoalDao;
+    }
+
+    @Inject
+    public void setGameDao(GameDao gameDao) {
+        this.gameDao = gameDao;
     }
 }

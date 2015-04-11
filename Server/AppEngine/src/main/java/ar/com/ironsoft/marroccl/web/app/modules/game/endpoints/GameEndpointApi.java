@@ -95,6 +95,10 @@ public class GameEndpointApi {
         videoMessage.setMessage(titleMessage.getMessage());
         videoMessage.setType(message.getType());
         //
+        String[] players = commentaryService.parsePlayer(message);
+        videoMessage.setPlayer(players[0]);
+        videoMessage.setPlayer2(players[1]);
+        //
         if (videoUrl != null) {
             videoMessage.setVideoLink(videoUrl.getVideoUrl());
         } else {
