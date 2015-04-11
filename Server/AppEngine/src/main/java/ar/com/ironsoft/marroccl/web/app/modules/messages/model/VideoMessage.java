@@ -54,6 +54,9 @@ public class VideoMessage extends SimpleMessage {
     }
 
     public void setPeriod(Integer period) {
+        if (period == null) {
+            period = 0;
+        }
         this.period = period;
     }
 
@@ -62,6 +65,9 @@ public class VideoMessage extends SimpleMessage {
     }
 
     public void setMinutes(Integer minutes) {
+        if (minutes == null) {
+            minutes = 0;
+        }
         this.minutes = minutes;
     }
 
@@ -70,6 +76,9 @@ public class VideoMessage extends SimpleMessage {
     }
 
     public void setSeconds(Integer seconds) {
+        if (seconds == null) {
+            seconds = 0;
+        }
         this.seconds = seconds;
     }
 
