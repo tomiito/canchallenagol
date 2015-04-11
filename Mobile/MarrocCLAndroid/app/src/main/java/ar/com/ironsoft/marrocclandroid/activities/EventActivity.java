@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +40,8 @@ public class EventActivity extends BaseActionBarActivity {
     private VideoView videoView;
     private ProgressBar progressBar;
     private ImageView thumbnail;
+    private ShareActionProvider shareActionProvider;
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -52,9 +56,10 @@ public class EventActivity extends BaseActionBarActivity {
 
         context = this;
 
-        if (!processPushMessageFromIntent()) {
+            if (!processPushMessageFromIntent()) {
             pushMessage = savedInstanceState.getParcelable("message");
         }
+        setShareIntent();
         setUI();
         playVideo();
         getScoreBoard();
@@ -127,11 +132,11 @@ public class EventActivity extends BaseActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageLoader.getInstance().displayImage(gameItem.getHomeTeamLink(), (ImageView)findViewById(R.id.score_board_image_rival_home));
-                        ImageLoader.getInstance().displayImage(gameItem.getAwayTeamLink(), (ImageView)findViewById(R.id.score_board_image_rival_away));
+                        ImageLoader.getInstance().displayImage(gameItem.getHomeTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_home));
+                        ImageLoader.getInstance().displayImage(gameItem.getAwayTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_away));
 
-                        ((TextView)findViewById(R.id.score_board_home_score)).setText(gameItem.getHomeTeamScore().toString());
-                        ((TextView)findViewById(R.id.score_board_away_score)).setText(gameItem.getAwayTeamScore().toString());
+                        ((TextView) findViewById(R.id.score_board_home_score)).setText(gameItem.getHomeTeamScore().toString());
+                        ((TextView) findViewById(R.id.score_board_away_score)).setText(gameItem.getAwayTeamScore().toString());
                     }
                 });
             }
@@ -167,6 +172,23 @@ public class EventActivity extends BaseActionBarActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate menu resource file.
+        getMenuInflater().inflate(R.menu.event_menu, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+
+        // Fetch and store ShareActionProvider
+        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        setShareIntent();
+
+        // Return true to display menu
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -177,5 +199,16 @@ public class EventActivity extends BaseActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setShareIntent() {
+        if (shareActionProvider != null && pushMessage != null) {
+            // populate the share intent with data
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, pushMessage.getTitle() + " / " + pushMessage.getMessage());
+            intent.putExtra(Intent.EXTRA_TEXT, pushMessage.getVideoLink());
+            shareActionProvider.setShareIntent(intent);
+        }
     }
 }

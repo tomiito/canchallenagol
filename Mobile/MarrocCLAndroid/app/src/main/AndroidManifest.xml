@@ -43,13 +43,15 @@
         <activity
             android:name=".activities.GameActivity"
             android:label="@string/app_name"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:parentActivityName=".activities.GameSelectActivity">
         </activity>
 
         <activity
             android:name=".activities.EventActivity"
             android:label="@string/event_name"
-            android:exported="true">
+            android:exported="true"
+            android:parentActivityName=".activities.GameActivity">
         </activity>
 
         <receiver
