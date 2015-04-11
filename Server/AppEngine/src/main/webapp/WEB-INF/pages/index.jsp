@@ -101,6 +101,9 @@
         // GAME MODULE
         sl.add("/app/modules/game/gameModule.js");
         sl.add("/app/modules/game/controller/gameController.js");
+        // CONFIG MODULE
+        sl.add("/app/modules/config/configModule.js");
+        sl.add("/app/modules/config/controller/configController.js");
         //
     } else if (SharedConstants.isProductionServer()) {
         sl.add("/app/all.js");

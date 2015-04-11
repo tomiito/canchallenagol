@@ -11,6 +11,9 @@
     "LOADING": "Loading devices ...",
     "NO_DATA": "No devices found!"
   },
+  "CONFIG": {
+    "TITLE": "Configuration"
+  },
   "VIDEO": {
     "SEND_NEW_MESSAGE": "Send new video message",
     "MESSAGE": "Message",

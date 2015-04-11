@@ -6,15 +6,18 @@ app.config([
 		'dashboardURLProvider',
 		'deviceURLProvider',
 		'gameURLProvider',
+		'configURLProvider',
 		'$translateProvider',
 		function($routeProvider, dashboardURLProvider, deviceURLProvider,
-				gameURLProvider, $translateProvider) {
+				gameURLProvider, configURLProvider, $translateProvider) {
 			// /
 			dashboardURLProvider.provideUrl($routeProvider);
 			// /devices/
 			deviceURLProvider.provideUrl($routeProvider);
 			// /game/
 			gameURLProvider.provideUrl($routeProvider);
+			// /config/
+			configURLProvider.provideUrl($routeProvider);
 			// other
 			$routeProvider.otherwise({
 				redirectTo : '/'
