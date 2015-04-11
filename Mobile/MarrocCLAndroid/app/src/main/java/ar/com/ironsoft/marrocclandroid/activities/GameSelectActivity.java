@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.games.Game;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -46,6 +47,12 @@ public class GameSelectActivity extends BaseActionBarActivity {
         gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch ((Integer)view.findViewById(R.id.list_item_main_game_away_score_name).getTag()) {
+                    case 1: // No empezo
+                        return;
+                    case 3: // Terminado
+                        return;
+                }
                 Intent intent = new Intent().setClass(context, GameActivity.class);
 
                 intent.putExtra("gameId", (String) view.findViewById(R.id.list_item_main_game_home_score_name).getTag());

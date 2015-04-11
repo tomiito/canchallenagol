@@ -31,7 +31,7 @@ public class EventTypeHelper {
                 break;
             default:
                 // Put something
-                bigIcon.setImageResource(R.drawable.ic_ball);
+                bigIcon.setImageResource(R.drawable.shoes);
                 break;
         }
     }

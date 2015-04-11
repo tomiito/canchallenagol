@@ -144,13 +144,11 @@ public class EventActivity extends BaseActionBarActivity {
 
     private void playVideo() {
         if (pushMessage.getVideoLink() == null) {
-            thumbnail.setVisibility(View.GONE);
+            thumbnail.setImageResource(R.drawable.video_not);
             return;
         }
         videoView.setMediaController(new MediaController(this));
         videoView.setVideoURI(Uri.parse(pushMessage.getVideoLink()));
-        //ImageLoader.getInstance().displayImage(pushMessage.getThumbnailLink(), thumbnail); // TODO: GV Add cache in Memory.
-        //videoView.setVideoURI(Uri.parse("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_225631.mp4"));
         videoView.requestFocus();
         progressBar.setVisibility(View.VISIBLE);
         thumbnail.setVisibility(View.VISIBLE);

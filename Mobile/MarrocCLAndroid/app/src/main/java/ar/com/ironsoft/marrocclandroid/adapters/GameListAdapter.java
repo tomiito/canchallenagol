@@ -40,15 +40,23 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
         }
 
         final GameHolder gameHolder = (GameHolder) convertView.getTag();
+
         ImageLoader.getInstance().displayImage(item.getHomeTeamLink(), gameHolder.imageHome);
         ImageLoader.getInstance().displayImage(item.getAwayTeamLink(), gameHolder.imageAway);
-
+        gameHolder.awayName.setTag(item.getStatus());
         gameHolder.homeName.setTag(item.getGameId());
         gameHolder.homeName.setText(item.getHomeTeamName());
         gameHolder.awayName.setText(item.getAwayTeamName());
 
-        gameHolder.homeScore.setText(item.getHomeTeamScore().toString());
-        gameHolder.awayScore.setText(item.getAwayTeamScore().toString());
+        if (item.getStatus() != 2) {
+            gameHolder.homeScore.setText("");
+            gameHolder.awayScore.setText("");
+            gameHolder.status.setText("No comenzado");
+        } else {
+            gameHolder.homeScore.setText(item.getHomeTeamScore().toString());
+            gameHolder.awayScore.setText(item.getAwayTeamScore().toString());
+            gameHolder.status.setText("Jugando");
+        }
 
         return convertView;
     }
@@ -69,6 +77,8 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
 
         gameHolder.homeScore = (TextView)convertView.findViewById(R.id.list_item_main_game_home_score);
         gameHolder.awayScore = (TextView)convertView.findViewById(R.id.list_item_main_game_away_score);
+        gameHolder.status = (TextView)convertView.findViewById(R.id.list_item_main_game_status);
+
         convertView.setTag(gameHolder);
     }
 
@@ -80,5 +90,7 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
         public TextView awayName;
         public TextView homeScore;
         public TextView awayScore;
+        public TextView status;
+
     }
 }

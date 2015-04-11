@@ -72,13 +72,26 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_ball)
                         .setContentTitle(pushMessage.getTitle())
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(pushMessage.getTitle()))
                         .setAutoCancel(true)
                         .setContentText(pushMessage.getMessage());
 
+        switch (pushMessage.getType()) {
+            case "goal":
+                mBuilder.setSmallIcon(R.drawable.ic_ball);
+                break;
+            case "yellow card":
+                mBuilder.setSmallIcon(R.drawable.yellow_card);
+                break;
+            case "red card":
+                mBuilder.setSmallIcon(R.drawable.yellow_card);
+                break;
+            default:
+                mBuilder.setSmallIcon(R.drawable.shoes);
+                break;
+        }
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
