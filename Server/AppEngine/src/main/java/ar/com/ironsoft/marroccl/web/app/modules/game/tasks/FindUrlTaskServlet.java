@@ -56,7 +56,9 @@ public class FindUrlTaskServlet extends TaskServlet {
                 String url = null;
                 do {
                     try {
-                        logger.log(Level.FINE, "Fetching url Times: " + times);
+                        logger.log(Level.FINE, String.format(
+                                "Video: %d Fetching url Times: %d",
+                                videoMinute, times));
                         url = findVideo(startUrl, hour, minute, j);
                         retry = false;
                         if (url != null) {
