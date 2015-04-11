@@ -93,7 +93,8 @@ public class GameEndpointApi {
                 .parseTitleMessage(message);
         //
         VideoMessage videoMessage = new VideoMessage();
-        videoMessage.setGameId(gameId);
+        videoMessage.setGameId(String.valueOf(configHolder
+                                .getInProgressGameId()));
         videoMessage.setTitle(titleMessage.getTitle());
         videoMessage.setMessage(titleMessage.getMessage());
         videoMessage.setType(message.getType());

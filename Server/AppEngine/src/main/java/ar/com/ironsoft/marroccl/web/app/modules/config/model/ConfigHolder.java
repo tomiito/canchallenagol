@@ -33,6 +33,8 @@ public class ConfigHolder implements BaseModel {
      */
     @Unindex
     private Integer extraMinutes = 3;
+    @Unindex
+    private String inProgressGameId = "3";
 
     public String getXmlUrl() {
         return xmlUrl;
@@ -93,5 +95,16 @@ public class ConfigHolder implements BaseModel {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getInProgressGameId() {
+        if (inProgressGameId == null) {
+            inProgressGameId = "3";
+        }
+        return inProgressGameId;
+    }
+
+    public void setInProgressGameId(String inProgressGameId) {
+        this.inProgressGameId = inProgressGameId;
     }
 }
