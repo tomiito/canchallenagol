@@ -1,7 +1,6 @@
 package ar.com.ironsoft.marroccl.web.app.modules.game.servlet;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,14 +15,12 @@ import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.Game;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.VideoMessageService;
-import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
 import ar.com.ironsoft.marroccl.web.app.modules.messages.model.VideoMessage;
 import ar.com.ironsoft.marroccl.web.core.servlets.BaseServlet;
 import ar.com.ironsoft.marroccl.web.guice.base.BasePath;
 import ar.com.ironsoft.marroccl.web.guice.base.RelativePath;
 
-import com.google.appengine.labs.repackaged.com.google.common.collect.Lists;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -61,15 +58,10 @@ public class GameGetFullServlet extends BaseServlet {
         gameDao.save(game);
         //
         ConfigHolder configHolder = configHolderDao.getConfig();
-        Commentary commentary = commentaryDao.get(Commentary.class,
-                Commentary.COMMENTARY_ID);
         //
-        List<Message> messages = Lists.newArrayList(messageDao.get(
-                Message.class, commentary.getMessageListId()).values());
-        Collections.sort(messages);
+        List<Message> messages = messageDao.getAll(minute, second);
         for (Message message : messages) {
-            if (message.getMinute() <= minute && message.getSecond() <= second
-                    && message.isNotFinal()) {
+            if (message.isNotFinal() || 3 == game.getStatus()) {
                 VideoMessage videoMessage = videoMessageService
                         .createVideoMessage(configHolder, message);
                 game.getMessages().add(videoMessage);

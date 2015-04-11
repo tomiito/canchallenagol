@@ -36,6 +36,8 @@ public class Message extends BaseElement implements BaseModel,
     private String time;
     @Unindex
     private String type;
+    @Index
+    private Integer minuteSecond;
 
     public Message() {
     }
@@ -53,6 +55,8 @@ public class Message extends BaseElement implements BaseModel,
         second = parseInteger(element.attributeValue("second"));
         type = element.attributeValue("type");
         time = element.attributeValue("time");
+        //
+        minuteSecond = minute * 100 + second;
     }
 
     public String getMessageId() {
@@ -140,6 +144,14 @@ public class Message extends BaseElement implements BaseModel,
         boolean isFinal = startEnd && minute == 0 && second == 0
                 && commentFinal;
         return isFinal;
+    }
+
+    public Integer getMinuteSecond() {
+        return minuteSecond;
+    }
+
+    public void setMinuteSecond(Integer minuteSecond) {
+        this.minuteSecond = minuteSecond;
     }
 
     @Override

@@ -216,6 +216,9 @@ public class Game implements BaseModel {
                 currentSecond = currentSecond % 60;
             }
             lastMillis = millis;
+            if (currentMinute > 95){
+                status = 3;
+            }
         }
     }
 }
