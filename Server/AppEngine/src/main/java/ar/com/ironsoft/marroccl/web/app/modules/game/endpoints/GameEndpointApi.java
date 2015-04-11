@@ -69,7 +69,8 @@ public class GameEndpointApi {
             @Named("messageId") String messageId) throws IOException {
         ConfigHolder configHolder = configHolderDao.getConfig();
         Message message = messageDao.get(Message.class, messageId);
-        VideoUrl videoUrl = videoUrlDao.findByMinute(message.getMinute());
+        int videoMinute = message.getMinute() + configHolder.getExtraMinutes();
+        VideoUrl videoUrl = videoUrlDao.findByMinute(videoMinute);
         //
         TitleMessage titleMessage = commentaryService
                 .parseTitleMessage(message);
@@ -83,8 +84,8 @@ public class GameEndpointApi {
         if (videoUrl != null) {
             videoMessage.setVideoLink(videoUrl.getVideoUrl());
         } else {
-            logger.log(Level.WARNING,
-                    "Video not found in minute: " + message.getMinute());
+            logger.log(Level.WARNING, "Video not found in minute: "
+                    + videoMinute);
             videoMessage.setVideoLink(null);
         }
         videoMessage.setGifLink("");

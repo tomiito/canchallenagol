@@ -26,13 +26,13 @@ public class ConfigHolder implements BaseModel {
     @Unindex
     private Integer startMinute = 1;
     @Unindex
-    private Integer totalVideos = 100;
+    private Integer totalVideos = 101;
     /**
      * This is the minutes that I have to add to the startup time because the
      * video starts from minute 0, but game could start in minute 5 or later.
      */
     @Unindex
-    private Integer extraMinutes = 0;
+    private Integer extraMinutes = 3;
 
     public String getXmlUrl() {
         return xmlUrl;
