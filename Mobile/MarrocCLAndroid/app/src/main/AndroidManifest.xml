@@ -55,6 +55,7 @@
             android:label="@string/event_name"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             android:parentActivityName=".activities.GameActivity">
         </activity>
 
