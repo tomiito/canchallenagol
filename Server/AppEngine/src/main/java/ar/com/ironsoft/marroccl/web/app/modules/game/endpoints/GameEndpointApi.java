@@ -2,10 +2,16 @@ package ar.com.ironsoft.marroccl.web.app.modules.game.endpoints;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import ar.com.ironsoft.marroccl.web.app.modules.config.daos.ConfigHolderDao;
+import ar.com.ironsoft.marroccl.web.app.modules.config.model.ConfigHolder;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.daos.VideoUrlDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.TitleMessage;
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.VideoUrl;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
@@ -29,10 +35,14 @@ import com.google.inject.Inject;
 @Api(name = "gameApi", version = "v1", namespace = @ApiNamespace(ownerDomain = "ironsoft", ownerName = "MarrocCL", packagePath = "app/game"))
 public class GameEndpointApi {
 
+    private Logger logger = Logger.getLogger(GameEndpointApi.class
+            .getSimpleName());
     private CommentaryDao commentaryDao;
     private MessageDao messageDao;
     private TaskLauncher taskLauncher;
     private CommentaryService commentaryService;
+    private ConfigHolderDao configHolderDao;
+    private VideoUrlDao videoUrlDao;
 
     @ApiMethod
     public void findUrls(@Named("gameId") String gameId) {
@@ -57,7 +67,9 @@ public class GameEndpointApi {
     @ApiMethod(httpMethod = "post")
     public void pushMessage(@Named("gameId") String gameId,
             @Named("messageId") String messageId) throws IOException {
+        ConfigHolder configHolder = configHolderDao.getConfig();
         Message message = messageDao.get(Message.class, messageId);
+        VideoUrl videoUrl = videoUrlDao.findByMinute(message.getMinute());
         //
         TitleMessage titleMessage = commentaryService
                 .parseTitleMessage(message);
@@ -68,9 +80,12 @@ public class GameEndpointApi {
         videoMessage.setMessage(titleMessage.getMessage());
         videoMessage.setType(message.getType());
         //
-        // TODO remove hardcode video
-        videoMessage
-                .setVideoLink("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_211215.mp4");
+        if (videoUrl != null) {
+            videoMessage.setVideoLink(videoUrl.getVideoUrl());
+        } else {
+            logger.log(Level.WARNING, "Video not found");
+            videoMessage.setVideoLink(null);
+        }
         videoMessage.setGifLink("");
         videoMessage.setThumbnailLink("");
         //
@@ -101,5 +116,15 @@ public class GameEndpointApi {
     @Inject
     public void setMessageDao(MessageDao messageDao) {
         this.messageDao = messageDao;
+    }
+
+    @Inject
+    public void setVideoUrlDao(VideoUrlDao videoUrlDao) {
+        this.videoUrlDao = videoUrlDao;
+    }
+
+    @Inject
+    public void setConfigHolderDao(ConfigHolderDao configHolderDao) {
+        this.configHolderDao = configHolderDao;
     }
 }
