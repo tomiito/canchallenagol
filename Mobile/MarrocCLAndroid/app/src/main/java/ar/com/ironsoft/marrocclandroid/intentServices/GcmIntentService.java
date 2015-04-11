@@ -11,6 +11,8 @@ import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Set;
 
 import ar.com.ironsoft.marrocclandroid.R;
@@ -92,11 +94,15 @@ public class GcmIntentService extends IntentService {
     private PushMessage parsePushMessage(Bundle bundle) {
         PushMessage pushMessage = new PushMessage();
         pushMessage.setGameId(bundle.getString("gameId"));
-        pushMessage.setTitle(bundle.getString("title"));
-        pushMessage.setMessage(bundle.getString("message"));
-        pushMessage.setType(bundle.getString("type"));
-        pushMessage.setPlayer(bundle.getString("player"));
-        pushMessage.setPlayer2(bundle.getString("player2"));
+        try {
+            pushMessage.setTitle(URLDecoder.decode(bundle.getString("title"), "UTF-8"));
+            pushMessage.setMessage(URLDecoder.decode(bundle.getString("message"), "UTF-8"));
+            pushMessage.setType(bundle.getString("type"));
+            pushMessage.setPlayer(URLDecoder.decode(bundle.getString("player"), "UTF-8"));
+            pushMessage.setPlayer2(URLDecoder.decode(bundle.getString("player2"), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         //pushMessage.setGifLink(bundle.getString("gifLink"));
         pushMessage.setVideoLink(bundle.getString("videoLink"));
         //pushMessage.setThumbnailLink(bundle.getString("thumbnailLink"));

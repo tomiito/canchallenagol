@@ -65,7 +65,11 @@ public class EventActivity extends BaseActionBarActivity {
         ImageView playerIcon = (ImageView)findViewById(R.id.list_item_main_event_icon_player);
 
         ((TextView)findViewById(R.id.list_item_main_event_player)).setText(pushMessage.getPlayer());
-        ((TextView)findViewById(R.id.list_item_main_event_message)).setText(pushMessage.getMessage());
+        if (pushMessage.getMessage() == "")
+            findViewById(R.id.list_item_main_event_message).setVisibility(View.GONE);
+        else
+            ((TextView)findViewById(R.id.list_item_main_event_message)).setText(pushMessage.getMessage());
+
         ((TextView)findViewById(R.id.list_item_main_event_title)).setText(pushMessage.getTitle());
         switch (pushMessage.getType().toLowerCase()) {
             case "goal":
