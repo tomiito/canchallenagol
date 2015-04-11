@@ -43,7 +43,6 @@
         <activity
             android:name=".activities.EventActivity"
             android:label="@string/event_name"
-            android:configChanges="keyboardHidden|locale|orientation|screenSize"
             android:exported="true">
         </activity>
 

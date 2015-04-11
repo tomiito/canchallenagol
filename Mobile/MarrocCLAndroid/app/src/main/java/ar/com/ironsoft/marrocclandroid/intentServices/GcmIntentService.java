@@ -74,7 +74,7 @@ public class GcmIntentService extends IntentService {
         intent.putExtra("pushMessage", pushMessage);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                intent, 0);
+                intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)

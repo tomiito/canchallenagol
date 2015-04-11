@@ -41,7 +41,7 @@ public class EventActivity extends BaseActionBarActivity {
         context = this;
 
         if (!processPushMessageFromIntent()) {
-            pushMessage = savedInstanceState.getParcelable("publication");
+            pushMessage = savedInstanceState.getParcelable("message");
         }
         setUI();
         playVideo();
