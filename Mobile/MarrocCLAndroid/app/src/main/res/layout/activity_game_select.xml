@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fillViewport="true">
 
     <RelativeLayout
@@ -10,7 +10,13 @@
         <ListView
             android:id="@+id/games_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp"
+            android:paddingLeft="3dp"
+            android:listSelector="@drawable/selectable"
+            android:paddingRight="3dp"
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="8dp">
 
         </ListView>
 
