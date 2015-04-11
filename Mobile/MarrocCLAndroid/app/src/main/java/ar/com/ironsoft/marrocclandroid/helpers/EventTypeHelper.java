@@ -24,10 +24,10 @@ public class EventTypeHelper {
                 playerIcon.setImageResource(R.drawable.red_card);
                 break;
             case "corner":
-                bigIcon .setImageResource(R.drawable.red_card_big);
+                bigIcon .setImageResource(R.drawable.corner);
                 break;
             case "offside":
-                bigIcon.setImageResource(R.drawable.red_card_big);
+                bigIcon.setImageResource(R.drawable.offside);
                 break;
             default:
                 // Put something
