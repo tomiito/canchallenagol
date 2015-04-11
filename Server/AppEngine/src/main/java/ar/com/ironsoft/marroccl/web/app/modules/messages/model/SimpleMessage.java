@@ -1,6 +1,7 @@
 package ar.com.ironsoft.marroccl.web.app.modules.messages.model;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 import ar.com.ironsoft.marroccl.web.gcm.GCMMessage;
 
@@ -28,7 +29,7 @@ public class SimpleMessage implements Serializable {
         this.message = message;
     }
 
-    public GCMMessage asGCM() {
+    public GCMMessage asGCM() throws UnsupportedEncodingException {
         return new GCMMessage.Builder().addData("message", message).build();
     }
 }
