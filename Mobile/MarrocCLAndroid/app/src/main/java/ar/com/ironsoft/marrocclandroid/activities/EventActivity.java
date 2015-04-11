@@ -2,6 +2,7 @@ package ar.com.ironsoft.marrocclandroid.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,17 +18,18 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import ar.com.ironsoft.marrocclandroid.R;
-import ar.com.ironsoft.marrocclandroid.adapters.GameListAdapter;
 import ar.com.ironsoft.marrocclandroid.domain.GameItem;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 import ar.com.ironsoft.marrocclandroid.helpers.EventTypeHelper;
@@ -46,7 +48,7 @@ public class EventActivity extends BaseActionBarActivity {
     private View scoreBoardContainer;
     private View loadingPartial;
 
-
+    private DisplayImageOptions options;
     private EventTypeHelper eventTypeHelper;
 
     @Override
@@ -64,6 +66,16 @@ public class EventActivity extends BaseActionBarActivity {
         context = this;
         scoreBoardContainer = findViewById(R.id.score_board_container);
         loadingPartial = findViewById(R.id.loading_circular_partial_container);
+
+        options = new DisplayImageOptions.Builder()
+                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .showImageForEmptyUri(R.drawable.ic_ball)
+                .showImageOnFail(R.drawable.ic_ball)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .displayer(new FadeInBitmapDisplayer(300, true, true, false))
+                .build();
 
         if (!processPushMessageFromIntent()) {
             pushMessage = savedInstanceState.getParcelable("message");
@@ -129,8 +141,8 @@ public class EventActivity extends BaseActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageLoader.getInstance().displayImage(gameItem.getHomeTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_home));
-                        ImageLoader.getInstance().displayImage(gameItem.getAwayTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_away));
+                        ImageLoader.getInstance().displayImage(gameItem.getHomeTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_home),options);
+                        ImageLoader.getInstance().displayImage(gameItem.getAwayTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_away),options);
 
                         ((TextView) findViewById(R.id.score_board_home_score)).setText(gameItem.getHomeTeamScore().toString());
                         ((TextView) findViewById(R.id.score_board_away_score)).setText(gameItem.getAwayTeamScore().toString());
