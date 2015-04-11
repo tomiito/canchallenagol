@@ -4,8 +4,8 @@ controller.controller('GameController', [
 		'$scope',
 		'$modal',
 		'$growl',
-		'Page',
-		function($scope, $modal, $growl, Page) {
+		'GamePlayModalController',
+		function($scope, $modal, $growl, GamePlayModalController) {
 
 			$scope.listGames = function() {
 				$scope.loading = true;
@@ -26,6 +26,28 @@ controller.controller('GameController', [
 					message.sending = false;
 					$scope.$apply();
 				});
+			}
+
+			$scope.showPlaySuccessMessage = function() {
+				$growl.success("GAME.PLAY.SUCCESS.TITLE",
+						"GAME.PLAY.SUCCESS.BODY", {});
+			}
+
+			$scope.playGame = function() {
+				$scope.openModalForPlayGame();
+			}
+
+			$scope.showStopSuccessMessage = function() {
+				$growl.success("GAME.STOP.SUCCESS.TITLE",
+						"GAME.STOP.SUCCESS.BODY", {});
+			}
+
+			$scope.stopGame = function() {
+
+				gapi.client.gameApi.gameEndpointApi.stopGame({}).execute(
+						function(result) {
+							$scope.showStopSuccessMessage();
+						});
 			}
 
 			$scope.showCreateDummySuccessMessage = function() {
@@ -63,6 +85,21 @@ controller.controller('GameController', [
 					'gameId' : $scope.commentary.gameId
 				}).execute(function(result) {
 					$scope.showFindSuccessMessage();
+				});
+			}
+
+			$scope.openModalForPlayGame = function() {
+				var modalInstance = $modal.open({
+					templateUrl : //
+					'app/modules/game/views/gamePlayModal.html',
+					controller : GamePlayModalController,
+					resolve : {}
+				});
+
+				modalInstance.result.then(function() {
+					$scope.showPlaySuccessMessage();
+				}, function() {
+
 				});
 			}
 

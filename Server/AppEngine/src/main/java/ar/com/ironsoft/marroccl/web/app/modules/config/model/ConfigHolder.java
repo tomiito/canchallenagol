@@ -34,7 +34,7 @@ public class ConfigHolder implements BaseModel {
     @Unindex
     private Integer extraMinutes = 3;
     @Unindex
-    private String inProgressGameId = "3";
+    private String inProgressGameId = "1";
 
     public String getXmlUrl() {
         return xmlUrl;
@@ -99,7 +99,7 @@ public class ConfigHolder implements BaseModel {
 
     public String getInProgressGameId() {
         if (inProgressGameId == null) {
-            inProgressGameId = "3";
+            inProgressGameId = "1";
         }
         return inProgressGameId;
     }

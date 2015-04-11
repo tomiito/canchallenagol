@@ -44,14 +44,22 @@ public class Game implements BaseModel {
     private String awayTeamLink;
     @Unindex
     private Integer awayTeamScore;
-    @IgnoreSave
-    private List<VideoMessage> messages = new ArrayList<>();
     /**
      * Time in string MM:ss
      */
     @Unindex
     private String time;
+    //
+    @Unindex
+    private int currentMinute;
+    @Unindex
+    private int currentSecond;
+    @Unindex
+    private long lastMillis;
+    @IgnoreSave
+    private List<VideoMessage> messages = new ArrayList<>();
 
+    //
     public String getGameId() {
         return gameId;
     }
@@ -156,5 +164,58 @@ public class Game implements BaseModel {
 
     public void setMessages(List<VideoMessage> messages) {
         this.messages = messages;
+    }
+
+    public int getCurrentMinute() {
+        return currentMinute;
+    }
+
+    public void setCurrentMinute(int currentMinute) {
+        this.currentMinute = currentMinute;
+    }
+
+    public int getCurrentSecond() {
+        return currentSecond;
+    }
+
+    public void setCurrentSecond(int currentSecond) {
+        this.currentSecond = currentSecond;
+    }
+
+    public long getLastMillis() {
+        return lastMillis;
+    }
+
+    public void setLastMillis(long lastMillis) {
+        this.lastMillis = lastMillis;
+    }
+
+    public void stop() {
+        lastMillis = 0l;
+        currentMinute = 0;
+        currentSecond = 0;
+        status = 1;
+    }
+
+    public void start(int minute, int second) {
+        currentMinute = minute;
+        currentSecond = second;
+        lastMillis = System.currentTimeMillis();
+        status = 2;
+    }
+
+    public void refreshCurrentTime() {
+        // In progress status 2
+        if (status == 2) {
+            long millis = System.currentTimeMillis();
+            long diff = (millis - lastMillis) / 1000;
+            currentMinute += diff / 60;
+            currentSecond += diff % 60;
+            if (currentSecond >= 60) {
+                currentMinute += currentSecond / 60;
+                currentSecond = currentSecond % 60;
+            }
+            lastMillis = millis;
+        }
     }
 }
