@@ -204,7 +204,7 @@ public class EventActivity extends BaseActionBarActivity {
             // populate the share intent with data
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, ushMessage.getTitle() + " / " + pushMessage.getMessage() + " / " + pushMessage.getVideoLink());
+            intent.putExtra(Intent.EXTRA_TEXT, pushMessage.getTitle() + " / " + pushMessage.getMessage() + " / " + pushMessage.getVideoLink());
             shareActionProvider.setShareIntent(intent);
         }
     }

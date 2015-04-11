@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:paddingTop="3dp"
             android:paddingLeft="3dp"
-            android:listSelector="@drawable/selectable"
             android:paddingRight="3dp"
             android:horizontalSpacing="5dp"
             android:verticalSpacing="8dp">
