@@ -37,8 +37,9 @@ public class GameEndpointApi {
     @ApiMethod
     public void findUrls(@Named("gameId") String gameId) {
         //
-        taskLauncher.launchTask(FindUrlsTaskServlet.class, new TaskParameter(
-                Commentary.GAME_ID, gameId));
+        taskLauncher.launchTask(TaskLauncher.QUEUE_FIND_URL_PAGED,
+                FindUrlsTaskServlet.class, new TaskParameter(
+                        Commentary.GAME_ID, gameId));
     }
 
     @ApiMethod
@@ -77,7 +78,8 @@ public class GameEndpointApi {
         videoMessage.setMinutes(message.getMinute());
         videoMessage.setSeconds(message.getSecond());
         //
-        taskLauncher.launchTask(SendAllMessageTask.class,
+        taskLauncher.launchTask(TaskLauncher.QUEUE_GCM_PAGED,
+                SendAllMessageTask.class,
                 ObjectSerializationUtils.serialize(videoMessage));
     }
 

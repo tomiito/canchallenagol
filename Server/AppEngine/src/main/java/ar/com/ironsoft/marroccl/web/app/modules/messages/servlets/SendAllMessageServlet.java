@@ -43,7 +43,8 @@ public class SendAllMessageServlet extends BaseServlet {
         SimpleMessage simpleMessage = new SimpleMessage();
         simpleMessage.setMessage(message);
         //
-        taskLauncher.launchTask(SendAllMessageTask.class,
+        taskLauncher.launchTask(TaskLauncher.QUEUE_GCM_PAGED,
+                SendAllMessageTask.class,
                 ObjectSerializationUtils.serialize(simpleMessage));
         //
         setSuccess(resp);

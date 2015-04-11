@@ -56,7 +56,8 @@ public class FindUrlsTaskServlet extends TaskServlet {
             //
             for (int i = 0; i <= totalVideos; i++) {
                 //
-                taskLauncher.launchTask(FindUrlTaskServlet.class,
+                taskLauncher.launchTask(TaskLauncher.QUEUE_FIND_URL,
+                        FindUrlTaskServlet.class, //
                         new TaskParameter(Commentary.GAME_ID, gameId), //
                         new TaskParameter("video", String.valueOf(i)), //
                         new TaskParameter("startUrl", startUrl), //

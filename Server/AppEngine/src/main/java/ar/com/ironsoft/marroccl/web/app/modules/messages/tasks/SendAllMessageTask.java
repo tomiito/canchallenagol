@@ -60,12 +60,14 @@ public class SendAllMessageTask extends TaskServlet {
                     MulticastMessage mm = new MulticastMessage(multicastKey,
                             simpleMessage);
                     // Send message to gcm
-                    taskLauncher.launchTask(SendMessageTask.class,
+                    taskLauncher.launchTask(TaskLauncher.QUEUE_GCM,
+                            SendMessageTask.class,
                             ObjectSerializationUtils.serialize(mm));
                     // Iterate through over next 1000 elements
                     if (devicePagingResult.getCursor() != null) {
                         simpleMessage.setCursor(devicePagingResult.getCursor());
-                        taskLauncher.launchTask(SendAllMessageTask.class,
+                        taskLauncher.launchTask(TaskLauncher.QUEUE_GCM_PAGED,
+                                SendAllMessageTask.class,
                                 ObjectSerializationUtils
                                         .serialize(simpleMessage));
                     }

@@ -37,7 +37,8 @@ public class MessagesEndpointApi {
         videoMessage.setSeconds(0);
         videoMessage.setThumbnailLink(thumbnailLink);
         //
-        taskLauncher.launchTask(SendAllMessageTask.class,
+        taskLauncher.launchTask(TaskLauncher.QUEUE_GCM_PAGED,
+                SendAllMessageTask.class,
                 ObjectSerializationUtils.serialize(videoMessage));
     }
 
