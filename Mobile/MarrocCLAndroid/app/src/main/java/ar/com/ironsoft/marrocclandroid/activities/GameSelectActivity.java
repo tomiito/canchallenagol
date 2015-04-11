@@ -1,8 +1,11 @@
 package ar.com.ironsoft.marrocclandroid.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -19,6 +22,7 @@ import ar.com.ironsoft.marrocclandroid.adapters.GameEventsAdapter;
 import ar.com.ironsoft.marrocclandroid.adapters.GameListAdapter;
 import ar.com.ironsoft.marrocclandroid.domain.GameItem;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
+import ar.com.ironsoft.marrocclandroid.listeners.OnSingleClickListener;
 
 
 public class GameSelectActivity extends BaseActionBarActivity {
@@ -36,6 +40,15 @@ public class GameSelectActivity extends BaseActionBarActivity {
 
         context = this;
         gamesList = (ListView)findViewById(R.id.games_list);
+        gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent().setClass(context, GameActivity.class);
+
+                intent.putExtra("gameId", (String) view.findViewById(R.id.list_item_main_game_home_score_name).getTag());
+                context.startActivity(intent);
+            }
+        });
 
         getGames();
     }

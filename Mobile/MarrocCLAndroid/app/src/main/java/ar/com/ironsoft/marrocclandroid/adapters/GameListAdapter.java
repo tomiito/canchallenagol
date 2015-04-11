@@ -43,6 +43,7 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
         ImageLoader.getInstance().displayImage(item.homeTeamLink, gameHolder.imageHome);
         ImageLoader.getInstance().displayImage(item.awayTeamLink, gameHolder.imageAway);
 
+        gameHolder.homeName.setTag(item.gameId);
         gameHolder.homeName.setText(item.homeTeamName);
         gameHolder.awayName.setText(item.awayTeamName);
 
@@ -59,6 +60,7 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
 
     private void configureViewHolder(View convertView) {
         GameHolder gameHolder = new GameHolder();
+
         gameHolder.imageHome = (ImageView)convertView.findViewById(R.id.list_item_main_game_image_rival_home);
         gameHolder.imageAway = (ImageView)convertView.findViewById(R.id.list_item_main_game_image_rival_away);
 
@@ -71,6 +73,7 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
     }
 
     public static class GameHolder {
+
         public ImageView imageHome;
         public ImageView imageAway;
         public TextView homeName;

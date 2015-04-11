@@ -47,7 +47,6 @@ public class SplashActivity extends Activity {
 
     String regid;
 
-
     private static final long SPLASH_SCREEN_DELAY = 1000;
     private Timer timer;
 
