@@ -40,15 +40,15 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
         }
 
         final GameHolder gameHolder = (GameHolder) convertView.getTag();
-        ImageLoader.getInstance().displayImage(item.homeTeamLink, gameHolder.imageHome);
-        ImageLoader.getInstance().displayImage(item.awayTeamLink, gameHolder.imageAway);
+        ImageLoader.getInstance().displayImage(item.getHomeTeamLink(), gameHolder.imageHome);
+        ImageLoader.getInstance().displayImage(item.getAwayTeamLink(), gameHolder.imageAway);
 
-        gameHolder.homeName.setTag(item.gameId);
-        gameHolder.homeName.setText(item.homeTeamName);
-        gameHolder.awayName.setText(item.awayTeamName);
+        gameHolder.homeName.setTag(item.getGameId());
+        gameHolder.homeName.setText(item.getHomeTeamName());
+        gameHolder.awayName.setText(item.getAwayTeamName());
 
-        gameHolder.homeScore.setText(item.homeTeamScore.toString());
-        gameHolder.awayScore.setText(item.awayTeamScore.toString());
+        gameHolder.homeScore.setText(item.getHomeTeamScore().toString());
+        gameHolder.awayScore.setText(item.getAwayTeamScore().toString());
 
         return convertView;
     }

@@ -16,6 +16,7 @@
             android:src="@drawable/yellow_card_big"/>
 
         <LinearLayout
+            android:id="@+id/list_item_main_event_time_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

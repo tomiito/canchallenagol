@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,10 +36,15 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
             configureViewHolder(convertView);
         }
 
-        final EventHolder listingHolder = (EventHolder) convertView.getTag();
-        listingHolder.image.setImageResource(R.drawable.ic_ball); // TODO: GV Change with Type.
-        listingHolder.title.setText(item.getTitle());
-        listingHolder.message.setText(item.getMessage());
+        final EventHolder eventHolder = (EventHolder) convertView.getTag();
+        eventHolder.title.setTag(item);
+        eventHolder.image.setImageResource(R.drawable.ic_ball); // TODO: GV Change with Type.
+        eventHolder.title.setText(item.getTitle());
+        eventHolder.message.setText(item.getMessage());
+        eventHolder.player.setText(item.getPlayer());
+        eventHolder.time.setText(item.getMinutes() + ":" + item.getSeconds() + "''");
+        if (position >= 1)
+            eventHolder.timeContainer.setBackgroundResource(R.color.gray_darker);
 
         return convertView;
     }
@@ -51,8 +57,12 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
     private void configureViewHolder(View convertView) {
         EventHolder eventHolder = new EventHolder();
         eventHolder.image = (ImageView)convertView.findViewById(R.id.list_item_main_event_image);
+        eventHolder.playerIcon = (ImageView)convertView.findViewById(R.id.list_item_main_event_icon_player);
         eventHolder.title = (TextView)convertView.findViewById(R.id.list_item_main_event_title);
         eventHolder.message = (TextView)convertView.findViewById(R.id.list_item_main_event_message);
+        eventHolder.player = (TextView)convertView.findViewById(R.id.list_item_main_event_player);
+        eventHolder.time = (TextView)convertView.findViewById(R.id.list_item_main_event_time);
+        eventHolder.timeContainer = (LinearLayout)convertView.findViewById(R.id.list_item_main_event_time_container);
         convertView.setTag(eventHolder);
     }
 
@@ -60,5 +70,9 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
         public ImageView image;
         public TextView title;
         public TextView message;
+        public ImageView playerIcon;
+        public TextView player;
+        public LinearLayout timeContainer;
+        public TextView time;
     }
 }

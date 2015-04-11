@@ -3,16 +3,25 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <include layout="@layout/score_board" />
+
+        <View
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_gray" />
+
         <ListView
-            android:id="@+id/match_events"
+            android:id="@+id/game_events"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </ListView>
 
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

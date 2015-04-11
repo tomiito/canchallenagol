@@ -127,11 +127,11 @@ public class EventActivity extends BaseActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageLoader.getInstance().displayImage(gameItem.homeTeamLink, (ImageView)findViewById(R.id.score_board_image_rival_home));
-                        ImageLoader.getInstance().displayImage(gameItem.awayTeamLink, (ImageView)findViewById(R.id.score_board_image_rival_away));
+                        ImageLoader.getInstance().displayImage(gameItem.getHomeTeamLink(), (ImageView)findViewById(R.id.score_board_image_rival_home));
+                        ImageLoader.getInstance().displayImage(gameItem.getAwayTeamLink(), (ImageView)findViewById(R.id.score_board_image_rival_away));
 
-                        ((TextView)findViewById(R.id.score_board_home_score)).setText(gameItem.homeTeamScore.toString());
-                        ((TextView)findViewById(R.id.score_board_away_score)).setText(gameItem.awayTeamScore.toString());
+                        ((TextView)findViewById(R.id.score_board_home_score)).setText(gameItem.getHomeTeamScore().toString());
+                        ((TextView)findViewById(R.id.score_board_away_score)).setText(gameItem.getAwayTeamScore().toString());
                     }
                 });
             }

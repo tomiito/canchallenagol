@@ -1,6 +1,7 @@
 package ar.com.ironsoft.marrocclandroid.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -8,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -30,6 +33,7 @@ import java.util.Set;
 
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.adapters.GameEventsAdapter;
+import ar.com.ironsoft.marrocclandroid.domain.GameFullItem;
 import ar.com.ironsoft.marrocclandroid.domain.GameItem;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 import ar.com.ironsoft.marrocclandroid.helpers.SharedPreferencesHelper;
@@ -37,13 +41,11 @@ import ar.com.ironsoft.marrocclandroid.helpers.SharedPreferencesHelper;
 
 public class GameActivity extends BaseActionBarActivity {
 
-    private VideoView videoView;
-    private ProgressBar progressBar;
-    private ListView matchEvents;
+    private ListView gameEvents;
 
     private GameEventsAdapter adapter;
 
-    private Integer gameId;
+    private String gameId;
 
     Context context;
 
@@ -52,17 +54,19 @@ public class GameActivity extends BaseActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        gameId = getIntent().getStringExtra("gameId");
+
         context = this;
 
         setUI();
-        loadEventGames();
+        loadEventsGame();
     }
 
-    private void loadEventGames() {
+    private void loadEventsGame() {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://marroccl-909.appspot.com/game/getfull?gameId=" + gameId)
+                .url("https://marroccl-909.appspot.com/game/getFull?gameId=" + gameId)
                 .get()
                 .build();
 
@@ -76,35 +80,36 @@ public class GameActivity extends BaseActionBarActivity {
             public void onResponse(Response response) throws IOException {
                 Gson gson = new Gson();
 
-                final GameItem gameItem = gson.fromJson(response.body().string(), GameItem.class);
+                final GameFullItem gameFullItem = gson.fromJson(response.body().string(), GameFullItem.class);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageLoader.getInstance().displayImage(gameItem.homeTeamLink, (ImageView)findViewById(R.id.score_board_image_rival_home));
-                        ImageLoader.getInstance().displayImage(gameItem.awayTeamLink, (ImageView)findViewById(R.id.score_board_image_rival_away));
+                        ImageLoader.getInstance().displayImage(gameFullItem.getHomeTeamLink(), (ImageView)findViewById(R.id.score_board_image_rival_home));
+                        ImageLoader.getInstance().displayImage(gameFullItem.getAwayTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_away));
 
-                        ((TextView)findViewById(R.id.score_board_home_score)).setText(gameItem.homeTeamScore.toString());
-                        ((TextView)findViewById(R.id.score_board_away_score)).setText(gameItem.awayTeamScore.toString());
+                        ((TextView)findViewById(R.id.score_board_home_score)).setText(gameFullItem.getHomeTeamScore().toString());
+                        ((TextView)findViewById(R.id.score_board_away_score)).setText(gameFullItem.getAwayTeamScore().toString());
+
+                        adapter = new GameEventsAdapter(0, gameFullItem.getMessages(), context);
+                        gameEvents.setAdapter(adapter);
                     }
                 });
             }
         });
-
-        Gson gson = new Gson();
-        ArrayList<PushMessage> events = new ArrayList<>();
-        //for (String value : recordsSaved) {
-        //    events.add(gson.fromJson(value, PushMessage.class));
-        //}
-        adapter = new GameEventsAdapter(0, new ArrayList(events), this);
-        matchEvents.setAdapter(adapter);
-
     }
 
     private void setUI() {
-        videoView = (VideoView)findViewById(R.id.video);
-        progressBar = (ProgressBar)findViewById(R.id.progress_bar);
-        matchEvents = (ListView)findViewById(R.id.match_events);
+        gameEvents = (ListView)findViewById(R.id.game_events);
+        gameEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent().setClass(context, EventActivity.class);
+
+                intent.putExtra("pushMessage", (PushMessage) view.findViewById(R.id.list_item_main_event_title).getTag());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
