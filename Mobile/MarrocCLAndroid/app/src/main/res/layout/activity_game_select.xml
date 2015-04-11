@@ -1,0 +1,27 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/games_list"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp"
+            android:paddingLeft="3dp"
+            android:listSelector="@drawable/selectable"
+            android:paddingRight="3dp"
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="8dp">
+
+        </ListView>
+
+        <include layout="@layout/loading_fullscreen" />
+
+    </RelativeLayout>
+</ScrollView>

@@ -3,19 +3,24 @@ package ar.com.ironsoft.marrocclandroid.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by gabrielvilloldo on 4/10/15.
  */
 public class PushMessage implements Parcelable {
-    public String title;
-    public String message;
-    public String videoLink;
-    public String thumbnailLink;
-    public String gifLink;
-    public String additionalData;
-    public Integer timeMinutes;
-    public Integer timeSeconds;
-    public String type;
+    private String gameId;
+    private String title;
+    private String message;
+    private String videoLink;
+    private String thumbnailLink;
+    private String gifLink;
+    private String additionalData;
+    private Integer minutes;
+    private Integer seconds;
+    private String type;
+    private String player;
+    private String player2;
 
     public static final Parcelable.Creator<PushMessage> CREATOR = new Parcelable.Creator<PushMessage>() {
         @Override
@@ -31,9 +36,12 @@ public class PushMessage implements Parcelable {
 
     public PushMessage() { }
 
-    public PushMessage(String title, String message) {
-        this.title = title;
-        this.message = message;
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
     public String getTitle() {
@@ -84,20 +92,20 @@ public class PushMessage implements Parcelable {
         this.additionalData = aditionalData;
     }
 
-    public Integer getTimeMinutes() {
-        return timeMinutes;
+    public Integer getMinutes() {
+        return minutes;
     }
 
-    public void setTimeMinutes(Integer timeMinutes) {
-        this.timeMinutes = timeMinutes;
+    public void setMinutes(Integer minutes) {
+        this.minutes = minutes;
     }
 
-    public Integer getTimeSeconds() {
-        return timeSeconds;
+    public Integer getSeconds() {
+        return seconds;
     }
 
-    public void setTimeSeconds(Integer timeSeconds) {
-        this.timeSeconds = timeSeconds;
+    public void setSeconds(Integer seconds) {
+        this.seconds = seconds;
     }
 
     public String getType() {
@@ -108,6 +116,22 @@ public class PushMessage implements Parcelable {
         this.type = type;
     }
 
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    public String getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer2(String player) {
+        this.player2 = player;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -115,27 +139,30 @@ public class PushMessage implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(gameId);
         dest.writeString(title);
         dest.writeString(message);
         dest.writeString(videoLink);
         dest.writeString(thumbnailLink);
         dest.writeString(gifLink);
         dest.writeString(additionalData);
-        dest.writeInt(timeMinutes);
-        dest.writeInt(timeSeconds);
+        dest.writeInt(minutes);
+        dest.writeInt(seconds);
         dest.writeString(type);
+        dest.writeString(player);
     }
 
     private PushMessage(Parcel source) {
+        gameId = source.readString();
         title = source.readString();
         message = source.readString();
         videoLink = source.readString();
         thumbnailLink = source.readString();
         gifLink = source.readString();
         additionalData = source.readString();
-        timeMinutes = source.readInt();
-        timeSeconds = source.readInt();
+        minutes = source.readInt();
+        seconds = source.readInt();
         type = source.readString();
-
+        player = source.readString();
     }
 }

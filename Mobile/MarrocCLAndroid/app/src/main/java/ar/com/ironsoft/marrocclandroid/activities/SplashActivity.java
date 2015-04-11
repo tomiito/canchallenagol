@@ -1,22 +1,16 @@
 package ar.com.ironsoft.marrocclandroid.activities;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.MediaController;
+import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,13 +22,15 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ar.com.ironsoft.marrocclandroid.R;
+import ar.com.ironsoft.marrocclandroid.adapters.GameEventsAdapter;
 
 
-public class MainActivity extends ActionBarActivity {
+public class SplashActivity extends Activity {
 
-    public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -43,8 +39,7 @@ public class MainActivity extends ActionBarActivity {
 
     static final String TAG = "MarrocApp";
 
-    private VideoView videoView;
-    private ProgressBar progressBar;
+    private GameEventsAdapter adapter;
 
     GoogleCloudMessaging gcm;
     SharedPreferences prefs;
@@ -52,14 +47,16 @@ public class MainActivity extends ActionBarActivity {
 
     String regid;
 
+    private static final long SPLASH_SCREEN_DELAY = 1000;
+    private Timer timer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splash);
+        timer = new Timer();
 
         context = this;
-
-        setUI();
 
         // Check device for Play Services APK. If check succeeds, proceed with
         //  GCM registration.
@@ -70,37 +67,34 @@ public class MainActivity extends ActionBarActivity {
             if (regid.isEmpty()) {
                 registerInBackground();
             }
+            else {
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        goToNextStep();
+                    }
+                };
+
+                timer.schedule(task, SPLASH_SCREEN_DELAY);
+            }
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
     }
 
-    private void setUI() {
-        videoView = (VideoView)findViewById(R.id.video);
-        progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+    private void goToNextStep() {
+        Intent mainIntent = new Intent().setClass(
+                SplashActivity.this, GameSelectActivity.class);
+        startActivity(mainIntent);
 
+        finish();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+        timer.purge();
     }
 
     /**
@@ -156,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
     private SharedPreferences getGCMPreferences(Context context) {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the registration ID in your app is up to you.
-        return getSharedPreferences(MainActivity.class.getSimpleName(),
+        return getSharedPreferences(GameActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
 
@@ -239,12 +233,17 @@ public class MainActivity extends ActionBarActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                Toast.makeText(context, "NO NENE NO", Toast.LENGTH_LONG).show();
+
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                Toast.makeText(context, "Andooo", Toast.LENGTH_LONG).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        goToNextStep();
+                    }
+                });
             }
         });
     }
@@ -266,4 +265,5 @@ public class MainActivity extends ActionBarActivity {
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
     }
+
 }

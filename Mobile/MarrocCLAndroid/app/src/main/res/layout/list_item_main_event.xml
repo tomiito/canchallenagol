@@ -1,33 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="5dp">
 
-    <ImageView
-        android:id="@+id/list_item_main_event_image"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_ball"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/list_item_main_event_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_ball"/>
+
+        <LinearLayout
+            android:id="@+id/list_item_main_event_time_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:background="@color/light_blue_transparent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_clock"/>
+
+            <TextView
+                android:id="@+id/list_item_main_event_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:text="31:22''"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingTop="3dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/list_item_main_event_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textSize="17sp"
             android:text="Gol de Argentina" />
+
         <TextView
             android:id="@+id/list_item_main_event_message"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:ellipsize="end"
             android:text="34' Barrilete cosmico"/>
+
+       <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <ImageView
+                android:id="@+id/list_item_main_event_icon_player"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:src="@drawable/yellow_card"/>
+
+            <TextView
+                android:id="@+id/list_item_main_event_player"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/list_item_main_event_icon_player"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="5dp"
+                android:layout_alignBaseline="@id/list_item_main_event_icon_player"
+                android:layout_height="wrap_content"
+                android:text="Di Maria" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MarrocCL" parent="Theme.MarrocCL.Base" />
+
+    <style name="Theme.MarrocCL.Base" parent="@style/Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
+        <item name="windowActionModeOverlay">false</item>
+        <item name="actionModeBackground">@color/gray</item>
+        <item name="windowActionBar">true</item>
+    </style>
+</resources>

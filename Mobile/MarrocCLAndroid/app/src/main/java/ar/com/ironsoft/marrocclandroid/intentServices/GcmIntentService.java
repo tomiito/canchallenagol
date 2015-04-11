@@ -6,15 +6,19 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.Set;
 
 import ar.com.ironsoft.marrocclandroid.R;
-import ar.com.ironsoft.marrocclandroid.activities.MainActivity;
+import ar.com.ironsoft.marrocclandroid.activities.EventActivity;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
+import ar.com.ironsoft.marrocclandroid.helpers.SharedPreferencesHelper;
 import ar.com.ironsoft.marrocclandroid.receivers.GcmBroadcastReceiver;
 
 /**
@@ -47,7 +51,9 @@ public class GcmIntentService extends IntentService {
                     // Do Nothing
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE:
-                    sendNotification(parsePushMessage(extras));
+                    PushMessage pushMessage = parsePushMessage(extras);
+
+                    sendNotification(pushMessage);
                     break;
             }
         }
@@ -58,30 +64,55 @@ public class GcmIntentService extends IntentService {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Intent intent = new Intent(this, EventActivity.class);
+        intent.putExtra("pushMessage", pushMessage);
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_ball)
                         .setContentTitle(pushMessage.getTitle())
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(pushMessage.getTitle()))
+                        .setAutoCancel(true)
                         .setContentText(pushMessage.getMessage());
 
+        switch (pushMessage.getType()) {
+            case "goal":
+                mBuilder.setSmallIcon(R.drawable.ic_ball);
+                break;
+            case "yellow card":
+                mBuilder.setSmallIcon(R.drawable.yellow_card);
+                break;
+            case "red card":
+                mBuilder.setSmallIcon(R.drawable.yellow_card);
+                break;
+            default:
+                mBuilder.setSmallIcon(R.drawable.shoes);
+                break;
+        }
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
     private PushMessage parsePushMessage(Bundle bundle) {
         PushMessage pushMessage = new PushMessage();
-        pushMessage.setTitle(bundle.getString("title"));
-        pushMessage.setMessage(bundle.getString("message"));
-        pushMessage.setGifLink(bundle.getString("gifLink"));
+        pushMessage.setGameId(bundle.getString("gameId"));
+        try {
+            pushMessage.setTitle(URLDecoder.decode(bundle.getString("title"), "UTF-8"));
+            pushMessage.setMessage(URLDecoder.decode(bundle.getString("message"), "UTF-8"));
+            pushMessage.setType(bundle.getString("type"));
+            pushMessage.setPlayer(URLDecoder.decode(bundle.getString("player"), "UTF-8"));
+            pushMessage.setPlayer2(URLDecoder.decode(bundle.getString("player2"), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        //pushMessage.setGifLink(bundle.getString("gifLink"));
         pushMessage.setVideoLink(bundle.getString("videoLink"));
-        pushMessage.setThumbnailLink(bundle.getString("thumbnailLink"));
-        pushMessage.setTimeMinutes(bundle.getInt("minutes"));
-        pushMessage.setTimeSeconds(bundle.getInt("seconds"));
+        //pushMessage.setThumbnailLink(bundle.getString("thumbnailLink"));
+        pushMessage.setMinutes(Integer.parseInt(bundle.getString("minutes")));
+        pushMessage.setSeconds(Integer.parseInt(bundle.getString("seconds")));
         return pushMessage;
     }
 }

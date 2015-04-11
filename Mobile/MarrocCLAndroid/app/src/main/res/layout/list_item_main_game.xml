@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/listing_item_border"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/list_item_main_game_image_rival_home"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_ball"/>
+
+        <TextView
+            android:id="@+id/list_item_main_game_home_score_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_item_main_game_image_rival_home"
+            android:paddingLeft="5dp"
+            android:textSize="16sp"
+            android:text="River" />
+
+        <TextView
+            android:id="@+id/list_item_main_game_home_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/list_item_main_game_image_rival_home"
+            android:layout_toLeftOf="@+id/separator"
+            android:layout_marginRight="15dp"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark"
+            android:text="11" />
+
+        <TextView
+            android:id="@+id/separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBaseline="@id/list_item_main_game_home_score"
+            android:text="-"
+            android:textColor="@color/green_dark"
+            android:textSize="50sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/list_item_main_game_away_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_alignBaseline="@+id/list_item_main_game_image_rival_away"
+            android:layout_toRightOf="@id/separator"
+            android:text="22"
+            android:textSize="50sp"
+            android:textColor="@color/green_dark"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/list_item_main_game_image_rival_away"
+            android:paddingLeft="5dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_ball"/>
+
+        <TextView
+            android:id="@+id/list_item_main_game_away_score_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_alignRight="@id/list_item_main_game_image_rival_away"
+            android:layout_below="@id/list_item_main_game_image_rival_away"
+            android:text="Boca"/>
+
+        <TextView
+            android:id="@+id/list_item_main_game_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/list_item_main_game_image_rival_away"
+            android:text="Jugando"/>
+
+</RelativeLayout>
