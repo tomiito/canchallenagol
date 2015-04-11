@@ -35,10 +35,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <include layout="@layout/list_item_main_event" />
 
+            <View
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray" />
+
+            <include layout="@layout/score_board" />
+
+            <View
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
