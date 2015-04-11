@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 import ar.com.ironsoft.marroccl.web.app.modules.config.daos.ConfigHolderDao;
 import ar.com.ironsoft.marroccl.web.app.modules.config.model.ConfigHolder;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.daos.GameDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.Game;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameDummyService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.VideoMessageService;
@@ -41,6 +43,7 @@ public class GameEndpointApi {
     private ConfigHolderDao configHolderDao;
     private GameDummyService gameDummyService;
     private GameService gameService;
+    private GameDao gameDao;
     private VideoMessageService videoMessageService;
 
     @ApiMethod
@@ -64,6 +67,20 @@ public class GameEndpointApi {
     }
 
     @ApiMethod(httpMethod = "post")
+    public void startGame(@Named("minute") int minute,
+            @Named("second") int second) throws IOException {
+        ConfigHolder configHolder = configHolderDao.getConfig();
+        gameService.startGame(configHolder.getInProgressGameId(), minute,
+                second);
+    }
+
+    @ApiMethod(httpMethod = "post")
+    public void stopGame() throws IOException {
+        ConfigHolder configHolder = configHolderDao.getConfig();
+        gameService.stopGame(configHolder.getInProgressGameId());
+    }
+
+    @ApiMethod(httpMethod = "post")
     public void parseGame() throws IOException {
         gameService.parseGame();
     }
@@ -79,6 +96,9 @@ public class GameEndpointApi {
         ConfigHolder configHolder = configHolderDao.getConfig();
         VideoMessage videoMessage = videoMessageService.createVideoMessage(
                 configHolder, messageId);
+        Game game = gameDao.get(Game.class, configHolder.getInProgressGameId());
+        game.start(videoMessage.getMinutes(), videoMessage.getSeconds());
+        gameDao.save(game);
         //
         taskLauncher.launchTask(TaskLauncher.QUEUE_GCM_PAGED,
                 SendAllMessageTask.class,
@@ -113,6 +133,11 @@ public class GameEndpointApi {
     @Inject
     public void setGameService(GameService gameService) {
         this.gameService = gameService;
+    }
+
+    @Inject
+    public void setGameDao(GameDao gameDao) {
+        this.gameDao = gameDao;
     }
 
     @Inject

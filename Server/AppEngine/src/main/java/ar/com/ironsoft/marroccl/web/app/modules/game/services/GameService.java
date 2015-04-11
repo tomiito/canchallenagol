@@ -17,6 +17,7 @@ import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
+import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -36,6 +37,12 @@ public class GameService {
     public Game getGameWithCurrentScore(String gameId, Integer minute,
             Integer second) {
         Game game = gameDao.get(Game.class, gameId);
+        return getGameWithCurrentScore(game, minute, second);
+    }
+
+    public Game getGameWithCurrentScore(Game game, Integer minute,
+            Integer second) {
+        Preconditions.checkNotNull(game);
         // Replace final score by current score in that minute
         GameGoal currentScore = gameGoalDao.findByMinuteAndSecond(minute,
                 second);
@@ -61,6 +68,18 @@ public class GameService {
         Commentary commentary = gameXmlService.parseGameXml(xml);
         commentaryService.saveCommentary(commentary);
         scoreService.processGoals(commentary);
+    }
+
+    public void startGame(String inProgressGameId, int minute, int second) {
+        Game game = gameDao.get(Game.class, inProgressGameId);
+        game.start(minute, second);
+        gameDao.save(game);
+    }
+
+    public void stopGame(String inProgressGameId) {
+        Game game = gameDao.get(Game.class, inProgressGameId);
+        game.stop();
+        gameDao.save(game);
     }
 
     @Inject

@@ -1,4 +1,5 @@
-var module = angular.module('gameModule', ['gameController']);
+var module = angular.module('gameModule', ['gameController',
+		'gamePlayModalController']);
 
 module.provider('gameURL', [function() {
 	return {

@@ -17,7 +17,8 @@ import com.googlecode.objectify.annotation.Unindex;
  */
 @Entity
 @Index
-public class Message extends BaseElement implements BaseModel {
+public class Message extends BaseElement implements BaseModel,
+        Comparable<Message> {
 
     @Id
     private String messageId;
@@ -129,8 +130,32 @@ public class Message extends BaseElement implements BaseModel {
     }
 
     public boolean isNotFinal() {
-        boolean isFinal = type.startsWith("end") && minute == 0 && second == 0
+        return !isFinal();
+    }
+
+    public boolean isFinal() {
+        boolean startEnd = type != null && type.startsWith("end");
+        boolean commentFinal = comment != null
                 && comment.toLowerCase().startsWith("final del partido");
-        return !isFinal;
+        boolean isFinal = startEnd && minute == 0 && second == 0
+                && commentFinal;
+        return isFinal;
+    }
+
+    @Override
+    public int compareTo(Message o) {
+        if (o.isFinal()) {
+            return 1;
+        } else if (this.isFinal()) {
+            return -1;
+        } else if (period.equals(o.period)) {
+            if (minute.equals(o.minute)) {
+                return o.second.compareTo(second);
+            } else {
+                return o.minute.compareTo(minute);
+            }
+        } else {
+            return o.period.compareTo(period);
+        }
     }
 }

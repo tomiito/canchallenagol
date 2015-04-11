@@ -44,8 +44,8 @@ public class GameDummyService {
     private Game createGame1() {
         Game game = new Game();
         game.setGameId("1");
-        game.setTime("90:00");
-        game.setStatus(3);
+        game.setTime("00:01");
+        game.setStatus(2);
         //
         game.setHomeTeamId("7");
         game.setHomeTeamName("Huracan");
@@ -55,7 +55,7 @@ public class GameDummyService {
         game.setAwayTeamId("2");
         game.setAwayTeamName("Boca Juniors");
         game.setAwayTeamLink("http://lh3.ggpht.com/-F2Zh5rBDCQs/T_S3u8W3mHI/AAAAAAAADIM/rmvMETxY3C4/s150/bocajuniors.png");
-        game.setAwayTeamScore(2);
+        game.setAwayTeamScore(0);
         //
         return game;
     }
@@ -101,8 +101,8 @@ public class GameDummyService {
     private Game createGame4() {
         Game game = new Game();
         game.setGameId("4");
-        game.setTime("15:43");
-        game.setStatus(2);
+        game.setTime("00:00");
+        game.setStatus(1);
         //
         game.setHomeTeamId("3");
         game.setHomeTeamName("Independiente");
@@ -120,13 +120,13 @@ public class GameDummyService {
     private Game createGame5() {
         Game game = new Game();
         game.setGameId("5");
-        game.setTime("90:00");
-        game.setStatus(3);
+        game.setTime("00:00");
+        game.setStatus(1);
         //
         game.setHomeTeamId("1");
         game.setHomeTeamName("River Plate");
         game.setHomeTeamLink("http://lh4.ggpht.com/-M4TSXz-rRKg/T_S4FbkWK-I/AAAAAAAADR4/Oq2Ed2h2lN0/s150/riverplate.png");
-        game.setHomeTeamScore(1);
+        game.setHomeTeamScore(0);
         //
         game.setAwayTeamId("5");
         game.setAwayTeamName("San Lorenzo");

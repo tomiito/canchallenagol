@@ -1,7 +1,8 @@
 package ar.com.ironsoft.marroccl.web.app.modules.game.servlet;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import ar.com.ironsoft.marroccl.web.app.modules.config.daos.ConfigHolderDao;
 import ar.com.ironsoft.marroccl.web.app.modules.config.model.ConfigHolder;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.daos.GameDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.Game;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameService;
@@ -21,6 +23,7 @@ import ar.com.ironsoft.marroccl.web.core.servlets.BaseServlet;
 import ar.com.ironsoft.marroccl.web.guice.base.BasePath;
 import ar.com.ironsoft.marroccl.web.guice.base.RelativePath;
 
+import com.google.appengine.labs.repackaged.com.google.common.collect.Lists;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -37,6 +40,7 @@ import com.google.inject.Singleton;
 @RelativePath("getFull")
 public class GameGetFullServlet extends BaseServlet {
 
+    private GameDao gameDao;
     private GameService gameService;
     private CommentaryDao commentaryDao;
     private ConfigHolderDao configHolderDao;
@@ -49,16 +53,20 @@ public class GameGetFullServlet extends BaseServlet {
         String gameId = req.getParameter("gameId");
         Preconditions.checkNotNull(gameId);
         //
-        int minute = 67;
-        int second = 56;
-        Game game = gameService.getGameWithCurrentScore(gameId, minute, second);
+        Game game = gameDao.get(Game.class, gameId);
+        game.refreshCurrentTime();
+        int minute = game.getCurrentMinute();
+        int second = game.getCurrentSecond();
+        game = gameService.getGameWithCurrentScore(game, minute, second);
+        gameDao.save(game);
         //
         ConfigHolder configHolder = configHolderDao.getConfig();
         Commentary commentary = commentaryDao.get(Commentary.class,
                 Commentary.COMMENTARY_ID);
         //
-        Collection<Message> messages = messageDao.get(Message.class,
-                commentary.getMessageListId()).values();
+        List<Message> messages = Lists.newArrayList(messageDao.get(
+                Message.class, commentary.getMessageListId()).values());
+        Collections.sort(messages);
         for (Message message : messages) {
             if (message.getMinute() <= minute && message.getSecond() <= second
                     && message.isNotFinal()) {
@@ -70,6 +78,11 @@ public class GameGetFullServlet extends BaseServlet {
         //
         String json = new Gson().toJson(game);
         setJsonResponse(resp, json);
+    }
+
+    @Inject
+    public void setGameDao(GameDao gameDao) {
+        this.gameDao = gameDao;
     }
 
     @Inject

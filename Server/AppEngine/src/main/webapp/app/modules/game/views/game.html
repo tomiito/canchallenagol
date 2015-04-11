@@ -6,19 +6,29 @@
                 <i class="fa fa-mobile-phone"></i> {{$root.title | translate}}
             </li>
             <li class="pull-right">
+                <button type="button" class="btn btn-success"
+                        ng-click="playGame()">
+                    <i class="fa fa-play-circle"></i>
+                    {{'GAME.PLAY' | translate}}
+                </button>
+                <button type="button" class="btn btn-danger"
+                        ng-click="stopGame()">
+                    <i class="fa fa-stop"></i>
+                    {{'GAME.STOP' | translate}}
+                </button>
                 <button type="button" class="btn btn-send"
                         ng-click="parseGame()">
-                    <i class="fa fa-database"></i>
+                    <i class="fa fa-file-excel-o"></i>
                     {{'GAME.PARSE_GAME' | translate}}
                 </button>
                 <button type="button" class="btn btn-send"
                         ng-click="createDummyGames()">
-                    <i class="fa fa-database"></i>
+                    <i class="fa fa-futbol-o"></i>
                     {{'GAME.CREATE_DUMMIES' | translate}}
                 </button>
                 <button type="button" class="btn btn-send"
                         ng-click="findUrls()">
-                    <i class="fa fa-database"></i>
+                    <i class="fa fa-search"></i>
                     {{'GAME.FIND_URLS' | translate}}
                 </button>
             </li>
