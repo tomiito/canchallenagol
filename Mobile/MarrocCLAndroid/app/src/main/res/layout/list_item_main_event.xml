@@ -13,7 +13,7 @@
             android:id="@+id/list_item_main_event_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/yellow_card_big"/>
+            android:src="@drawable/ic_ball"/>
 
         <LinearLayout
             android:id="@+id/list_item_main_event_time_container"

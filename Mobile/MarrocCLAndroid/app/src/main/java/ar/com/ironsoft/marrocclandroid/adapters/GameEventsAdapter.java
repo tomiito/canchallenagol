@@ -13,16 +13,19 @@ import java.util.ArrayList;
 
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
+import ar.com.ironsoft.marrocclandroid.helpers.EventTypeHelper;
 
 /**
  * Created by gabrielvilloldo on 4/10/15.
  */
 public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
     protected ArrayList<PushMessage> pushedMessages;
+    private EventTypeHelper eventTypeHelper;
 
     public GameEventsAdapter(int resource, ArrayList<PushMessage> pushedMessages, Context mContext) {
         super(mContext, resource, pushedMessages);
         this.pushedMessages = pushedMessages;
+        eventTypeHelper = new EventTypeHelper();
     }
 
     @Override
@@ -38,13 +41,15 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
 
         final EventHolder eventHolder = (EventHolder) convertView.getTag();
         eventHolder.title.setTag(item);
-        eventHolder.image.setImageResource(R.drawable.ic_ball); // TODO: GV Change with Type.
         eventHolder.title.setText(item.getTitle());
         eventHolder.message.setText(item.getMessage());
         eventHolder.player.setText(item.getPlayer());
         eventHolder.time.setText(item.getMinutes() + ":" + item.getSeconds() + "''");
-        if (position >= 1)
+        if (position >= 1) {
             eventHolder.timeContainer.setBackgroundResource(R.color.gray_darker);
+        }
+        //
+        eventTypeHelper.changeIconImages(item,eventHolder.image,eventHolder.playerIcon);
 
         return convertView;
     }
@@ -63,6 +68,7 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
         eventHolder.player = (TextView)convertView.findViewById(R.id.list_item_main_event_player);
         eventHolder.time = (TextView)convertView.findViewById(R.id.list_item_main_event_time);
         eventHolder.timeContainer = (LinearLayout)convertView.findViewById(R.id.list_item_main_event_time_container);
+        //
         convertView.setTag(eventHolder);
     }
 

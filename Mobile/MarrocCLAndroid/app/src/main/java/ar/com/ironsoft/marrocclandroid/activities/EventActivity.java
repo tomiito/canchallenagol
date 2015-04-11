@@ -30,6 +30,7 @@ import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.adapters.GameListAdapter;
 import ar.com.ironsoft.marrocclandroid.domain.GameItem;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
+import ar.com.ironsoft.marrocclandroid.helpers.EventTypeHelper;
 
 
 public class EventActivity extends BaseActionBarActivity {
@@ -46,6 +47,8 @@ public class EventActivity extends BaseActionBarActivity {
     private View loadingPartial;
 
 
+    private EventTypeHelper eventTypeHelper;
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -56,6 +59,7 @@ public class EventActivity extends BaseActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+        eventTypeHelper = new EventTypeHelper();
 
         context = this;
         scoreBoardContainer = findViewById(R.id.score_board_container);
@@ -94,23 +98,7 @@ public class EventActivity extends BaseActionBarActivity {
             ((TextView)findViewById(R.id.list_item_main_event_message)).setText(pushMessage.getMessage());
 
         ((TextView)findViewById(R.id.list_item_main_event_title)).setText(pushMessage.getTitle());
-        switch (pushMessage.getType().toLowerCase()) {
-            case "goal":
-                bigIcon.setImageResource(R.drawable.goal_big);
-                playerIcon.setImageResource(R.drawable.player_goal);
-                break;
-            case "yellow card":
-                bigIcon.setImageResource(R.drawable.yellow_card_big);
-                playerIcon.setImageResource(R.drawable.yellow_card);
-                break;
-            case "red card":
-                bigIcon.setImageResource(R.drawable.red_card_big);
-                playerIcon.setImageResource(R.drawable.red_card);
-                break;
-            default:
-                // Put something
-                break;
-        }
+        eventTypeHelper.changeIconImages(pushMessage, bigIcon, playerIcon);
         ((TextView)findViewById(R.id.list_item_main_event_time)).setText(pushMessage.getMinutes() + ":" + pushMessage.getSeconds() + "''");
     }
 
