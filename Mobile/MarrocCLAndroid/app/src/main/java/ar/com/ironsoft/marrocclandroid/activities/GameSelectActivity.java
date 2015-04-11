@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -28,6 +29,7 @@ import ar.com.ironsoft.marrocclandroid.listeners.OnSingleClickListener;
 public class GameSelectActivity extends BaseActionBarActivity {
 
     private ListView gamesList;
+    private View loading;
 
     private GameListAdapter adapter;
 
@@ -40,6 +42,7 @@ public class GameSelectActivity extends BaseActionBarActivity {
 
         context = this;
         gamesList = (ListView)findViewById(R.id.games_list);
+        loading = findViewById(R.id.loading_circular_fullscreen_container);
         gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -61,6 +64,7 @@ public class GameSelectActivity extends BaseActionBarActivity {
                 .get()
                 .build();
 
+        loading.setVisibility(View.VISIBLE);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -82,6 +86,8 @@ public class GameSelectActivity extends BaseActionBarActivity {
                     @Override
                     public void run() {
                         gamesList.setAdapter(adapter);
+                        loading.setVisibility(View.GONE);
+                        gamesList.setVisibility(View.VISIBLE);
                     }
                 });
             }

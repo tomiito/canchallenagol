@@ -42,6 +42,8 @@ import ar.com.ironsoft.marrocclandroid.helpers.SharedPreferencesHelper;
 public class GameActivity extends BaseActionBarActivity {
 
     private ListView gameEvents;
+    private View loading;
+    private View container;
 
     private GameEventsAdapter adapter;
 
@@ -55,6 +57,8 @@ public class GameActivity extends BaseActionBarActivity {
         setContentView(R.layout.activity_game);
 
         gameId = getIntent().getStringExtra("gameId");
+        loading = findViewById(R.id.loading_circular_fullscreen_container);
+        container = findViewById(R.id.game_container);
 
         context = this;
 
@@ -70,6 +74,7 @@ public class GameActivity extends BaseActionBarActivity {
                 .get()
                 .build();
 
+        loading.setVisibility(View.VISIBLE);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -93,6 +98,8 @@ public class GameActivity extends BaseActionBarActivity {
 
                         adapter = new GameEventsAdapter(0, gameFullItem.getMessages(), context);
                         gameEvents.setAdapter(adapter);
+                        loading.setVisibility(View.GONE);
+                        container.setVisibility(View.VISIBLE);
                     }
                 });
             }

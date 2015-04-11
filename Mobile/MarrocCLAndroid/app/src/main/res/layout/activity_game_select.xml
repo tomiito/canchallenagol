@@ -9,6 +9,7 @@
 
         <ListView
             android:id="@+id/games_list"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="3dp"
@@ -19,6 +20,8 @@
             android:verticalSpacing="8dp">
 
         </ListView>
+
+        <include layout="@layout/loading_fullscreen" />
 
     </RelativeLayout>
 </ScrollView>

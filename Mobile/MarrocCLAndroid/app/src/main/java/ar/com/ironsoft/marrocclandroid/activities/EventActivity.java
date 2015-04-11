@@ -42,6 +42,9 @@ public class EventActivity extends BaseActionBarActivity {
     private ImageView thumbnail;
     private ShareActionProvider shareActionProvider;
 
+    private View scoreBoardContainer;
+    private View loadingPartial;
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -55,8 +58,10 @@ public class EventActivity extends BaseActionBarActivity {
         setContentView(R.layout.activity_event);
 
         context = this;
+        scoreBoardContainer = findViewById(R.id.score_board_container);
+        loadingPartial = findViewById(R.id.loading_circular_partial_container);
 
-            if (!processPushMessageFromIntent()) {
+        if (!processPushMessageFromIntent()) {
             pushMessage = savedInstanceState.getParcelable("message");
         }
         setShareIntent();
@@ -117,6 +122,8 @@ public class EventActivity extends BaseActionBarActivity {
                 .get()
                 .build();
 
+        scoreBoardContainer.setVisibility(View.GONE);
+        loadingPartial.setVisibility(View.VISIBLE);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -137,6 +144,8 @@ public class EventActivity extends BaseActionBarActivity {
 
                         ((TextView) findViewById(R.id.score_board_home_score)).setText(gameItem.getHomeTeamScore().toString());
                         ((TextView) findViewById(R.id.score_board_away_score)).setText(gameItem.getAwayTeamScore().toString());
+                        loadingPartial.setVisibility(View.GONE);
+                        scoreBoardContainer.setVisibility(View.VISIBLE);
                     }
                 });
             }
