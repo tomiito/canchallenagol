@@ -5,7 +5,7 @@
     android:padding="5dp">
 
     <ImageView
-        android:id="@+id/list_item_main_event_image_rival_local"
+        android:id="@+id/list_item_main_event_image_rival_home"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_ball"/>
@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/list_item_main_event_title"
+            android:id="@+id/list_item_main_game_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textStyle="bold"
@@ -30,7 +30,7 @@
             android:text="Boca"/>
 
         <ImageView
-            android:id="@+id/list_item_main_event_image_rival_visitor"
+            android:id="@+id/list_item_main_game_image_rival_away"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_ball"/>
@@ -38,7 +38,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/list_item_main_event_title"
+        android:id="@+id/list_item_main_game_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textStyle="bold"

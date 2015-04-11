@@ -51,13 +51,13 @@ public class GcmIntentService extends IntentService {
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE:
                     PushMessage pushMessage = parsePushMessage(extras);
 
-                    Set<String> recordsSaved = SharedPreferencesHelper.getSetOfStrings(getApplicationContext(),
+                    /*Set<String> recordsSaved = SharedPreferencesHelper.getSetOfStrings(getApplicationContext(),
                             SharedPreferencesHelper.EVENTS_MATCH);
 
                     recordsSaved.add(new Gson().toJson(pushMessage));
 
                     SharedPreferencesHelper.setSetOfStrings(getApplicationContext(), SharedPreferencesHelper.EVENTS_MATCH,
-                            recordsSaved);
+                            recordsSaved);*/
 
                     sendNotification(pushMessage);
                     break;

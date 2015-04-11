@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/common_signin_btn_default_background"
+    android:background="@color/colorPrimary"
     android:layout_height="match_parent">
 
     <ImageView
@@ -10,6 +10,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/ic_logo_actionbar" />
 
 </RelativeLayout>

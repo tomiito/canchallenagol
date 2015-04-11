@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2e5160</color>
+    <color name="colorPrimaryDark">#14272f</color>
+
+    <!-- Flat Colors -->
+    <color name="black">#000</color>
+    <color name="white">#FFF</color>
+    <color name="gray">#7F7F7F</color>
+    <color name="orange">#FF9900</color>
+    <color name="orange_medium">#85ffbb00</color>
+    <color name="orange_light">#40ffbb00</color>
+    <color name="green_dark">#29A051</color>
+    <color name="green">#32C15F</color>
+
+</resources>

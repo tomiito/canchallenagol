@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +18,7 @@ import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 
 
-public class EventActivity extends ActionBarActivity {
+public class EventActivity extends BaseActionBarActivity {
 
     Context context;
     PushMessage pushMessage;
@@ -29,23 +28,32 @@ public class EventActivity extends ActionBarActivity {
     private ImageView thumbnail;
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("message", pushMessage);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
         context = this;
 
-        processPushMessageFromIntent();
+        if (!processPushMessageFromIntent()) {
+            pushMessage = savedInstanceState.getParcelable("publication");
+        }
         setUI();
-
         playVideo();
     }
 
-    private void processPushMessageFromIntent() {
+    private Boolean processPushMessageFromIntent() {
         Intent intent = getIntent();
-        if (intent != null) {
+        if (intent != null && intent.getExtras().size() > 0) {
             pushMessage = intent.getParcelableExtra("pushMessage");
+            return true;
         }
+        return false;
     }
 
     private void setUI() {
@@ -59,6 +67,10 @@ public class EventActivity extends ActionBarActivity {
     }
 
     private void playVideo() {
+        if (pushMessage.getVideoLink() == null) {
+            thumbnail.setVisibility(View.GONE);
+            return;
+        }
         videoView.setMediaController(new MediaController(this));
         videoView.setVideoURI(Uri.parse(pushMessage.getVideoLink()));
         //ImageLoader.getInstance().displayImage(pushMessage.getThumbnailLink(), thumbnail); // TODO: GV Add cache in Memory.
@@ -83,22 +95,13 @@ public class EventActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_settings:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

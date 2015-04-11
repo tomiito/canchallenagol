@@ -1,29 +1,9 @@
 package ar.com.ironsoft.marrocclandroid.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ProgressBar;
-import android.widget.VideoView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,7 +26,7 @@ public class SplashActivity extends Activity {
             public void run() {
 
                 Intent mainIntent = new Intent().setClass(
-                        SplashActivity.this, MainActivity.class);
+                        SplashActivity.this, GameActivity.class);
                 startActivity(mainIntent);
 
                 finish();

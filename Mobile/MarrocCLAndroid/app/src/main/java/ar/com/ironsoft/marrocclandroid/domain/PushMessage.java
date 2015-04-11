@@ -3,6 +3,8 @@ package ar.com.ironsoft.marrocclandroid.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by gabrielvilloldo on 4/10/15.
  */
@@ -31,11 +33,6 @@ public class PushMessage implements Parcelable {
     };
 
     public PushMessage() { }
-
-    public PushMessage(String title, String message) {
-        this.title = title;
-        this.message = message;
-    }
 
     public Integer getGameId() {
         return gameId;
