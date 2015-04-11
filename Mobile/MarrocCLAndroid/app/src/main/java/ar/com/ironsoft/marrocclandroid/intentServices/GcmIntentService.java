@@ -91,9 +91,12 @@ public class GcmIntentService extends IntentService {
 
     private PushMessage parsePushMessage(Bundle bundle) {
         PushMessage pushMessage = new PushMessage();
-        pushMessage.setGameId(Integer.parseInt(bundle.getString("gameId")));
+        pushMessage.setGameId(bundle.getString("gameId"));
         pushMessage.setTitle(bundle.getString("title"));
         pushMessage.setMessage(bundle.getString("message"));
+        pushMessage.setType(bundle.getString("type"));
+        pushMessage.setPlayer(bundle.getString("player"));
+        pushMessage.setPlayer2(bundle.getString("player2"));
         //pushMessage.setGifLink(bundle.getString("gifLink"));
         pushMessage.setVideoLink(bundle.getString("videoLink"));
         //pushMessage.setThumbnailLink(bundle.getString("thumbnailLink"));

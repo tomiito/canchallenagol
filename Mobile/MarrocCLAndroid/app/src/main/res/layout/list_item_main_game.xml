@@ -1,47 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp">
 
     <ImageView
-        android:id="@+id/list_item_main_event_image_rival_home"
+        android:id="@+id/list_item_main_game_image_rival_home"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_ball"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingTop="3dp"
-        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/list_item_main_game_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/list_item_main_game_home_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/list_item_main_game_image_rival_home"
+            android:paddingLeft="5dp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:text="River" />
-        <TextView
-            android:id="@+id/list_item_main_event_message"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Boca"/>
 
         <ImageView
             android:id="@+id/list_item_main_game_image_rival_away"
+            android:paddingLeft="5dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_alignParentRight="true"
             android:src="@drawable/ic_ball"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/list_item_main_game_away_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_toLeftOf="@id/list_item_main_game_image_rival_away"
+            android:text="Boca"/>
 
-    <TextView
-        android:id="@+id/list_item_main_game_state"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textStyle="bold"
-        android:text="River" />
-
-</LinearLayout>
+</RelativeLayout>

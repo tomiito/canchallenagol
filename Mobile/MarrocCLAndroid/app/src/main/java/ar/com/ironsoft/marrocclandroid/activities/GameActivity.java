@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import ar.com.ironsoft.marrocclandroid.R;
-import ar.com.ironsoft.marrocclandroid.adapters.MatchEventsAdapter;
+import ar.com.ironsoft.marrocclandroid.adapters.GameEventsAdapter;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 import ar.com.ironsoft.marrocclandroid.helpers.SharedPreferencesHelper;
 
@@ -45,7 +45,7 @@ public class GameActivity extends BaseActionBarActivity {
     private ProgressBar progressBar;
     private ListView matchEvents;
 
-    private MatchEventsAdapter adapter;
+    private GameEventsAdapter adapter;
 
     GoogleCloudMessaging gcm;
     SharedPreferences prefs;
@@ -89,7 +89,7 @@ public class GameActivity extends BaseActionBarActivity {
         for (String value : recordsSaved) {
             events.add(gson.fromJson(value, PushMessage.class));
         }
-        adapter = new MatchEventsAdapter(0, new ArrayList(events), this);
+        adapter = new GameEventsAdapter(0, new ArrayList(events), this);
         matchEvents.setAdapter(adapter);
 
     }

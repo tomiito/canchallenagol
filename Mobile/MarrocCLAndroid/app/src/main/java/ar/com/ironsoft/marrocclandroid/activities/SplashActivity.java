@@ -26,7 +26,7 @@ public class SplashActivity extends Activity {
             public void run() {
 
                 Intent mainIntent = new Intent().setClass(
-                        SplashActivity.this, GameActivity.class);
+                        SplashActivity.this, GameSelectActivity.class);
                 startActivity(mainIntent);
 
                 finish();

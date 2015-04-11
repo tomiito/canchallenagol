@@ -16,10 +16,10 @@ import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 /**
  * Created by gabrielvilloldo on 4/10/15.
  */
-public class MatchEventsAdapter extends ArrayAdapter<PushMessage> {
+public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
     protected ArrayList<PushMessage> pushedMessages;
 
-    public MatchEventsAdapter(int resource, ArrayList<PushMessage> pushedMessages, Context mContext) {
+    public GameEventsAdapter(int resource, ArrayList<PushMessage> pushedMessages, Context mContext) {
         super(mContext, resource, pushedMessages);
         this.pushedMessages = pushedMessages;
     }

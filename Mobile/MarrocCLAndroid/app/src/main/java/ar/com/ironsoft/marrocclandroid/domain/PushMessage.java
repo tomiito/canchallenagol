@@ -9,16 +9,18 @@ import java.io.Serializable;
  * Created by gabrielvilloldo on 4/10/15.
  */
 public class PushMessage implements Parcelable {
-    public Integer gameId;
-    public String title;
-    public String message;
-    public String videoLink;
-    public String thumbnailLink;
-    public String gifLink;
-    public String additionalData;
-    public Integer minutes;
-    public Integer seconds;
-    public String type;
+    private String gameId;
+    private String title;
+    private String message;
+    private String videoLink;
+    private String thumbnailLink;
+    private String gifLink;
+    private String additionalData;
+    private Integer minutes;
+    private Integer seconds;
+    private String type;
+    private String player;
+    private String player2;
 
     public static final Parcelable.Creator<PushMessage> CREATOR = new Parcelable.Creator<PushMessage>() {
         @Override
@@ -34,11 +36,11 @@ public class PushMessage implements Parcelable {
 
     public PushMessage() { }
 
-    public Integer getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(Integer gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 
@@ -114,6 +116,22 @@ public class PushMessage implements Parcelable {
         this.type = type;
     }
 
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    public String getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer2(String player) {
+        this.player2 = player;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -121,7 +139,7 @@ public class PushMessage implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(gameId);
+        dest.writeString(gameId);
         dest.writeString(title);
         dest.writeString(message);
         dest.writeString(videoLink);
@@ -131,10 +149,11 @@ public class PushMessage implements Parcelable {
         dest.writeInt(minutes);
         dest.writeInt(seconds);
         dest.writeString(type);
+        dest.writeString(player);
     }
 
     private PushMessage(Parcel source) {
-        gameId = source.readInt();
+        gameId = source.readString();
         title = source.readString();
         message = source.readString();
         videoLink = source.readString();
@@ -144,6 +163,6 @@ public class PushMessage implements Parcelable {
         minutes = source.readInt();
         seconds = source.readInt();
         type = source.readString();
-
+        player = source.readString();
     }
 }

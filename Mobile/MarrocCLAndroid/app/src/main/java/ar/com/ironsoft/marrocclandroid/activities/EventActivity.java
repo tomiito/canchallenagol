@@ -61,9 +61,27 @@ public class EventActivity extends BaseActionBarActivity {
         progressBar = (ProgressBar)findViewById(R.id.progress_bar);
         thumbnail = (ImageView)findViewById(R.id.thumbnail);
 
-        ((TextView)findViewById(R.id.event_title)).setText(pushMessage.getTitle());
-        ((TextView)findViewById(R.id.event_message)).setText(pushMessage.getMessage());
-        //((TextView)findViewById(R.id.event_time)).setText(pushMessage.getMinutes());
+        ImageView bigIcon = (ImageView)findViewById(R.id.list_item_main_event_image);
+        ImageView playerIcon = (ImageView)findViewById(R.id.list_item_main_event_icon_player);
+
+        ((TextView)findViewById(R.id.list_item_main_event_player)).setText(pushMessage.getPlayer());
+        ((TextView)findViewById(R.id.list_item_main_event_message)).setText(pushMessage.getMessage());
+        ((TextView)findViewById(R.id.list_item_main_event_title)).setText(pushMessage.getTitle());
+        switch (pushMessage.getType().toLowerCase()) {
+            case "goal":
+                bigIcon.setImageResource(R.drawable.goal_big);
+                playerIcon.setImageResource(R.drawable.player_goal);
+                break;
+            case "yellow card":
+                bigIcon.setImageResource(R.drawable.yellow_card_big);
+                playerIcon.setImageResource(R.drawable.yellow_card);
+                break;
+            case "red card":
+                bigIcon.setImageResource(R.drawable.red_card_big);
+                playerIcon.setImageResource(R.drawable.red_card);
+                break;
+        }
+        ((TextView)findViewById(R.id.list_item_main_event_time)).setText(pushMessage.getMinutes() + ":" + pushMessage.getSeconds() + "''");
     }
 
     private void playVideo() {
