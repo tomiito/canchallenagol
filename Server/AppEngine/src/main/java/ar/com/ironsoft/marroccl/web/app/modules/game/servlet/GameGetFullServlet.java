@@ -1,6 +1,7 @@
 package ar.com.ironsoft.marroccl.web.app.modules.game.servlet;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -60,6 +61,7 @@ public class GameGetFullServlet extends BaseServlet {
         ConfigHolder configHolder = configHolderDao.getConfig();
         //
         List<Message> messages = messageDao.getAll(minute, second);
+        Collections.sort(messages);
         for (Message message : messages) {
             if (message.isNotFinal() || 3 == game.getStatus()) {
                 VideoMessage videoMessage = videoMessageService
