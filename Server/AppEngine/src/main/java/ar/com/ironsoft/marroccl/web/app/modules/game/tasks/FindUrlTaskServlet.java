@@ -53,10 +53,11 @@ public class FindUrlTaskServlet extends TaskServlet {
             for (int j = 0; j < 99; j++) {
                 boolean retry = false;
                 int times = 1;
+                String url = null;
                 do {
                     try {
                         logger.log(Level.FINE, "Fetching url Times: " + times);
-                        String url = findVideo(startUrl, hour, minute, j);
+                        url = findVideo(startUrl, hour, minute, j);
                         retry = false;
                         if (url != null) {
                             videoUrlDao.save(new VideoUrl(gameId, url,
@@ -70,6 +71,9 @@ public class FindUrlTaskServlet extends TaskServlet {
                         times++;
                     }
                 } while (retry == true && times <= 3);
+                if (url != null) {
+                    break;
+                }
             }
         }
     }
