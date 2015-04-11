@@ -27,6 +27,7 @@
     "LOADING": "Loading game incidents ...",
     "NO_DATA": "No incidents found!",
     "FIND_URLS": "Find urls",
+    "CREATE_DUMMIES": "Create dummy games",
     "MESSAGE": {
       "ID": "Id",
       "TYPE": "Type",

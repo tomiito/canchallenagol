@@ -13,6 +13,7 @@ import ar.com.ironsoft.marroccl.web.app.modules.game.daos.VideoUrlDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.TitleMessage;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.VideoUrl;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
+import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameDummyService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
@@ -43,6 +44,7 @@ public class GameEndpointApi {
     private CommentaryService commentaryService;
     private ConfigHolderDao configHolderDao;
     private VideoUrlDao videoUrlDao;
+    private GameDummyService gameDummyService;
 
     @ApiMethod
     public void findUrls(@Named("gameId") String gameId) {
@@ -62,6 +64,11 @@ public class GameEndpointApi {
         commentary.setMessageList(Lists.newArrayList(messages));
         //
         return commentary;
+    }
+
+    @ApiMethod(httpMethod = "post")
+    public void createDummyGames() {
+        gameDummyService.createDummyGames();
     }
 
     @ApiMethod(httpMethod = "post")
@@ -128,5 +135,10 @@ public class GameEndpointApi {
     @Inject
     public void setConfigHolderDao(ConfigHolderDao configHolderDao) {
         this.configHolderDao = configHolderDao;
+    }
+
+    @Inject
+    public void setGameDummyService(GameDummyService gameDummyService) {
+        this.gameDummyService = gameDummyService;
     }
 }

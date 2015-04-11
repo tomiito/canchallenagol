@@ -28,6 +28,18 @@ controller.controller('GameController', [
 				});
 			}
 
+			$scope.showCreateDummySuccessMessage = function() {
+				$growl.success("GAME.DUMMIES.SUCCESS.TITLE",
+						"GAME.DUMMIES.SUCCESS.BODY", {});
+			}
+
+			$scope.createDummyGames = function() {
+				gapi.client.gameApi.gameEndpointApi.createDummyGames({})
+						.execute(function(result) {
+							$scope.showCreateDummySuccessMessage();
+						});
+			}
+
 			$scope.showFindSuccessMessage = function() {
 				$growl.success("GAME.FIND.SUCCESS.TITLE",
 						"GAME.FIND.SUCCESS.BODY", {});

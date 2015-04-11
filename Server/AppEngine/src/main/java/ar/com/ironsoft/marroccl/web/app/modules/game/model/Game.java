@@ -16,18 +16,34 @@ public class Game implements BaseModel {
 
     @Id
     private String gameId;
+    /**
+     * 1 - not started <br />
+     * 2 - in progress <br />
+     * 3 - finished <br />
+     */
+    @Unindex
+    private Integer status;
     @Index
     private String homeTeamId;
     @Unindex
     private String homeTeamName;
     @Unindex
     private String homeTeamLink;
+    @Unindex
+    private Integer homeTeamScore;
     @Index
     private String awayTeamId;
     @Unindex
     private String awayTeamName;
     @Unindex
     private String awayTeamLink;
+    @Unindex
+    private Integer awayTeamScore;
+    /**
+     * Time in string MM:ss
+     */
+    @Unindex
+    private String time;
 
     public String getGameId() {
         return gameId;
@@ -45,5 +61,85 @@ public class Game implements BaseModel {
     @Override
     public void setId(String id) {
         setGameId(id);
+    }
+
+    public String getHomeTeamId() {
+        return homeTeamId;
+    }
+
+    public void setHomeTeamId(String homeTeamId) {
+        this.homeTeamId = homeTeamId;
+    }
+
+    public String getHomeTeamName() {
+        return homeTeamName;
+    }
+
+    public void setHomeTeamName(String homeTeamName) {
+        this.homeTeamName = homeTeamName;
+    }
+
+    public String getHomeTeamLink() {
+        return homeTeamLink;
+    }
+
+    public void setHomeTeamLink(String homeTeamLink) {
+        this.homeTeamLink = homeTeamLink;
+    }
+
+    public String getAwayTeamId() {
+        return awayTeamId;
+    }
+
+    public void setAwayTeamId(String awayTeamId) {
+        this.awayTeamId = awayTeamId;
+    }
+
+    public String getAwayTeamName() {
+        return awayTeamName;
+    }
+
+    public void setAwayTeamName(String awayTeamName) {
+        this.awayTeamName = awayTeamName;
+    }
+
+    public String getAwayTeamLink() {
+        return awayTeamLink;
+    }
+
+    public void setAwayTeamLink(String awayTeamLink) {
+        this.awayTeamLink = awayTeamLink;
+    }
+
+    public Integer getHomeTeamScore() {
+        return homeTeamScore;
+    }
+
+    public void setHomeTeamScore(Integer homeTeamScore) {
+        this.homeTeamScore = homeTeamScore;
+    }
+
+    public Integer getAwayTeamScore() {
+        return awayTeamScore;
+    }
+
+    public void setAwayTeamScore(Integer awayTeamScore) {
+        this.awayTeamScore = awayTeamScore;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
