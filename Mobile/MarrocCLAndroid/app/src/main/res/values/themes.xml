@@ -7,7 +7,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
         <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
         <item name="windowActionModeOverlay">false</item>
         <item name="actionModeBackground">@color/gray</item>

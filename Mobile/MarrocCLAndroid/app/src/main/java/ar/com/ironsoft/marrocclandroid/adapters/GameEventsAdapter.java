@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
@@ -18,7 +20,7 @@ import ar.com.ironsoft.marrocclandroid.helpers.EventTypeHelper;
 /**
  * Created by gabrielvilloldo on 4/10/15.
  */
-public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
+public class GameEventsAdapter extends ArrayAdapter<PushMessage> implements SectionIndexer {
     protected ArrayList<PushMessage> pushedMessages;
     private EventTypeHelper eventTypeHelper;
 
@@ -70,6 +72,27 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
         eventHolder.timeContainer = (LinearLayout)convertView.findViewById(R.id.list_item_main_event_time_container);
         //
         convertView.setTag(eventHolder);
+    }
+
+    @Override
+    public Object[] getSections() {
+        Integer[] minutes = new Integer[pushedMessages.size()];
+        Integer i = 0;
+        for (PushMessage message : pushedMessages) {
+            minutes[i] = message.getMinutes();
+            i++;
+        }
+        return minutes;
+    }
+
+    @Override
+    public int getPositionForSection(int sectionIndex) {
+        return sectionIndex;
+    }
+
+    @Override
+    public int getSectionForPosition(int position) {
+        return position;
     }
 
     public static class EventHolder {
