@@ -18,7 +18,6 @@ public class SharedConstants {
     public static final String EMPTY_STRING = "";
     public static final String INDEX_JSP_URL = "/WEB-INF/pages/index.jsp";
     public static final String API_KEY = "AIzaSyDhZTKbHg1HBM7Cx5Bncm8OsYwW-O9X66U";
-    public static final String XML_URL = "http://cdntx.lanacion.com.ar/hackaton/incidencias.xml";
     public static final String UTF_8 = "UTF-8";
     //
     private static ResourceBundle appProperties;

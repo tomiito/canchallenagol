@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.com.ironsoft.marroccl.web.app.modules.config.model.ConfigHolder;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.VideoUrlDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.core.tasks.TaskLauncher;
@@ -27,11 +28,11 @@ import com.google.inject.Singleton;
 @RelativePath("findUrls")
 public class FindUrlsTaskServlet extends TaskServlet {
 
-    public static final String FIRST_VIDEO_URL = "https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_{0}.mp4";
     private Logger logger = Logger.getLogger(FindUrlsTaskServlet.class
             .getSimpleName());
     private TaskLauncher taskLauncher;
     private VideoUrlDao videoUrlDao;
+    private ConfigHolder configHolder;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -48,10 +49,10 @@ public class FindUrlsTaskServlet extends TaskServlet {
             //
             String gameId = req.getParameter(Commentary.GAME_ID);
             //
-            String startUrl = FIRST_VIDEO_URL;
-            int totalVideos = 3;
-            int hour = 21;
-            int minute = 1;
+            String startUrl = configHolder.getVideoUrl();
+            int totalVideos = configHolder.getTotalVideos();
+            int hour = configHolder.getStartHour();
+            int minute = configHolder.getStartMinute();
             //
             for (int i = 0; i <= totalVideos; i++) {
                 //
@@ -69,6 +70,11 @@ public class FindUrlsTaskServlet extends TaskServlet {
                 }
             }
         }
+    }
+
+    @Inject
+    public void setConfigHolder(ConfigHolder configHolder) {
+        this.configHolder = configHolder;
     }
 
     @Inject
