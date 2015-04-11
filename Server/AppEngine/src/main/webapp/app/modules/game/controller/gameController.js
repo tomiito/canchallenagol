@@ -41,6 +41,18 @@ controller.controller('GameController', [
 						});
 			}
 
+			$scope.showParseSuccessMessage = function() {
+				$growl.success("GAME.PARSE.SUCCESS.TITLE",
+						"GAME.PARSE.SUCCESS.BODY", {});
+			}
+
+			$scope.parseGame = function() {
+				gapi.client.gameApi.gameEndpointApi.parseGame({}).execute(
+						function(result) {
+							$scope.showParseSuccessMessage();
+						});
+			}
+
 			$scope.showFindSuccessMessage = function() {
 				$growl.success("GAME.FIND.SUCCESS.TITLE",
 						"GAME.FIND.SUCCESS.BODY", {});

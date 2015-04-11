@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
+import ar.com.ironsoft.marroccl.web.app.modules.game.daos.GameGoalDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.model.TitleMessage;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
@@ -18,20 +19,20 @@ import com.google.inject.Singleton;
 @Singleton
 public class CommentaryService {
 
-    private Logger logger = Logger.getLogger(
-            CommentaryService.class
-                    .getSimpleName());
+    private Logger logger = Logger.getLogger(CommentaryService.class
+            .getSimpleName());
     private CommentaryDao commentaryDao;
     private MessageDao messageDao;
+    private GameGoalDao gameGoalDao;
 
     public void saveCommentary(Commentary commentary) {
         logger.log(Level.INFO, "Removing old commentary");
         // Look for existent game id;
         commentaryDao.delete(Commentary.class, commentary.getId());
         messageDao.deleteEntities(commentary.getMessageList());
+        gameGoalDao.deleteAll();
         //
-        logger.log(
-                Level.INFO,
+        logger.log(Level.INFO,
                 "Saving new commentary with id: " + commentary.getGameId());
         //
         commentaryDao.save(commentary);
@@ -47,6 +48,11 @@ public class CommentaryService {
             titleMessage.setTitle(message.getComment());
         }
         return titleMessage;
+    }
+
+    @Inject
+    public void setGameGoalDao(GameGoalDao gameGoalDao) {
+        this.gameGoalDao = gameGoalDao;
     }
 
     @Inject

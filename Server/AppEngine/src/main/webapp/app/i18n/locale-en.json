@@ -26,6 +26,7 @@
     "EVENT_INCIDENTS": "Incidents",
     "LOADING": "Loading game incidents ...",
     "NO_DATA": "No incidents found!",
+    "PARSE_GAME": "Parse game XML",
     "FIND_URLS": "Find urls",
     "CREATE_DUMMIES": "Create dummy games",
     "MESSAGE": {
