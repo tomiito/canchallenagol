@@ -2,19 +2,15 @@ package ar.com.ironsoft.marroccl.web.app.modules.game.endpoints;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ar.com.ironsoft.marroccl.web.app.modules.config.daos.ConfigHolderDao;
 import ar.com.ironsoft.marroccl.web.app.modules.config.model.ConfigHolder;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
-import ar.com.ironsoft.marroccl.web.app.modules.game.daos.VideoUrlDao;
-import ar.com.ironsoft.marroccl.web.app.modules.game.model.TitleMessage;
-import ar.com.ironsoft.marroccl.web.app.modules.game.model.VideoUrl;
-import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameDummyService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameService;
+import ar.com.ironsoft.marroccl.web.app.modules.game.services.VideoMessageService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
@@ -42,11 +38,10 @@ public class GameEndpointApi {
     private CommentaryDao commentaryDao;
     private MessageDao messageDao;
     private TaskLauncher taskLauncher;
-    private CommentaryService commentaryService;
     private ConfigHolderDao configHolderDao;
-    private VideoUrlDao videoUrlDao;
     private GameDummyService gameDummyService;
     private GameService gameService;
+    private VideoMessageService videoMessageService;
 
     @ApiMethod
     public void findUrls(@Named("gameId") String gameId) {
@@ -82,49 +77,12 @@ public class GameEndpointApi {
     public void pushMessage(@Named("gameId") String gameId,
             @Named("messageId") String messageId) throws IOException {
         ConfigHolder configHolder = configHolderDao.getConfig();
-        Message message = messageDao.get(Message.class, messageId);
-        int videoMinute = message.getMinute() + configHolder.getExtraMinutes();
-        if (message.getSecond() > 30) {
-            videoMinute++;
-        }
-        VideoUrl videoUrl = videoUrlDao.findByMinute(videoMinute);
-        //
-        TitleMessage titleMessage = commentaryService
-                .parseTitleMessage(message);
-        //
-        VideoMessage videoMessage = new VideoMessage();
-        videoMessage.setGameId(String.valueOf(configHolder
-                                .getInProgressGameId()));
-        videoMessage.setTitle(titleMessage.getTitle());
-        videoMessage.setMessage(titleMessage.getMessage());
-        videoMessage.setType(message.getType());
-        //
-        String[] players = commentaryService.parsePlayer(message);
-        videoMessage.setPlayer(players[0]);
-        videoMessage.setPlayer2(players[1]);
-        //
-        if (videoUrl != null) {
-            videoMessage.setVideoLink(videoUrl.getVideoUrl());
-        } else {
-            logger.log(Level.WARNING, "Video not found in minute: "
-                    + videoMinute);
-            videoMessage.setVideoLink(null);
-        }
-        videoMessage.setGifLink("");
-        videoMessage.setThumbnailLink("");
-        //
-        videoMessage.setPeriod(message.getPeriod());
-        videoMessage.setMinutes(message.getMinute());
-        videoMessage.setSeconds(message.getSecond());
+        VideoMessage videoMessage = videoMessageService.createVideoMessage(
+                configHolder, messageId);
         //
         taskLauncher.launchTask(TaskLauncher.QUEUE_GCM_PAGED,
                 SendAllMessageTask.class,
                 ObjectSerializationUtils.serialize(videoMessage));
-    }
-
-    @Inject
-    public void setCommentaryService(CommentaryService commentaryService) {
-        this.commentaryService = commentaryService;
     }
 
     @Inject
@@ -143,11 +101,6 @@ public class GameEndpointApi {
     }
 
     @Inject
-    public void setVideoUrlDao(VideoUrlDao videoUrlDao) {
-        this.videoUrlDao = videoUrlDao;
-    }
-
-    @Inject
     public void setConfigHolderDao(ConfigHolderDao configHolderDao) {
         this.configHolderDao = configHolderDao;
     }
@@ -160,5 +113,10 @@ public class GameEndpointApi {
     @Inject
     public void setGameService(GameService gameService) {
         this.gameService = gameService;
+    }
+
+    @Inject
+    public void setVideoMessageService(VideoMessageService videoMessageService) {
+        this.videoMessageService = videoMessageService;
     }
 }

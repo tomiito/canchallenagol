@@ -1,9 +1,14 @@
 package ar.com.ironsoft.marroccl.web.app.modules.game.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ar.com.ironsoft.marroccl.web.app.modules.messages.model.VideoMessage;
 import ar.com.ironsoft.marroccl.web.core.model.BaseModel;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.IgnoreSave;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
 
@@ -39,7 +44,8 @@ public class Game implements BaseModel {
     private String awayTeamLink;
     @Unindex
     private Integer awayTeamScore;
-
+    @IgnoreSave
+    private List<VideoMessage> messages = new ArrayList<>();
     /**
      * Time in string MM:ss
      */
@@ -142,5 +148,13 @@ public class Game implements BaseModel {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<VideoMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<VideoMessage> messages) {
+        this.messages = messages;
     }
 }

@@ -127,4 +127,10 @@ public class Message extends BaseElement implements BaseModel {
     public void setId(String id) {
         setMessageId(id);
     }
+
+    public boolean isNotFinal() {
+        boolean isFinal = type.startsWith("end") && minute == 0 && second == 0
+                && comment.toLowerCase().startsWith("final del partido");
+        return !isFinal;
+    }
 }
