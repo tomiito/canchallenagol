@@ -84,6 +84,9 @@ public class GameEndpointApi {
         ConfigHolder configHolder = configHolderDao.getConfig();
         Message message = messageDao.get(Message.class, messageId);
         int videoMinute = message.getMinute() + configHolder.getExtraMinutes();
+        if (message.getSecond() > 30) {
+            videoMinute++;
+        }
         VideoUrl videoUrl = videoUrlDao.findByMinute(videoMinute);
         //
         TitleMessage titleMessage = commentaryService
