@@ -37,6 +37,11 @@ public class ConfigHolder implements BaseModel {
     private Integer extraMinutes2Period = 20;
     @Unindex
     private String inProgressGameId = "1";
+    /**
+     * 1 mean auto push the goal to devices
+     */
+    @Unindex
+    private Integer autoPushGoals = 0;
 
     public String getXmlUrl() {
         return xmlUrl;
@@ -95,6 +100,17 @@ public class ConfigHolder implements BaseModel {
 
     public void setExtraMinutes2Period(Integer extraMinutes2Period) {
         this.extraMinutes2Period = extraMinutes2Period;
+    }
+
+    public Integer getAutoPushGoals() {
+        if (autoPushGoals == null) {
+            autoPushGoals = 0;
+        }
+        return autoPushGoals;
+    }
+
+    public void setAutoPushGoals(Integer autoPushGoals) {
+        this.autoPushGoals = autoPushGoals;
     }
 
     @Override
