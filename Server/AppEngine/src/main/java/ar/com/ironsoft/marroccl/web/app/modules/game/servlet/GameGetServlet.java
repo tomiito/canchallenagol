@@ -1,39 +1,47 @@
 package ar.com.ironsoft.marroccl.web.app.modules.game.servlet;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.com.ironsoft.marroccl.web.app.modules.game.model.Game;
 import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameService;
 import ar.com.ironsoft.marroccl.web.core.servlets.BaseServlet;
 import ar.com.ironsoft.marroccl.web.guice.base.BasePath;
 import ar.com.ironsoft.marroccl.web.guice.base.RelativePath;
 
+import com.google.common.base.Preconditions;
+import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * Parse xml after 1 minutes
- *
+ * Get game by minute and second. Do not return the historic of the events in
+ * the match before that time. Shows the score in that time.
+ * 
  * @author Tomas de Priede
  */
 @Singleton
 @BasePath("/game/")
-@RelativePath("parseGame")
-public class ParseGameServlet extends BaseServlet {
+@RelativePath("get")
+public class GameGetServlet extends BaseServlet {
 
-    private Logger logger = Logger.getLogger(ParseGameServlet.class
-            .getSimpleName());
     private GameService gameService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
-        gameService.parseGame();
-        setSuccess(resp);
+        String gameId = req.getParameter("gameId");
+        Integer minute = Integer.parseInt(req.getParameter("minute"));
+        Integer second = Integer.parseInt(req.getParameter("second"));
+        Preconditions.checkNotNull(gameId);
+        //
+        Game game = gameService.getGameWithCurrentScore(gameId, minute, second);
+        //
+        String json = new Gson().toJson(game);
+        setJsonResponse(resp, json);
     }
 
     @Inject

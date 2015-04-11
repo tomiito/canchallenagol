@@ -20,8 +20,7 @@
         <include path="/**.gif" expiration="30d"/>
         <include path="/**.jpg" expiration="30d"/>
         <include path="/**.css" expiration="30d"/>
-        <include path="/**.js" expiration="7d"/>
-
+        <exclude path="/app/all.js"/>
         <exclude path="/**.appcache"/>
     </static-files>
 

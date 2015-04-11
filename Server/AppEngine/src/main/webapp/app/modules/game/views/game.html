@@ -7,9 +7,14 @@
             </li>
             <li class="pull-right">
                 <button type="button" class="btn btn-send"
-                        ng-click="doSomething()">
-                    <i class="fa fa-mobile-phone"></i>
-                    {{'GAME.DO_SOMETHING' | translate}}
+                        ng-click="parseGame()">
+                    <i class="fa fa-database"></i>
+                    {{'GAME.PARSE_GAME' | translate}}
+                </button>
+                <button type="button" class="btn btn-send"
+                        ng-click="createDummyGames()">
+                    <i class="fa fa-database"></i>
+                    {{'GAME.CREATE_DUMMIES' | translate}}
                 </button>
                 <button type="button" class="btn btn-send"
                         ng-click="findUrls()">

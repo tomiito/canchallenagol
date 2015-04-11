@@ -2,11 +2,15 @@ package ar.com.ironsoft.marroccl.web.app.modules.game.endpoints;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.logging.Logger;
 
+import ar.com.ironsoft.marroccl.web.app.modules.config.daos.ConfigHolderDao;
+import ar.com.ironsoft.marroccl.web.app.modules.config.model.ConfigHolder;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.CommentaryDao;
 import ar.com.ironsoft.marroccl.web.app.modules.game.daos.MessageDao;
-import ar.com.ironsoft.marroccl.web.app.modules.game.model.TitleMessage;
-import ar.com.ironsoft.marroccl.web.app.modules.game.services.CommentaryService;
+import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameDummyService;
+import ar.com.ironsoft.marroccl.web.app.modules.game.services.GameService;
+import ar.com.ironsoft.marroccl.web.app.modules.game.services.VideoMessageService;
 import ar.com.ironsoft.marroccl.web.app.modules.game.tasks.FindUrlsTaskServlet;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Commentary;
 import ar.com.ironsoft.marroccl.web.app.modules.game.xml.model.Message;
@@ -29,10 +33,15 @@ import com.google.inject.Inject;
 @Api(name = "gameApi", version = "v1", namespace = @ApiNamespace(ownerDomain = "ironsoft", ownerName = "MarrocCL", packagePath = "app/game"))
 public class GameEndpointApi {
 
+    private Logger logger = Logger.getLogger(GameEndpointApi.class
+            .getSimpleName());
     private CommentaryDao commentaryDao;
     private MessageDao messageDao;
     private TaskLauncher taskLauncher;
-    private CommentaryService commentaryService;
+    private ConfigHolderDao configHolderDao;
+    private GameDummyService gameDummyService;
+    private GameService gameService;
+    private VideoMessageService videoMessageService;
 
     @ApiMethod
     public void findUrls(@Named("gameId") String gameId) {
@@ -55,37 +64,25 @@ public class GameEndpointApi {
     }
 
     @ApiMethod(httpMethod = "post")
+    public void parseGame() throws IOException {
+        gameService.parseGame();
+    }
+
+    @ApiMethod(httpMethod = "post")
+    public void createDummyGames() {
+        gameDummyService.createDummyGames();
+    }
+
+    @ApiMethod(httpMethod = "post")
     public void pushMessage(@Named("gameId") String gameId,
             @Named("messageId") String messageId) throws IOException {
-        Message message = messageDao.get(Message.class, messageId);
-        //
-        TitleMessage titleMessage = commentaryService
-                .parseTitleMessage(message);
-        //
-        VideoMessage videoMessage = new VideoMessage();
-        videoMessage.setGameId(gameId);
-        videoMessage.setTitle(titleMessage.getTitle());
-        videoMessage.setMessage(titleMessage.getMessage());
-        videoMessage.setType(message.getType());
-        //
-        // TODO remove hardcode video
-        videoMessage
-                .setVideoLink("https://s3.amazonaws.com/historico.lanacion.com.ar/Partidos/TYC.20150331_211215.mp4");
-        videoMessage.setGifLink("");
-        videoMessage.setThumbnailLink("");
-        //
-        videoMessage.setPeriod(message.getPeriod());
-        videoMessage.setMinutes(message.getMinute());
-        videoMessage.setSeconds(message.getSecond());
+        ConfigHolder configHolder = configHolderDao.getConfig();
+        VideoMessage videoMessage = videoMessageService.createVideoMessage(
+                configHolder, messageId);
         //
         taskLauncher.launchTask(TaskLauncher.QUEUE_GCM_PAGED,
                 SendAllMessageTask.class,
                 ObjectSerializationUtils.serialize(videoMessage));
-    }
-
-    @Inject
-    public void setCommentaryService(CommentaryService commentaryService) {
-        this.commentaryService = commentaryService;
     }
 
     @Inject
@@ -101,5 +98,25 @@ public class GameEndpointApi {
     @Inject
     public void setMessageDao(MessageDao messageDao) {
         this.messageDao = messageDao;
+    }
+
+    @Inject
+    public void setConfigHolderDao(ConfigHolderDao configHolderDao) {
+        this.configHolderDao = configHolderDao;
+    }
+
+    @Inject
+    public void setGameDummyService(GameDummyService gameDummyService) {
+        this.gameDummyService = gameDummyService;
+    }
+
+    @Inject
+    public void setGameService(GameService gameService) {
+        this.gameService = gameService;
+    }
+
+    @Inject
+    public void setVideoMessageService(VideoMessageService videoMessageService) {
+        this.videoMessageService = videoMessageService;
     }
 }

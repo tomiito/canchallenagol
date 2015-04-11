@@ -11,6 +11,9 @@
     "LOADING": "Loading devices ...",
     "NO_DATA": "No devices found!"
   },
+  "CONFIG": {
+    "TITLE": "Configuration"
+  },
   "VIDEO": {
     "SEND_NEW_MESSAGE": "Send new video message",
     "MESSAGE": "Message",
@@ -23,7 +26,9 @@
     "EVENT_INCIDENTS": "Incidents",
     "LOADING": "Loading game incidents ...",
     "NO_DATA": "No incidents found!",
+    "PARSE_GAME": "Parse game XML",
     "FIND_URLS": "Find urls",
+    "CREATE_DUMMIES": "Create dummy games",
     "MESSAGE": {
       "ID": "Id",
       "TYPE": "Type",

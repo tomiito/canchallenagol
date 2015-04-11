@@ -5,7 +5,7 @@
     <groupId>ar.com.ironsoft</groupId>
     <artifactId>marroccl</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>marroccl Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <prerequisites>

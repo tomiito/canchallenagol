@@ -12,4 +12,6 @@ import com.google.inject.ImplementedBy;
 public interface VideoUrlDao extends BaseDao<VideoUrl> {
 
     void deleteAll();
+
+    VideoUrl findByMinute(Integer minute);
 }

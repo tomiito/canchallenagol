@@ -11,6 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+
 import ar.com.ironsoft.marroccl.web.app.modules.devices.daos.DeviceDao;
 import ar.com.ironsoft.marroccl.web.app.modules.devices.model.Device;
 import ar.com.ironsoft.marroccl.web.app.modules.messages.daos.MulticastDao;
@@ -74,9 +76,14 @@ public class SendMessageTask extends TaskServlet {
                 MulticastResult multicastResult;
                 boolean allDone = true;
                 try {
-                    logger.log(Level.INFO, "Sending multitask");
+                    String data = StringUtils.join(gcm.getData().values(),
+                            " - ");
+                    logger.log(Level.INFO, "Sending multitask GCM Data:" + data);
+                    //
                     multicastResult = sender.sendNoRetry(gcm, deviceIds);
+                    //
                     logger.log(Level.INFO, "Processing result");
+                    //
                     allDone = processMulticastResult(mm, deviceIds,
                             multicastResult);
                 } catch (IOException e) {

@@ -26,7 +26,15 @@ public class ConfigHolder implements BaseModel {
     @Unindex
     private Integer startMinute = 1;
     @Unindex
-    private Integer totalVideos = 100;
+    private Integer totalVideos = 101;
+    /**
+     * This is the minutes that I have to add to the startup time because the
+     * video starts from minute 0, but game could start in minute 5 or later.
+     */
+    @Unindex
+    private Integer extraMinutes = 3;
+    @Unindex
+    private String inProgressGameId = "3";
 
     public String getXmlUrl() {
         return xmlUrl;
@@ -68,6 +76,17 @@ public class ConfigHolder implements BaseModel {
         this.totalVideos = totalVideos;
     }
 
+    public Integer getExtraMinutes() {
+        if (extraMinutes == null) {
+            extraMinutes = 0;
+        }
+        return extraMinutes;
+    }
+
+    public void setExtraMinutes(Integer extraMinutes) {
+        this.extraMinutes = extraMinutes;
+    }
+
     @Override
     public String getId() {
         return id;
@@ -76,5 +95,16 @@ public class ConfigHolder implements BaseModel {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getInProgressGameId() {
+        if (inProgressGameId == null) {
+            inProgressGameId = "3";
+        }
+        return inProgressGameId;
+    }
+
+    public void setInProgressGameId(String inProgressGameId) {
+        this.inProgressGameId = inProgressGameId;
     }
 }

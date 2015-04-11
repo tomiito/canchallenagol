@@ -1,5 +1,8 @@
 package ar.com.ironsoft.marroccl.web.app.modules.messages.model;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import ar.com.ironsoft.marroccl.web.gcm.GCMMessage;
 
 /**
@@ -16,6 +19,8 @@ public class VideoMessage extends SimpleMessage {
     private Integer minutes;
     private Integer seconds;
     private String title;
+    private String player;
+    private String player2;
 
     public String getVideoLink() {
         return videoLink;
@@ -90,13 +95,32 @@ public class VideoMessage extends SimpleMessage {
         this.type = type;
     }
 
-    public GCMMessage asGCM() {
-        return new GCMMessage.Builder().addData("message", getMessage()) //
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    public String getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer2(String player2) {
+        this.player2 = player2;
+    }
+
+    public GCMMessage asGCM() throws UnsupportedEncodingException {
+        return new GCMMessage.Builder()
+                .addData("message", URLEncoder.encode(getMessage(), "UTF-8")) //
                 .addData("gameId", getGameId()) //
-                .addData("title", getTitle()) //
+                .addData("title", URLEncoder.encode(getTitle(), "UTF-8")) //
                 .addData("videoLink", getVideoLink()) //
                 .addData("gifLink", getGifLink()) //
                 .addData("type", getType()) //
+                .addData("player", URLEncoder.encode(getPlayer(), "UTF-8")) //
+                .addData("player2", URLEncoder.encode(getPlayer2(), "UTF-8")) //
                 .addData("period", String.valueOf(getPeriod())) //
                 .addData("minutes", String.valueOf(getMinutes())) //
                 .addData("seconds", String.valueOf(getSeconds())) //

@@ -1,6 +1,7 @@
 package ar.com.ironsoft.marroccl.web.core.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.logging.Logger;
 
@@ -29,6 +30,18 @@ public abstract class BaseServlet extends HttpServlet {
         } else {
             super.doGet(req, resp);
         }
+    }
+
+    protected void setJsonResponse(HttpServletResponse response, String json)
+            throws IOException {
+        response.setContentType("application/json");
+        // Get the printwriter object from response to write the required json
+        // object to the output stream
+        PrintWriter out = response.getWriter();
+        // Assuming your json object is **jsonObject**, perform the following,
+        // it will return your json object
+        out.print(json);
+        out.flush();
     }
 
     protected String getParameter(HttpServletRequest req, String parameter)
