@@ -43,15 +43,75 @@ public class CommentaryService {
 
     public TitleMessage parseTitleMessage(Message message) {
         TitleMessage titleMessage = new TitleMessage();
-        if ("goal".equals(message.getType())) {
-            titleMessage.setTitle(message.getComment().split("\\.", 2)[0]);
-            titleMessage.setMessage(message.getComment().split("\\.", 2)[1]);
+        String type = message.getType().toLowerCase();
+        String comment = message.getComment().trim();
+        if ("goal".equals(type)) {
+            titleMessage.setTitle(comment.split("\\.", 2)[0]);
+            titleMessage.setMessage(comment.split("\\.", 2)[1]);
+        } else if ("substitution".equals(type)) {
+            titleMessage.setTitle(StringUtils.split(comment, ",")[0]);
+            titleMessage.setMessage(StringUtils.split(comment, ",")[1].trim());
+            titleMessage.setMessage(StringUtils.capitalize(titleMessage
+                    .getMessage()));
+        } else if ("yellow card".equals(type)) {
+            String team = StringUtils.split(comment, "(")[1];
+            team = StringUtils.split(team, ")")[0];
+            titleMessage.setTitle("Amarilla para " + team);
+            titleMessage.setMessage(StringUtils.capitalize(comment));
+        } else if ("red card".equals(type)) {
+            String team = StringUtils.split(comment, "(")[1];
+            team = StringUtils.split(team, ")")[0];
+            titleMessage.setTitle("Roja para " + team);
+            titleMessage.setMessage(StringUtils.capitalize(comment));
+        } else if ("free kick lost".equals(type)) {
+            String team = StringUtils.split(comment, "(")[1];
+            team = StringUtils.split(team, ")")[0];
+            String typeText = StringUtils
+                    .splitByWholeSeparator(comment, " de ")[0];
+            titleMessage.setTitle(typeText + " de " + team);
+            //
+            comment = StringUtils.splitByWholeSeparator(comment, "(")[0];
+            titleMessage.setMessage(StringUtils.capitalize(comment));
+        } else if ("free kick won".equals(type)) {
+            String team = StringUtils.split(comment, "(")[1];
+            team = StringUtils.split(team, ")")[0];
+            titleMessage.setTitle("Tiro libre para " + team);
+            //
+            titleMessage.setMessage(StringUtils.capitalize(comment));
+        } else if ("offside".equals(type)) {
+            String team = StringUtils.splitByWholeSeparator(comment, "lugar, ")[1];
+            team = StringUtils.splitByWholeSeparator(team, ". ")[0];
+            comment = StringUtils.splitByWholeSeparator(comment, ". ")[1];
+            titleMessage.setTitle("Offside de " + team);
+            titleMessage.setMessage(StringUtils.capitalize(comment));
+        } else if ("corner".equals(type)) {
+            String team = StringUtils.splitByWholeSeparator(comment,
+                    "esquina, ")[1];
+            team = StringUtils.splitByWholeSeparator(team, ". ")[0];
+            comment = StringUtils.splitByWholeSeparator(comment, ". ")[1];
+            titleMessage.setTitle("Saque de esquina para " + team);
+            titleMessage.setMessage(StringUtils.capitalize(comment));
+        } else if ("attempt blocked".equals(type)) {
+            String team = StringUtils.split(comment, "(")[1];
+            team = StringUtils.splitByWholeSeparator(team, "),")[0];
+            titleMessage.setTitle("Remate rechazado de " + team);
+            titleMessage.setMessage(StringUtils.capitalize(comment));
+        } else if ("attempt saved".equals(type)) {
+            String team = StringUtils.split(comment, "(")[1];
+            team = StringUtils.split(team, ")")[0];
+            titleMessage.setTitle("Tiro de " + team + " atajado");
+            titleMessage.setMessage(StringUtils.capitalize(comment));
+        } else if ("miss".equals(type)) {
+            String team = StringUtils.split(comment, "(")[1];
+            team = StringUtils.split(team, ")")[0];
+            titleMessage.setTitle("Disparo desviado de " + team);
+            titleMessage.setMessage(StringUtils.capitalize(comment));
         } else {
-            titleMessage.setTitle(message.getComment());
+            titleMessage.setTitle(comment);
             titleMessage.setMessage("");
         }
         titleMessage.setTitle(titleMessage.getTitle().trim());
-        titleMessage.setMessage(titleMessage.getTitle().trim());
+        titleMessage.setMessage(titleMessage.getMessage().trim());
         return titleMessage;
     }
 

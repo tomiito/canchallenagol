@@ -49,12 +49,12 @@ public class GameDummyService {
         //
         game.setHomeTeamId("7");
         game.setHomeTeamName("Huracan");
-        game.setHomeTeamLink("http://lh4.ggpht.com/-RSYEbp16AGg/T_S1vj_lekI/AAAAAAAABy8/YeHi38pHfBY/s50/huracan.png");
+        game.setHomeTeamLink("http://lh4.ggpht.com/-RSYEbp16AGg/T_S1vj_lekI/AAAAAAAABy8/YeHi38pHfBY/s150/huracan.png");
         game.setHomeTeamScore(0);
         //
         game.setAwayTeamId("2");
         game.setAwayTeamName("Boca Juniors");
-        game.setAwayTeamLink("http://lh3.ggpht.com/-F2Zh5rBDCQs/T_S3u8W3mHI/AAAAAAAADIM/rmvMETxY3C4/s50/bocajuniors.png");
+        game.setAwayTeamLink("http://lh3.ggpht.com/-F2Zh5rBDCQs/T_S3u8W3mHI/AAAAAAAADIM/rmvMETxY3C4/s150/bocajuniors.png");
         game.setAwayTeamScore(2);
         //
         return game;
@@ -68,12 +68,12 @@ public class GameDummyService {
         //
         game.setHomeTeamId("8");
         game.setHomeTeamName("Estudiantes LP");
-        game.setHomeTeamLink("http://lh4.googleusercontent.com/-PyvFFHG0LK8/UnR9RJ6T1kI/AAAAAAAADVg/rolZ5K5TPKk/s50/estudianteslp.png");
+        game.setHomeTeamLink("http://lh4.googleusercontent.com/-PyvFFHG0LK8/UnR9RJ6T1kI/AAAAAAAADVg/rolZ5K5TPKk/s150/estudianteslp.png");
         game.setHomeTeamScore(0);
         //
         game.setAwayTeamId("4");
         game.setAwayTeamName("Racing");
-        game.setAwayTeamLink("http://lh3.ggpht.com/-YD8xS5JI-r8/T_S4EBiutFI/AAAAAAAADRQ/cB2d8PYTzko/s50/racingclub.png");
+        game.setAwayTeamLink("http://lh3.ggpht.com/-YD8xS5JI-r8/T_S4EBiutFI/AAAAAAAADRQ/cB2d8PYTzko/s150/racingclub.png");
         game.setAwayTeamScore(0);
         //
         return game;
@@ -87,12 +87,12 @@ public class GameDummyService {
         //
         game.setHomeTeamId("9");
         game.setHomeTeamName("Lanus");
-        game.setHomeTeamLink("http://lh5.ggpht.com/-L9z7BWtrf4o/T_S3_bTDETI/AAAAAAAADPQ/xrnz51ot3g4/s50/lanus.png");
+        game.setHomeTeamLink("http://lh5.ggpht.com/-L9z7BWtrf4o/T_S3_bTDETI/AAAAAAAADPQ/xrnz51ot3g4/s150/lanus.png");
         game.setHomeTeamScore(0);
         //
         game.setAwayTeamId("10");
         game.setAwayTeamName("Argentinos");
-        game.setAwayTeamLink("http://lh3.ggpht.com/-FRNjsLp2asc/T_S3siSQHsI/AAAAAAAADHI/1p0DdN_qi9c/s50/argentinos.png");
+        game.setAwayTeamLink("http://lh3.ggpht.com/-FRNjsLp2asc/T_S3siSQHsI/AAAAAAAADHI/1p0DdN_qi9c/s150/argentinos.png");
         game.setAwayTeamScore(0);
         //
         return game;
@@ -106,12 +106,12 @@ public class GameDummyService {
         //
         game.setHomeTeamId("3");
         game.setHomeTeamName("Independiente");
-        game.setHomeTeamLink("http://lh6.ggpht.com/-a2AaUl2K1pk/UAmoC0dBjHI/AAAAAAAADXA/Pbmbv3_XsSk/s50/independiente.png");
+        game.setHomeTeamLink("http://lh6.ggpht.com/-a2AaUl2K1pk/UAmoC0dBjHI/AAAAAAAADXA/Pbmbv3_XsSk/s150/independiente.png");
         game.setHomeTeamScore(0);
         //
         game.setAwayTeamId("6");
         game.setAwayTeamName("Gimnasia LP");
-        game.setAwayTeamLink("http://lh5.ggpht.com/-Be3IP2CxEYA/T_Ua2BGXK6I/AAAAAAAAB8A/80rxnomgX9s/s50/gimnasialp.png");
+        game.setAwayTeamLink("http://lh5.ggpht.com/-Be3IP2CxEYA/T_Ua2BGXK6I/AAAAAAAAB8A/80rxnomgX9s/s150/gimnasialp.png");
         game.setAwayTeamScore(0);
         //
         return game;
@@ -125,12 +125,12 @@ public class GameDummyService {
         //
         game.setHomeTeamId("1");
         game.setHomeTeamName("River Plate");
-        game.setHomeTeamLink("http://lh4.ggpht.com/-M4TSXz-rRKg/T_S4FbkWK-I/AAAAAAAADR4/Oq2Ed2h2lN0/s50/riverplate.png");
+        game.setHomeTeamLink("http://lh4.ggpht.com/-M4TSXz-rRKg/T_S4FbkWK-I/AAAAAAAADR4/Oq2Ed2h2lN0/s150/riverplate.png");
         game.setHomeTeamScore(1);
         //
         game.setAwayTeamId("5");
         game.setAwayTeamName("San Lorenzo");
-        game.setAwayTeamLink("http://lh6.ggpht.com/-ALlV82LjBew/T_S4GJPJJPI/AAAAAAAADSM/UIfqIIqNxnw/s50/sanlorenzo.png");
+        game.setAwayTeamLink("http://lh6.ggpht.com/-ALlV82LjBew/T_S4GJPJJPI/AAAAAAAADSM/UIfqIIqNxnw/s150/sanlorenzo.png");
         game.setAwayTeamScore(0);
         //
         return game;
