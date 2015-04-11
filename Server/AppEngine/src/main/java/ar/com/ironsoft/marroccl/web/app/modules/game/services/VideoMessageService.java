@@ -35,6 +35,9 @@ public class VideoMessageService {
     public VideoMessage createVideoMessage(ConfigHolder configHolder,
             Message message) {
         int videoMinute = message.getMinute() + configHolder.getExtraMinutes();
+        if (message.getPeriod() == 2) {
+            videoMinute += configHolder.getExtraMinutes2Period();
+        }
         if (message.getSecond() > 30) {
             videoMinute++;
         }
