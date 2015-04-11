@@ -25,6 +25,7 @@
             <ListView
                 android:id="@+id/game_events"
                 android:layout_width="match_parent"
+                android:fastScrollEnabled="true"
                 android:layout_height="wrap_content">
 
             </ListView>

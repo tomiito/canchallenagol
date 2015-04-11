@@ -1,6 +1,7 @@
 package ar.com.ironsoft.marrocclandroid.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,24 +9,36 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.games.Game;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.domain.GameItem;
-import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
 
 /**
  * Created by gabrielvilloldo on 4/10/15.
  */
 public class GameListAdapter extends ArrayAdapter<GameItem> {
     protected ArrayList<GameItem> games;
+    private DisplayImageOptions options;
 
     public GameListAdapter(int resource, ArrayList<GameItem> games, Context mContext) {
         super(mContext, resource, games);
         this.games = games;
+
+        options = new DisplayImageOptions.Builder()
+                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .showImageForEmptyUri(R.drawable.ic_ball)
+                .showImageOnFail(R.drawable.ic_ball)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .displayer(new FadeInBitmapDisplayer(300, true, true, false))
+                .build();
     }
 
     @Override
@@ -41,27 +54,24 @@ public class GameListAdapter extends ArrayAdapter<GameItem> {
 
         final GameHolder gameHolder = (GameHolder) convertView.getTag();
 
-        ImageLoader.getInstance().displayImage(item.getHomeTeamLink(), gameHolder.imageHome);
-        ImageLoader.getInstance().displayImage(item.getAwayTeamLink(), gameHolder.imageAway);
+        ImageLoader.getInstance().displayImage(item.getHomeTeamLink(), gameHolder.imageHome, options);
+        ImageLoader.getInstance().displayImage(item.getAwayTeamLink(), gameHolder.imageAway, options);
         gameHolder.awayName.setTag(item.getStatus());
         gameHolder.homeName.setTag(item.getGameId());
         gameHolder.homeName.setText(item.getHomeTeamName());
         gameHolder.awayName.setText(item.getAwayTeamName());
 
-        if (item.getStatus() != 2) {
+        if (item.getStatus() == 1) {
             gameHolder.homeScore.setText("");
             gameHolder.awayScore.setText("");
-            if (item.getStatus() == 1) {
-                gameHolder.status.setText("No comenzado");
-            }
-            else {
-                gameHolder.status.setText("Finalizado");
-
-            }
+            gameHolder.status.setText("No comenzado");
         } else {
             gameHolder.homeScore.setText(item.getHomeTeamScore().toString());
             gameHolder.awayScore.setText(item.getAwayTeamScore().toString());
-            gameHolder.status.setText(item.getCurrentMinute().toString() + ":" + item.getCurrentSecond().toString());
+            if (item.getStatus() == 2)
+                gameHolder.status.setText(item.getCurrentMinute().toString() + ":" + item.getCurrentSecond().toString());
+            else
+                gameHolder.status.setText("Finalizado");
         }
 
         return convertView;

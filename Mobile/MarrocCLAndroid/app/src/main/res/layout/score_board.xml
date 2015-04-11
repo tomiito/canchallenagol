@@ -13,8 +13,7 @@
         <ImageView
             android:id="@+id/score_board_image_rival_home"
             android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_ball"/>
+            android:layout_height="80dp"/>
 
         <TextView
             android:id="@+id/score_board_home_score"
@@ -43,8 +42,7 @@
             android:paddingLeft="5dp"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_ball"/>
+            android:layout_alignParentRight="true"/>
 
         <TextView
             android:id="@+id/score_board_away_score"

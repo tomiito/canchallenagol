@@ -2,14 +2,13 @@ package ar.com.ironsoft.marrocclandroid.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.google.android.gms.games.Game;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -20,11 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ar.com.ironsoft.marrocclandroid.R;
-import ar.com.ironsoft.marrocclandroid.adapters.GameEventsAdapter;
 import ar.com.ironsoft.marrocclandroid.adapters.GameListAdapter;
 import ar.com.ironsoft.marrocclandroid.domain.GameItem;
-import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
-import ar.com.ironsoft.marrocclandroid.listeners.OnSingleClickListener;
 
 
 public class GameSelectActivity extends BaseActionBarActivity {
@@ -47,10 +43,8 @@ public class GameSelectActivity extends BaseActionBarActivity {
         gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch ((Integer)view.findViewById(R.id.list_item_main_game_away_score_name).getTag()) {
+                switch ((Integer) view.findViewById(R.id.list_item_main_game_away_score_name).getTag()) {
                     case 1: // No empezo
-                        return;
-                    case 3: // Terminado
                         return;
                 }
                 Intent intent = new Intent().setClass(context, GameActivity.class);
@@ -59,7 +53,13 @@ public class GameSelectActivity extends BaseActionBarActivity {
                 context.startActivity(intent);
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loading.setVisibility(View.VISIBLE);
+        gamesList.setVisibility(View.GONE);
         getGames();
     }
 

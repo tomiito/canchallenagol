@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +22,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -51,6 +55,8 @@ public class GameActivity extends BaseActionBarActivity {
 
     Context context;
 
+    private DisplayImageOptions options;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,12 +65,29 @@ public class GameActivity extends BaseActionBarActivity {
         gameId = getIntent().getStringExtra("gameId");
         loading = findViewById(R.id.loading_circular_fullscreen_container);
         container = findViewById(R.id.game_container);
-
+        options = new DisplayImageOptions.Builder()
+                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .showImageForEmptyUri(R.drawable.ic_ball)
+                .showImageOnFail(R.drawable.ic_ball)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .displayer(new FadeInBitmapDisplayer(300, true, true, false))
+                .build();
         context = this;
 
         setUI();
         loadEventsGame();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loading.setVisibility(View.VISIBLE);
+        container.setVisibility(View.GONE);
+        loadEventsGame();
+    }
+
 
     private void loadEventsGame() {
         OkHttpClient client = new OkHttpClient();
@@ -90,8 +113,8 @@ public class GameActivity extends BaseActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageLoader.getInstance().displayImage(gameFullItem.getHomeTeamLink(), (ImageView)findViewById(R.id.score_board_image_rival_home));
-                        ImageLoader.getInstance().displayImage(gameFullItem.getAwayTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_away));
+                        ImageLoader.getInstance().displayImage(gameFullItem.getHomeTeamLink(), (ImageView)findViewById(R.id.score_board_image_rival_home), options);
+                        ImageLoader.getInstance().displayImage(gameFullItem.getAwayTeamLink(), (ImageView) findViewById(R.id.score_board_image_rival_away), options);
 
                         ((TextView)findViewById(R.id.score_board_home_score)).setText(gameFullItem.getHomeTeamScore().toString());
                         ((TextView)findViewById(R.id.score_board_away_score)).setText(gameFullItem.getAwayTeamScore().toString());

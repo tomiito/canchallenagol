@@ -12,8 +12,7 @@
         <ImageView
             android:id="@+id/list_item_main_event_image"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_ball"/>
+            android:layout_height="100dp"/>
 
         <LinearLayout
             android:id="@+id/list_item_main_event_time_container"

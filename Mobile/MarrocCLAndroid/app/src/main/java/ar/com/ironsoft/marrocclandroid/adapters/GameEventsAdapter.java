@@ -7,9 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import ar.com.ironsoft.marrocclandroid.R;
 import ar.com.ironsoft.marrocclandroid.domain.PushMessage;
@@ -18,7 +24,7 @@ import ar.com.ironsoft.marrocclandroid.helpers.EventTypeHelper;
 /**
  * Created by gabrielvilloldo on 4/10/15.
  */
-public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
+public class GameEventsAdapter extends ArrayAdapter<PushMessage> implements SectionIndexer {
     protected ArrayList<PushMessage> pushedMessages;
     private EventTypeHelper eventTypeHelper;
 
@@ -68,8 +74,33 @@ public class GameEventsAdapter extends ArrayAdapter<PushMessage> {
         eventHolder.player = (TextView)convertView.findViewById(R.id.list_item_main_event_player);
         eventHolder.time = (TextView)convertView.findViewById(R.id.list_item_main_event_time);
         eventHolder.timeContainer = (LinearLayout)convertView.findViewById(R.id.list_item_main_event_time_container);
-        //
         convertView.setTag(eventHolder);
+    }
+
+    @Override
+    public Object[] getSections() {
+        Set<Integer> minutes = new TreeSet<Integer>();
+        for (PushMessage message : pushedMessages) {
+            if (message.getMinutes() != null && message.getMinutes() == 0
+                    && message.getSeconds() != null && message.getSeconds() == 0
+                    && message.getTitle() != null && message.getTitle().toLowerCase().startsWith("final")){
+                continue;
+            }
+            minutes.add(message.getMinutes());
+        }
+        List<Integer> minuteSorted = new ArrayList<Integer>(minutes);
+        Collections.reverse(minuteSorted);
+        return minuteSorted.toArray();
+    }
+
+    @Override
+    public int getPositionForSection(int sectionIndex) {
+        return sectionIndex;
+    }
+
+    @Override
+    public int getSectionForPosition(int position) {
+        return position;
     }
 
     public static class EventHolder {
