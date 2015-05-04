@@ -12,7 +12,24 @@ An Android native mobile application
 
 Android
 -----------------
+The app was fully developed using Android SDK and Android Studio with the best libraries in the jCenter repository.
 
+* Google Play Services - to use Google Cloud Messaging (for Push Notifications) and other services.
+* Google Support Library v4 & v7 - for compatibility to old Android versions.
+* OkHttp - for making http requests.
+* Google GSON - to work with JSON (is better work with Jackson, but it's faster to implement GSON)
+* Universal Image Loader - to loading & cache images.
+
+We delivered the app in 2 environments, one for development and another for production (minified and different signing configuration)
+Also the app every startup verifies if it registered in our backend to receive the push notificacions when a goal or every event was raised.
+
+You can get the apk using the following steps: 
+* Download the source code
+* Execute "gradlew assembleDebug"
+* Locate the apk in the bin directory
+* Distribute the apk to different devices and install it.
+
+Enjoy watching soccer!
 
 AppEngine
 -----------------
