@@ -8,7 +8,8 @@ The purpose was to show goals videos for a provided soccer match in a mobile app
 Our infrastructure
 -----------------
 A backend made in GoogleAppEngine to support push-notifications and provide content to the mobile application  
-An Android native mobile application 
+An Android native mobile application  
+A Jenkins on a remote linux server with Auto deploy to GoogleAppEngine on master commits
 
 Android
 -----------------
